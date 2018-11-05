@@ -16,6 +16,8 @@ public class UserController {
 	
 	@RequestMapping("/users")
 	public List<User> getAllUsers() {
+		//return "Hello";
+		
 		return userService.getAllUsers();
 		
 		
