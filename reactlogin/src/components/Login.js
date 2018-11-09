@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import config from '../config.js';
-import login from "../custom_css/login.css";
+import login from "./../custom_css/login.css";
+import NavBar from './NavBar';
+
 
 class Login extends Component {
 
@@ -23,7 +24,9 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div>
+                <NavBar/>
+                <div className="container">
                 <div className="d-flex justify-content-center h-100">
                     <div className="card">
                         <div className="card-header">
@@ -65,6 +68,7 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         );
     }

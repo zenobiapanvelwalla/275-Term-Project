@@ -20,7 +20,7 @@ class AdminDashboard extends Component {
         return (
             <div>
                 <div id="mySidenav" className="sidenav">
-                <a href="javascript:void(0)" className="closebtn" onClick="javascript:closeNav()">&times;</a>
+                {/*<a href="javascript:void(0)" className="closebtn" onClick="javascript:closeNav()">&times;</a>*/}
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Clients</a>
