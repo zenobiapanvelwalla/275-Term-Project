@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 class Message extends Component {
 
-    static propTypes = {
-        message: PropTypes.string.isRequired
-    };
+    // static propTypes = {
+    //     message: PropTypes.string.isRequired
+    // };
 
     render() {
         return (
