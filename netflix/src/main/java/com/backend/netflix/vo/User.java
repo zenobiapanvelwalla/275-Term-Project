@@ -2,17 +2,7 @@ package com.backend.netflix.vo;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="users")
@@ -20,10 +10,18 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "user_id")
 	private int id;
+	@Column(name="email")
 	private String email;
+
+	@Column(name="password")
 	private String password;
+
+	@Column(name="display_name")
 	private String displayName;
+
+	@Column(name="verified")
 	private boolean verified;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
