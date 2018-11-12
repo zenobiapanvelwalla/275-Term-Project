@@ -14,11 +14,11 @@ import javax.persistence.Table;
 @Table(name="users")
 public class User {
 	
+	
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-
-	@Column(name="id")
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	private int id;
 
 	@Column(name="email")
 	private String email;
@@ -36,7 +36,18 @@ public class User {
 	
 
 	
-	
+	public User() {}
+	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
+			String role) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.displayName = displayName;
+		this.verified = verified;
+		this.verificationCode = verificationCode;
+		this.role = role;
+	}
 	public String getRole() {
 		return role;
 	}
@@ -62,10 +73,10 @@ public class User {
 		this.verificationCode = verificationCode;
 	}
 	
-	public Long getId() {
+   public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getEmail() {

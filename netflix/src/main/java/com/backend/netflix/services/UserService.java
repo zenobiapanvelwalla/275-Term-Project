@@ -16,7 +16,7 @@ import java.util.HashSet;
 
 @Service("userService")
 public class UserService {
-	
+	@Autowired(required=true)
 	private UserRepository userRepository;
     
 	public List<User> getAllUsers() {
@@ -28,9 +28,6 @@ public class UserService {
 	
 	
     public void addUser(User user) {
-		System.out.println(user.getDisplayName()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getId()+" "+user.getRole());
-		//initially user is not verified
-		user.setVerified(false);
 		
 		userRepository.save(user);
 	}

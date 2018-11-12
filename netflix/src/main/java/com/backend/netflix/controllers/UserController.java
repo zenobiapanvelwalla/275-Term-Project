@@ -55,23 +55,33 @@ public class UserController {
 	@PostMapping(path="/users/store",consumes = MediaType.APPLICATION_JSON_VALUE) // Map ONLY POST Requests
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {
 		
+		
 		//encrypting user password
 		Encryption enc = new Encryption();
 		String encrypted=enc.encrypt(user.getPassword());
 		user.setPassword(encrypted);
 		
 		//setting the user role
-		user.setRole("ADMIN");
+		String domain = user.getEmail().substring(user.getEmail().indexOf("@") + 1);
+		if(domain.compareTo("sjsu.edu")==0) {
+			user.setRole("ADMIN");
+		} else {
+			user.setRole("CUSTOMER");
+		}
+		
+		//initially user is not verified
+		user.setVerified(false);
 		
 		//setting the verification code for the user
-		String random = getSaltString();
+		Random rnd = new Random();
+		String random = String.format("%04d", rnd.nextInt(10000));
 		user.setVerificationCode(random);
 		
 		//Saving user
 		userService.addUser(user);
 		
 		//add code here to send an email to user for verification (email will contain the verification code
-		sendmail(random);
+		sendmail(random,user.getEmail());
 		
 		return new ResponseEntity(null,HttpStatus.CREATED);
 	}
@@ -92,7 +102,7 @@ public class UserController {
 
     }
 	//sending email
-	private void sendmail(String random) throws AddressException, MessagingException, IOException {
+	private void sendmail(String random,String email) throws AddressException, MessagingException, IOException {
 		   Properties props = new Properties();
 		   props.put("mail.smtp.auth", "true");
 		   props.put("mail.smtp.starttls.enable", "true");
@@ -107,7 +117,7 @@ public class UserController {
 		   Message msg = new MimeMessage(session);
 		   msg.setFrom(new InternetAddress("babymoviecentral@gmail.com", false));
 
-		   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("zenobiapanvelwalla@gmail.com"));
+		   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 		   msg.setSubject("Verification Code");
 		   msg.setContent("Your verification code is: "+random, "text/html");
 		   msg.setSentDate(new Date());
