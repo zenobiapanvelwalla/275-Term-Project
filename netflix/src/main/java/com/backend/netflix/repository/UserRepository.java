@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.backend.netflix.vo.User;
+import com.backend.netflix.beans.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 

@@ -8,8 +8,8 @@ import java.util.Set;
 import org.springframework.data.repository.CrudRepository;
 
 import com.backend.netflix.beans.Movie;
-import com.backend.netflix.vo.User;
-import com.backend.netflix.vo.UserRoles;
+import com.backend.netflix.beans.User;
+
 
 public interface MovieRepository extends CrudRepository<Movie, Integer> {
 

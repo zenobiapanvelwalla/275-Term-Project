@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.netflix.services.UserService;
-import com.backend.netflix.vo.User;
+import com.backend.netflix.beans.User;
 import com.backend.netflix.vo.Encryption;
 
 @RestController

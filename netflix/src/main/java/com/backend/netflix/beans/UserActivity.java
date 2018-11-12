@@ -4,7 +4,7 @@ import java.util.List;
 
 public class UserActivity {
 
-private int userId;
+    private int userId;
 	
 	private List<String> watchedMovies;
 	
