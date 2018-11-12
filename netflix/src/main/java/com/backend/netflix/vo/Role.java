@@ -12,6 +12,8 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
+	
 	private String role;
 	public int getId() {
 		return id;
@@ -22,6 +24,7 @@ public class Role {
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
