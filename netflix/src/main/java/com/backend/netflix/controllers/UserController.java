@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.backend.netflix.services.UserService;
 import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.Encryption;
@@ -40,6 +39,7 @@ import com.backend.netflix.vo.Encryption;
 public class UserController {
 	@Autowired
 	private UserService userService ;
+	
 	
 	
 	@RequestMapping("/users")
@@ -55,7 +55,7 @@ public class UserController {
 	@PostMapping(path="/users/store",consumes = MediaType.APPLICATION_JSON_VALUE) // Map ONLY POST Requests
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {
 		
-		
+		HashMap<String,Object> response =new HashMap<>();
 		//encrypting user password
 		Encryption enc = new Encryption();
 		String encrypted=enc.encrypt(user.getPassword());
@@ -80,27 +80,20 @@ public class UserController {
 		//Saving user
 		userService.addUser(user);
 		
+		
 		//add code here to send an email to user for verification (email will contain the verification code
 		sendmail(random,user.getEmail());
 		
-		return new ResponseEntity(null,HttpStatus.CREATED);
+		//getting id of the stored user
+		List<User> ul = userService.findByEmailAndPassword(user.getEmail(),user.getPassword());
+		response.put("success", true);
+		response.put("message", "User Signed Up");
+		response.put("statusCode",200);
+		response.put("user_id",ul.get(0).getId());
+		
+		return new ResponseEntity(response,HttpStatus.CREATED);
 	}
-	/**
-	 * Generate random string for user verification
-	 * @return
-	 */
-	protected String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
-
-    }
+	
 	//sending email
 	private void sendmail(String random,String email) throws AddressException, MessagingException, IOException {
 		   Properties props = new Properties();
@@ -125,13 +118,6 @@ public class UserController {
 		   MimeBodyPart messageBodyPart = new MimeBodyPart();
 		   messageBodyPart.setContent("Tutorials point email", "text/html");
 
-//		   Multipart multipart = new MimeMultipart();
-//		   multipart.addBodyPart(messageBodyPart);
-//		   MimeBodyPart attachPart = new MimeBodyPart();
-//
-//		   attachPart.attachFile("/var/tmp/image19.png");
-//		   multipart.addBodyPart(attachPart);
-//		   msg.setContent(multipart);
 		   Transport.send(msg);   
 		}
 
@@ -148,17 +134,26 @@ public class UserController {
 			
 			HashMap<String,Object> response =new HashMap<>();
 			if(userList.size()>0) {
-				System.out.println(userList);
-				session.setAttribute("userId",userList.get(0).getId());
-				System.out.println(userList.get(0).getId());
-				System.out.println(session.getAttribute("userId"));
-				response.put("message", userList);
-				response.put("success", true);
-				response.put("statusCode", 200);
+				
+				user = userList.get(0);
+				if(user.isVerified()) {
+					session.setAttribute("userId",userList.get(0).getId());
+					response.put("verified",true);
+					response.put("message", userList.get(0));
+					response.put("success", true);
+					response.put("statusCode", 200);
+				}else {
+					response.put("verified", false);
+					response.put("message", "User is not verified!");
+					response.put("success", false);
+					response.put("statusCode", 400);
+					
+				}
 			} else {
 				response.put("message","User Not Found");
-				response.put("success false",false);
-				response.put("statusCode", 200);
+				response.put("success",false);
+				response.put("statusCode", 400);
+				response.put("verified",false);
 			}
 			return  new ResponseEntity(response,HttpStatus.OK);
 		} catch (Exception e) {
@@ -171,6 +166,30 @@ public class UserController {
 
 	}
 	
+	
+	@PostMapping(path="/users/verify/{user_id}",consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity verify(@PathVariable int user_id,@RequestBody String verification_code, HttpSession session){
+		HashMap<String, Object> response = new HashMap<String,Object>();
+		Optional<User> user = userService.getUser(user_id);
+		if(user!=null) {
+			if(user.get().getVerificationCode().compareTo(verification_code)==0) {
+				userService.setVerifiedToTrue(user_id);
+				response.put("success", true);
+				response.put("statusCode",200);
+			} else {
+				response.put("success",false);
+				response.put("statusCode",400);
+				response.put("message","Verification code does not match");
+			}
+		}else {
+			response.put("success",false);
+			response.put("statusCode",400);
+			response.put("message","User not found!");
+		}
+		return  new ResponseEntity(response,HttpStatus.OK);
+	}
+	
 	//logout
 		@RequestMapping(value = "/logout")
 	    @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -181,6 +200,8 @@ public class UserController {
 	        response.put("success", true);
 	        return  new ResponseEntity(response,HttpStatus.OK);
 	    }
+		
+		
 	//get user profile
 		@RequestMapping("/users/profile/{id}")
 		public ResponseEntity getUser(@PathVariable int id) {

@@ -10,5 +10,7 @@ import com.backend.netflix.vo.UserRoles;
 public interface UserRolesRepository extends CrudRepository<UserRoles, Integer> {
 
 	Set<UserRoles> findById(String id);
+	
+	
 
 }

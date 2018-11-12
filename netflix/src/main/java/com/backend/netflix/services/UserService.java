@@ -3,19 +3,17 @@ package com.backend.netflix.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backend.netflix.vo.User;
-import com.backend.netflix.interfaces.UserRepository;
-import org.springframework.stereotype.Service;
-import java.util.Arrays;
-import java.util.HashSet;
+import com.backend.netflix.repository.UserRepository;
 
 
 
-@Service("userService")
+
+
 public class UserService {
+	
 	@Autowired(required=true)
 	private UserRepository userRepository;
     
@@ -43,6 +41,17 @@ public class UserService {
 		List<User> s=userRepository.findByEmailAndPassword(user.getEmail(),user.getPassword());
 		return s;
 		
+	}
+
+
+	public void setVerifiedToTrue(int id) {
+		userRepository.setVerifiedToTrue(id);
+	}
+
+
+	public List<User> findByEmailAndPassword(String email, String password) {
+		List<User> s=userRepository.findByEmailAndPassword(email,password);
+		return s;
 	}
     
 
