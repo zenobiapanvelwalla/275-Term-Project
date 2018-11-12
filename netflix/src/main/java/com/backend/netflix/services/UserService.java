@@ -2,24 +2,51 @@ package com.backend.netflix.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.backend.netflix.vo.User;
 import com.backend.netflix.interfaces.UserRepository;
+import org.springframework.stereotype.Service;
+import java.util.Arrays;
+import java.util.HashSet;
 
-@Service
+
+
+@Service("userService")
 public class UserService {
 	
-	@Autowired
 	private UserRepository userRepository;
-
+    
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
 		userRepository.findAll().forEach(users::add);
 		System.out.println("Users size:-"+users.size());
 		return users;
 	}
+	
+	
+    public void addUser(User user) {
+		System.out.println(user.getDisplayName()+" "+user.getEmail()+" "+user.getPassword()+" "+user.getId()+" "+user.getRole());
+		//initially user is not verified
+		user.setVerified(false);
+		
+		userRepository.save(user);
+	}
+    public Optional<User> getUser(int id) {
+		return userRepository.findById(id);
+	}
+    
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    public List<User> login(User user) throws Exception {
+		
+		List<User> s=userRepository.findByEmailAndPassword(user.getEmail(),user.getPassword());
+		return s;
+		
+	}
+    
 
 }

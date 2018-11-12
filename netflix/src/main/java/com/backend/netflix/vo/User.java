@@ -1,14 +1,20 @@
 package com.backend.netflix.vo;
 
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,22 +26,23 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@Column(name="id")
+	private Long id;
 	private String email;
 	private String password;
 	private String displayName;
 	private boolean verified;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+	private String verificationCode;
+	private String role;
 	
-	public User() {}
-	public User(User users) {
-		this.email = users.getEmail();
-		this.id = users.getId();
-		this.verified = users.isVerified();
-		this.displayName = users.getDisplayName();
-		this.password = users.getPassword();
+
+	
+	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public String getDisplayName() {
 		return displayName;
@@ -49,12 +56,17 @@ public class User {
 	public void setVerified(boolean verified) {
 		this.verified = verified;
 	}
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
 	
-	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getEmail() {
@@ -69,13 +81,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 	
 }
