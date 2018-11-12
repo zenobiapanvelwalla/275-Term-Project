@@ -16,6 +16,11 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	List<User> findByEmailAndPassword(String email,String password);
 	
 	
+	Optional<User> findByDisplayName(String displayName);
+	
+
+	Optional<User> findById(String id);
+	
 	@Modifying
 	@Transactional
 	@Query(value="UPDATE users SET verified=true WHERE id=?1,",nativeQuery=true)

@@ -1,16 +1,10 @@
-package com.backend.netflix.vo;
+package com.backend.netflix.beans;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="user_activity")
 public class UserActivity {
-	
-	
-	private int userId;
+
+private int userId;
 	
 	private List<String> watchedMovies;
 	
@@ -32,6 +26,13 @@ public class UserActivity {
 		this.watchedMovies = watchedMovies;
 	}
 
+	public UserActivity(int userId, List<String> watchedMovies, List<String> watchingMovies) {
+		super();
+		this.userId = userId;
+		this.watchedMovies = watchedMovies;
+		this.watchingMovies = watchingMovies;
+	}
+
 	public List<String> getWatchingMovies() {
 		return watchingMovies;
 	}
@@ -40,7 +41,7 @@ public class UserActivity {
 		this.watchingMovies = watchingMovies;
 	}
 	
+//	Still have to add
 	
 	
-
 }

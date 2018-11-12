@@ -5,10 +5,12 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 import com.backend.netflix.vo.User;
+import com.backend.netflix.beans.UserActivity;
 import com.backend.netflix.vo.UserRoles;
 
-public interface UserActivityRepository extends CrudRepository<UserRoles, Integer> {
+public interface UserActivityRepository extends CrudRepository<User, Integer> {
 
-	Set<UserRoles> findById(String id);
+//	Set<UserActivity> findByUserid(String  userid);
+
 
 }
