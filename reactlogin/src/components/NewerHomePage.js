@@ -6,7 +6,8 @@ import Login from "./Login";
 import Message from "./Message";
 import Welcome from "./Welcome";
 import SignUp from "./SignUp";
-import AdminDashboard from "./AdminDashboard";
+import NavBar from "./NavBar";
+import AdminDashboard from "./AdminDashboard"
 
 
 class NewerHomePage extends Component {
@@ -38,7 +39,7 @@ class NewerHomePage extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div>
             <Router>
                 <Switch>
                     <Route exact path="/" render={() => (
@@ -63,6 +64,7 @@ class NewerHomePage extends Component {
                     )}/>
                     <Route path="/signup" component={SignUp}/>
                     <Route path="/dashboard" component={AdminDashboard}/>
+                    <Route path="/navbar" component={NavBar}/>
                 </Switch>
             </Router>
 
