@@ -9,22 +9,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user_subscrition")
-public class UserSubScription {
-	
-	private int Uid;
-	private int Months;
-	
-
-	private Date startDate;
-	
-	private Date endDate;
-
+@Table(name="user_subscriptions")
+public class UserSubscription {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int subscritionId;
-	
+	private int id;
+	private int userId;
+	private int months;
+	private Date startDate;
+	private Date endDate;
+
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Date getStartDate() {
 		return startDate;
@@ -38,29 +45,12 @@ public class UserSubScription {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
 	
-	
-	
-	
-	public int getSubscritionId() {
-		return subscritionId;
-	}
-	public void setSubscritionId(int subscritionId) {
-		this.subscritionId = subscritionId;
-	}
-	
-	public int getUid() {
-		return Uid;
-	}
-	public void setUid(int uid) {
-		Uid = uid;
-	}
 	public int getMonths() {
-		return Months;
+		return months;
 	}
 	public void setMonths(int months) {
-		Months = months;
+		this.months = months;
 	}
 	
 	

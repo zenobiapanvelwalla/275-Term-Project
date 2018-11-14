@@ -1,10 +1,14 @@
-
+ 
 package com.backend.netflix.vo;
 
 import com.backend.netflix.vo.User;
 import javax.persistence.*;
+
+import org.springframework.lang.Nullable;
+
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,24 +17,22 @@ public class Movie{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="movie_id")
-    private long movieId;
-
+    @Column(name="id")
+    private long id;
     @Column(name="title")
     private String title;
-
     @Column(name="genre")
     private String genre;
     @Column(name="year")
-    private Date year;
+    private String year;
     @Column(name="studio")
     private String studio;
     @Column(name="synopsis")
     private String synopsis;
-    @Column(name="image")
-    private String image;
-    @Column(name="movie")
-    private String movie;
+    @Column(name="image_url")
+    private String imageUrl;
+    @Column(name="movie_url")
+    private String movieUrl;
     @Column(name="actors")
     private String actors;
     @Column(name="director")
@@ -43,17 +45,42 @@ public class Movie{
     @Column(name="availability")
     private String availability;
     @Column(name="price")
+    @Nullable
     private double price;
+    private boolean isDeleted;
+    private int noOfStars;
+    private Long noOfPlays;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "movie",fetch = FetchType.EAGER)
+    private List<UserActivity> activites = new ArrayList<>();
+    
 
-    @ManyToMany(mappedBy="users")
-    private Set<User>users=new HashSet<>();
+    public List<UserActivity> getActivites() {
+		return activites;
+	}
 
-    public long getMovieId() {
-        return movieId;
+	public void setActivites(List<UserActivity> activites) {
+		this.activites = activites;
+	}
+    
+    public void addActivity(UserActivity activity) {
+    	activites.add(activity);
+        activity.setMovie(this);
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+	public Long getNoOfPlays() {
+		return noOfPlays;
+	}
+
+	public void setNoOfPlays(Long noOfPlays) {
+		this.noOfPlays = noOfPlays;
+	}
+	
+    public long getMovieId() {
+        return id;
+    }
+
+    public void setMovieId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -72,11 +99,11 @@ public class Movie{
         this.genre = genre;
     }
 
-    public Date getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(String year) {
         this.year = year;
     }
 
@@ -97,19 +124,19 @@ public class Movie{
     }
 
     public String getImage() {
-        return image;
+        return imageUrl;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.imageUrl = image;
     }
 
     public String getMovie() {
-        return movie;
+        return movieUrl;
     }
 
     public void setMovie(String movie) {
-        this.movie = movie;
+        this.movieUrl = movie;
     }
 
     public String getActors() {
@@ -159,14 +186,20 @@ public class Movie{
     public void setPrice(double price) {
         this.price = price;
     }
-
-    public Set<User> getUsers() {
-        return users;
+    
+    public int getNoOfStars() {
+		return noOfStars;
+	}
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public boolean getIsDeleted() {
+        return isDeleted;
     }
+	public void setNoOfStars(int noOfStars) {
+		this.noOfStars = noOfStars;
+	}
 
 
 

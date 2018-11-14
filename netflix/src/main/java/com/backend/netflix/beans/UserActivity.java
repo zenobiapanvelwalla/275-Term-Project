@@ -2,6 +2,9 @@ package com.backend.netflix.beans;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Bean;
+
+
 public class UserActivity {
 
     private int userId;
@@ -21,11 +24,12 @@ public class UserActivity {
 	public List<String> getWatchedMovies() {
 		return watchedMovies;
 	}
-
+	
 	public void setWatchedMovies(List<String> watchedMovies) {
 		this.watchedMovies = watchedMovies;
 	}
-
+	
+	
 	public UserActivity(int userId, List<String> watchedMovies, List<String> watchingMovies) {
 		super();
 		this.userId = userId;

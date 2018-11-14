@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -18,7 +17,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,11 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.netflix.services.UserService;
-import com.backend.netflix.beans.User;
+import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.Encryption;
 
 @RestController
 public class UserController {
+	
 	@Autowired
 	private UserService userService ;
 	
