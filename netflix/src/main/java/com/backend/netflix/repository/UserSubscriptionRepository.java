@@ -1,14 +1,15 @@
 package com.backend.netflix.repository;
 
-import java.util.Optional;
+
 import java.util.Set;
-
 import org.springframework.data.repository.CrudRepository;
-import com.backend.netflix.vo.User;
-import com.backend.netflix.vo.UserRoles;
+import com.backend.netflix.beans.UserSubscription;
 
-public interface UserSubscriptionRepository extends CrudRepository<UserRoles, Integer> {
 
-	Set<UserRoles> findById(String id);
+public interface UserSubscriptionRepository extends CrudRepository<UserSubscription, Integer> {
+
+	Set<UserSubscription> findByUid(String Uid);
+	
+
 
 }

@@ -15,15 +15,17 @@ public class UserSubScription {
 	private int Uid;
 	private int Months;
 	
+
+	private Date startDate;
+	
+	private Date endDate;
+
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int subscritionId;
 	
-	private Date startDate;
-	
-	private Date endDate;
-	
+
 	public Date getStartDate() {
 		return startDate;
 	}

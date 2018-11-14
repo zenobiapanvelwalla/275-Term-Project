@@ -1,4 +1,6 @@
+
 package com.backend.netflix.vo;
+
 import com.backend.netflix.vo.User;
 import javax.persistence.*;
 import java.util.Date;
@@ -170,3 +172,6 @@ public class Movie{
 
 
 }
+
+
+
