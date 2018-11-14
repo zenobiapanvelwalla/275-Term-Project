@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Route, withRouter } from 'react-router-dom';
-// import login from "../custom_css/login.css";
+import { withRouter } from 'react-router-dom';
 
 class NavBar extends Component
 {
