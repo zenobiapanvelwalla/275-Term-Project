@@ -1,4 +1,9 @@
 /* The side navigation menu */
+
+.w3-main{
+    margin-left:200px;
+}
+.w3-sidebar .w3-bar-block .w3-card .w3-animate-left{display:none;}
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */

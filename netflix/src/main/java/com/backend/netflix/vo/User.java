@@ -10,9 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
 
 
 
@@ -35,8 +40,10 @@ public class User {
 	private boolean verified;
 	private String verificationCode;
 	private String role;
-	@OneToOne(fetch = FetchType.EAGER)
-	private UserActivity activity;
+	
+    //@JoinTable(name = "users_movies", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private List<UserMovie> userMovies;
 	
 	public User() {}
 	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
@@ -50,13 +57,26 @@ public class User {
 		this.verificationCode = verificationCode;
 		this.role = role;
 	}
-	public UserActivity getActivity() {
-		return activity;
-	}
-	public void addActivity(UserActivity activity) {
-        this.activity = activity;
-        activity.setUser(this);
+//	public UserActivity getActivity() {
+//		return activity;
+//	}
+//	public void addActivity(UserActivity activity) {
+//        this.activity = activity;
+//        activity.setUser(this);
+//    }
+	
+	
+    public List<UserMovie> getUserMovies() {
+        return userMovies;
     }
+	
+	public void setUserMovies(List<UserMovie> userMovies) {
+		this.userMovies = userMovies;
+	}
+	
+	public void addUserMovies(UserMovie userMovie) {
+		this.userMovies.add(userMovie);
+	}
 	public String getRole() {
 		return role;
 	}
