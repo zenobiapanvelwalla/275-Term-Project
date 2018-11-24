@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 
 
-class NavBar extends Component
+class AdminNavBar extends Component
 {
     render(){
         return(
@@ -15,25 +15,25 @@ class NavBar extends Component
                     <div className="collapse navbar-collapse" id="navigation">
                         <ul className="nav navbar-nav">
                             <li className="nav-item active">
-                                <a href="#" className="nav-link">Home</a>
+                                <a href="#" className="nav-link">Dashboard</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Feature</a>
+                                <a href="#" className="nav-link">Movies</a>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" data-toggle="dropdown" id="preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">Products</a>
+                                <a className="nav-link dropdown-toggle" data-toggle="dropdown" id="preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Movies</a>
                                 <div className="dropdown-menu" >
-                                    <a className="dropdown-item" href="#">Product1</a>
-                                    <a className="dropdown-item" href="#">Product2</a>
-                                    <a className="dropdown-item" href="#">Product3</a>
-                                    <a className="dropdown-item" href="#">Product4</a>
+                                    <a className="dropdown-item" href="#">Add</a>
+                                    <a className="dropdown-item" href="#">Update</a>
+                                    <a className="dropdown-item" href="#">All Movies</a>
+                                    
                                 </div>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Service</a>
+                                <a href="#" className="nav-link">Manage Users</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Contact Us</a>
+                                <a href="#" className="nav-link">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -43,4 +43,4 @@ class NavBar extends Component
     }
 }
 
-export default withRouter(NavBar);
+export default withRouter(AdminNavBar);

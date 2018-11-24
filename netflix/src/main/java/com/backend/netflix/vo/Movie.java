@@ -2,6 +2,8 @@
 package com.backend.netflix.vo;
 
 import com.backend.netflix.vo.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 import org.springframework.lang.Nullable;
@@ -51,7 +53,9 @@ public class Movie{
     private int noOfStars;
     private Long noOfPlays;
     //@ManyToMany(mappedBy = "movies", targetEntity = User.class)
+    
     @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
+    @JsonBackReference
     //@OneToMany
     private List<UserMovie> userMovies;
     

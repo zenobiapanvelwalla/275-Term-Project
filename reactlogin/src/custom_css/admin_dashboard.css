@@ -1,9 +1,38 @@
+.movie-container{
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    margin: 12px;
+    padding: 8px;
+    color: #212529;
+    background-color: whitesmoke;
+    position: absolute;
+    left: 80px;
+}
+
+.add-movie-back{
+    margin-right: 6px;
+    color: #f1f1f1;
+}
+
+.align-middle{
+    padding: 12px;
+    margin: 24px;
+}
+.pay_back {
+    margin-left: 4px;
+  }
 /* The side navigation menu */
 
 .w3-main{
     margin-left:200px;
 }
 .w3-sidebar .w3-bar-block .w3-card .w3-animate-left{display:none;}
+.w3-button .w3-teal .w3-xlarge{
+    right: 0px;
+    float: right;
+    
+}
+
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */

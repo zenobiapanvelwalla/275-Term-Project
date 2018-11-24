@@ -4,6 +4,7 @@ import {BrowserRouter as Router,Switch} from 'react-router-dom';
 import Login from "./Login";
 import SignUp from "./SignUp";
 import NavBar from "./NavBar";
+import AdminNavBar from "./AdminNavBar";
 import AdminDashboard from "./AdminDashboard"
 
 
@@ -18,6 +19,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/" component={Login}/>
                     <Route exact path="/dashboard" component={AdminDashboard}/>
                     <Route exact path="/navbar" component={NavBar}/>
+                    
                 </Switch>
             </Router>
 

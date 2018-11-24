@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity(name="UserMovie")
 @Table(name = "users_movies")
-public class UserMovie{
+public class UserMovie implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;

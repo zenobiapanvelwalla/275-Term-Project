@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 
 
@@ -42,7 +44,9 @@ public class User {
 	private String role;
 	
     //@JoinTable(name = "users_movies", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"))
+	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	@JsonManagedReference
 	private List<UserMovie> userMovies;
 	
 	public User() {}
