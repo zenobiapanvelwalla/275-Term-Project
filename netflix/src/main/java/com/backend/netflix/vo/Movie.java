@@ -41,14 +41,14 @@ public class Movie{
     private double price;
     private boolean isDeleted;
     private int noOfStars;
-    private Long noOfPlays;
+    private int noOfPlays = 0;
 
 
-	public Long getNoOfPlays() {
+	public int getNoOfPlays() {
 		return noOfPlays;
 	}
 
-	public void setNoOfPlays(Long noOfPlays) {
+	public void setNoOfPlays(int noOfPlays) {
 		this.noOfPlays = noOfPlays;
 	}
 	

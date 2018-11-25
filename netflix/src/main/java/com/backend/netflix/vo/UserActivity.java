@@ -1,5 +1,7 @@
 package com.backend.netflix.vo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -30,7 +32,16 @@ public class UserActivity{
 	private boolean watched;
 	private boolean watching;
 	private Date checkpoint;
-	
+	private Date timeStamp;
+
+	public Date timeStamp() {
+		return timeStamp;
+	}
+
+	public void setCreatedAt(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
 	public int getId() {
 		return id;
 	}
