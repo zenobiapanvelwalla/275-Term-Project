@@ -16,6 +16,8 @@ import com.backend.netflix.services.MovieService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.User;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class MovieController {
 
@@ -27,6 +29,27 @@ public class MovieController {
 
         return movieService.getAllMovies();
 
+    }
+
+    @RequestMapping("/admin/movies")
+    public ResponseEntity<?> getAllMoviesForAdmin(HttpSession session) throws Exception {
+        HashMap<String, Object> response = new HashMap<>();
+        //Remove the following line
+       session.setAttribute("role","ADMIN");
+
+        if (session.getAttribute("role").toString().compareTo("ADMIN")==0) {
+            List<Movie> movieList = movieService.getAllMoviesForAdmin();
+            response.put("success", true);
+            response.put("message", movieList);
+            response.put("statusCode", 200);
+        }else {
+            response.put("success", false);
+            response.put("message", "You are not authorized.");
+            response.put("statusCode", 500);
+        }
+
+
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/movies/store", consumes = MediaType.APPLICATION_JSON_VALUE)

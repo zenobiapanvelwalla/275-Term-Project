@@ -128,6 +128,7 @@ public class UserController {
 			Encryption enc = new Encryption();
 			String encrypted=enc.encrypt(user.getPassword());
 			user.setPassword(encrypted);
+
 			System.out.println(user.getPassword());
 			userList = userService.login(user);
 			
@@ -137,6 +138,7 @@ public class UserController {
 				user = userList.get(0);
 				if(user.isVerified()) {
 					session.setAttribute("userId",userList.get(0).getId());
+					session.setAttribute("role",user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("success", true);

@@ -52,5 +52,9 @@ public class MovieService {
 		movieRepository.save(m);
 	}
 
+	public List<Movie> getAllMoviesForAdmin(){
+		return movieRepository.getAllMoviesByIsDeleted(false);
+	}
+
 
 }

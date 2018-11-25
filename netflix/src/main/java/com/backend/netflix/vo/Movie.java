@@ -31,6 +31,7 @@ public class Movie{
     private String imageUrl;
     private String movieUrl;
     private String actors;
+    @Nullable
     private String director;
     private String country;
     private String rating;
