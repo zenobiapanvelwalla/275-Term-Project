@@ -29,8 +29,8 @@ public class UserActivityController {
 	*/
 
 	@RequestMapping("/user-activities/{user_id}")
-	public List<UserActivity> getUseractivityByTimeStamp(@PathVariable int user_id) {
-		return userActivityService.getUserActivityByUserIdOrderByTimeStamp(user_id);
+	public List<UserActivity> getUseractivityInReverseOrder(@PathVariable int user_id) {
+		return userActivityService.getUserActivityByUserIdOrderByUpdatedAt(user_id);
 	}
 
 	@RequestMapping(value = "/user-activities/store/{user_id}/{movie_id}",method = RequestMethod.GET)

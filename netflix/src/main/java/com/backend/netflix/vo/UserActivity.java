@@ -35,15 +35,26 @@ public class UserActivity{
 	private boolean watching;
 
 	private LocalTime checkpoint;
-	private LocalDateTime timeStamp;
 
-	public LocalDateTime getTimeStamp() {
-		return timeStamp;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setTimeStamp(LocalDateTime timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+
 
 	public int getId() {
 		return id;

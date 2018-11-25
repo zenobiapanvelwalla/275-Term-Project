@@ -16,13 +16,13 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    public List<UserActivity> findByUserId(int userid);
 
    @Transactional
-   @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY time_stamp DESC", nativeQuery = true)
+   @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY created_at DESC", nativeQuery = true)
    public List<UserActivity> findByUserIdAndMovieId(int userId,int MovieId);
 
 
    @Transactional
-   @Query(value = "SELECT * FROM users_activities WHERE user_id=? ORDER BY time_stamp DESC", nativeQuery = true)
-   List<UserActivity> findByUserIdOrderByTimeStamp(int userId);
+   @Query(value = "SELECT * FROM users_activities WHERE user_id=? ORDER BY updated_at DESC", nativeQuery = true)
+   List<UserActivity> findByUserIdOrderByUpdatedAt(int userId);
 
 
 }

@@ -33,8 +33,8 @@ public class UserActivityService {
 		return uaRepo.findByUserId(userId);
 	}
 
-	public List<UserActivity> getUserActivityByUserIdOrderByTimeStamp(int userId) {
-		return uaRepo.findByUserIdOrderByTimeStamp(userId);
+	public List<UserActivity> getUserActivityByUserIdOrderByUpdatedAt(int userId) {
+		return uaRepo.findByUserIdOrderByUpdatedAt(userId);
 	}
 
 	public void addUserActivity(int userId, int movieId) {
@@ -43,13 +43,13 @@ public class UserActivityService {
 		if (ua.size() > 0) {
 			UserActivity uactivity = ua.get(0);
 			LocalDateTime now = LocalDateTime.now();
-			Duration duration = Duration.between(now, uactivity.getTimeStamp());
+			Duration duration = Duration.between(now, uactivity.getCreatedAt());
 			long diff = Math.abs(duration.toHours());
 			if (diff < 24) {
 				uactivity.setWatched(false);
 				uactivity.setWatching(true);
 				//java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
-				uactivity.setTimeStamp(LocalDateTime.now());
+				uactivity.setUpdatedAt(LocalDateTime.now());
 				uaRepo.save(uactivity);
 			} else {
 				utilAddUserActivity(userId, movieId);
@@ -64,16 +64,20 @@ public class UserActivityService {
 		Optional<User> optuser = uRepo.findById(userId);
 		User user = (User) optuser.get();
 		user.setNoOfPlays(user.getNoOfPlays()+1);
+		uRepo.save(user);
 
 		//Optional<Movie> optmovie = mRepo.findById(movieId);
+
 		Movie movie = mRepo.findById(movieId);
 		movie.setNoOfPlays(movie.getNoOfPlays()+1);
+		mRepo.save(movie);
+
 		UserActivity ua = new UserActivity();
 		ua.setUserId(userId);
 		ua.setMovie(movie);
 		//java.sql.Date sqlDate = new java.sql.Date(new LocalDateTime.now());
-		ua.setTimeStamp(LocalDateTime.now());
-
+		ua.setCreatedAt(LocalDateTime.now());
+		ua.setUpdatedAt(LocalDateTime.now());
 		//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		/*Calendar now = Calendar.getInstance();
 		now.set(Calendar.HOUR,0);
