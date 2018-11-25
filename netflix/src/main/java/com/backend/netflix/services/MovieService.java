@@ -22,4 +22,8 @@ public class MovieService {
 		System.out.println("Movies size:-"+movies.size());
 		return movies;
 	}
+
+	public void addMovie(Movie movie) {
+		movieRepository.save(movie);
+	}
 }

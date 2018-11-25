@@ -19,34 +19,23 @@ public class Movie{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="id")
     private long id;
-    @Column(name="title")
+
     private String title;
-    @Column(name="genre")
+
     private String genre;
-    @Column(name="year")
+
     private String year;
-    @Column(name="studio")
     private String studio;
-    @Column(name="synopsis")
     private String synopsis;
-    @Column(name="image_url")
     private String imageUrl;
-    @Column(name="movie_url")
     private String movieUrl;
-    @Column(name="actors")
     private String actors;
-    @Column(name="director")
     private String director;
-    @Column(name="country")
     private String country;
-    @Column(name="rating")
     private String rating;
 
-    @Column(name="availability")
     private String availability;
-    @Column(name="price")
     @Nullable
     private double price;
     private boolean isDeleted;
@@ -110,19 +99,19 @@ public class Movie{
         this.synopsis = synopsis;
     }
 
-    public String getImage() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImage(String image) {
+    public void setImageUrl(String image) {
         this.imageUrl = image;
     }
 
-    public String getMovie() {
+    public String getMovieUrl() {
         return movieUrl;
     }
 
-    public void setMovie(String movie) {
+    public void setMovieUrl(String movie) {
         this.movieUrl = movie;
     }
 
