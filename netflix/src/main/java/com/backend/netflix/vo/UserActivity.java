@@ -1,7 +1,11 @@
 package com.backend.netflix.vo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.annotation.Generated;
 import javax.persistence.CascadeType;
@@ -29,8 +33,18 @@ public class UserActivity{
 	
 	private boolean watched;
 	private boolean watching;
-	private Date checkpoint;
-	
+
+	private LocalTime checkpoint;
+	private LocalDateTime timeStamp;
+
+	public LocalDateTime getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(LocalDateTime timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -61,10 +75,10 @@ public class UserActivity{
 	public void setWatching(boolean watching) {
 		this.watching = watching;
 	}
-	public Date getCheckpoint() {
+	public LocalTime getCheckpoint() {
 		return checkpoint;
 	}
-	public void setCheckpoint(Date checkpoint) {
+	public void setCheckpoint(LocalTime checkpoint) {
 		this.checkpoint = checkpoint;
 	}
 	

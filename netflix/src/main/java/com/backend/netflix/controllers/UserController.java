@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,7 @@ import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.Encryption;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	
 	@Autowired
@@ -128,6 +130,7 @@ public class UserController {
 			Encryption enc = new Encryption();
 			String encrypted=enc.encrypt(user.getPassword());
 			user.setPassword(encrypted);
+
 			System.out.println(user.getPassword());
 			userList = userService.login(user);
 			
@@ -137,7 +140,7 @@ public class UserController {
 				user = userList.get(0);
 				if(user.isVerified()) {
 					session.setAttribute("userId",userList.get(0).getId());
-					session.setAttribute("role", user.getRole());
+					session.setAttribute("role",user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("success", true);

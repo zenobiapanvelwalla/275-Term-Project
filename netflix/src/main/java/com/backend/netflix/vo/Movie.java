@@ -19,7 +19,7 @@ public class Movie{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private int id;
 
     private String title;
 
@@ -31,6 +31,7 @@ public class Movie{
     private String imageUrl;
     private String movieUrl;
     private String actors;
+    @Nullable
     private String director;
     private String country;
     private String rating;
@@ -40,14 +41,14 @@ public class Movie{
     private double price;
     private boolean isDeleted;
     private int noOfStars;
-    private Long noOfPlays;
+    private int noOfPlays = 0;
 
 
-	public Long getNoOfPlays() {
+	public int getNoOfPlays() {
 		return noOfPlays;
 	}
 
-	public void setNoOfPlays(Long noOfPlays) {
+	public void setNoOfPlays(int noOfPlays) {
 		this.noOfPlays = noOfPlays;
 	}
 	

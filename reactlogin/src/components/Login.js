@@ -61,12 +61,12 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="backgroundLogin">
                 <NavBar/>
                 <div className="container">
                 <div className="d-flex justify-content-center h-100">
-                    <div className="card">
-                        <div className="card-header">
+                    <div className="cardL card">
+                        <div className="cardL-header card-header">
                             <br/>
                             <h3>Sign In</h3>
                             <div className="d-flex justify-content-end social_icon">
