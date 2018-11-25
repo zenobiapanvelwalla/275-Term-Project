@@ -17,6 +17,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
 	Movie findById(int movieId);
 	List<Movie> getAllMoviesByIsDeleted(boolean isDeleted);
+
 	Set<Movie> findByTitleOrSynopsisOrActorsOrDirector(String title,String Synopsis,List<String> actors, List<String> directors);
 	
 	Set<Movie> findByGenreAndYear(String genre, Date year);

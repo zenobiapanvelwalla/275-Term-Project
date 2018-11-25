@@ -34,7 +34,15 @@ public class User {
 
 	private int noOfPlays =0;
 
-	public User() {}
+    public int getNoOfPlays() {
+        return noOfPlays;
+    }
+
+    public void setNoOfPlays(int noOfPlays) {
+        this.noOfPlays = noOfPlays;
+    }
+
+    public User() {}
 	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
 			String role) {
 		super();
