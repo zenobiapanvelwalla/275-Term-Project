@@ -5,7 +5,8 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import NavBar from "./NavBar";
 import AdminNavBar from "./AdminNavBar";
-import AdminDashboard from "./AdminDashboard"
+import AdminDashboard from "./AdminDashboard";
+import AddMovies from "./AddMovies";
 
 
 class NewerHomePage extends Component {
@@ -19,6 +20,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/" component={Login}/>
                     <Route exact path="/dashboard" component={AdminDashboard}/>
                     <Route exact path="/navbar" component={NavBar}/>
+                    <Route exact path="/addmovies" component={AddMovies}/>
                     
                 </Switch>
             </Router>

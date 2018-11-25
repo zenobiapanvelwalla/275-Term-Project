@@ -1,12 +1,15 @@
 .movie-container{
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    margin: 12px;
+    opacity: 0.9;
+    margin: auto;
     padding: 8px;
     color: #212529;
+    width:60%;
     background-color: whitesmoke;
     position: absolute;
-    left: 80px;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .add-movie-back{
