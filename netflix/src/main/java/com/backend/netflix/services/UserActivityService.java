@@ -33,6 +33,10 @@ public class UserActivityService {
 		return uaRepo.findByUserId(userId);
 	}
 
+	public List<UserActivity> getUserActivityByUserIdOrderByTimeStamp(int userId) {
+		return uaRepo.findByUserIdOrderByTimeStamp(userId);
+	}
+
 	public void addUserActivity(int userId, int movieId) {
 		List<UserActivity> ua = uaRepo.findByUserIdAndMovieId(userId, movieId);
 
@@ -46,6 +50,7 @@ public class UserActivityService {
 				uactivity.setWatching(true);
 				//java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
 				uactivity.setTimeStamp(LocalDateTime.now());
+				uaRepo.save(uactivity);
 			} else {
 				utilAddUserActivity(userId, movieId);
 			}
