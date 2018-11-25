@@ -23,7 +23,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	
 	@Modifying
 	@Transactional
-	@Query(value="UPDATE users SET verified=true WHERE id=?1,",nativeQuery=true)
+	@Query(value="UPDATE users SET verified=true WHERE id=?1",nativeQuery=true)
 	public void setVerifiedToTrue(int id);
 
 }

@@ -80,7 +80,7 @@ public class UserController {
 		userService.addUser(user);
 		
 		
-		//add code here to send an email to user for verification (email will contain the verification code
+		//add code here to send an email to user for verification (email will contain the verification code)
 		sendmail(random,user.getEmail());
 		
 		//getting id of the stored user
@@ -137,6 +137,7 @@ public class UserController {
 				user = userList.get(0);
 				if(user.isVerified()) {
 					session.setAttribute("userId",userList.get(0).getId());
+					session.setAttribute("role", user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("success", true);
@@ -168,12 +169,28 @@ public class UserController {
 	
 	@PostMapping(path="/users/verify/{user_id}",consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity verify(@PathVariable int user_id,@RequestBody String verification_code, HttpSession session){
+	public ResponseEntity verify(@PathVariable int user_id,@RequestBody HashMap<String,String> data, HttpSession session){
 		HashMap<String, Object> response = new HashMap<String,Object>();
 		Optional<User> user = userService.getUser(user_id);
-		if(user!=null) {
-			if(user.get().getVerificationCode().compareTo(verification_code)==0) {
+		
+		if(user.isPresent()) {
+			System.out.println(user.get().getVerificationCode());
+			System.out.println(data.get("verification_code"));
+			if(user.get().getVerificationCode().compareTo(data.get("verification_code"))==0) {
 				userService.setVerifiedToTrue(user_id);
+				//Sending verification confirmation email to user
+				try {
+					sendVerificationConfirmationMail(user.get().getEmail());
+				} catch (AddressException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {
@@ -188,6 +205,33 @@ public class UserController {
 		}
 		return  new ResponseEntity(response,HttpStatus.OK);
 	}
+	
+	//sending verification confirmation email
+	private void sendVerificationConfirmationMail(String email) throws AddressException, MessagingException, IOException {
+		   Properties props = new Properties();
+		   props.put("mail.smtp.auth", "true");
+		   props.put("mail.smtp.starttls.enable", "true");
+		   props.put("mail.smtp.host", "smtp.gmail.com");
+		   props.put("mail.smtp.port", "587");
+		   
+		   Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+		      protected PasswordAuthentication getPasswordAuthentication() {
+		         return new PasswordAuthentication("babymoviecentral@gmail.com", "movie@123");
+		      }
+		   });
+		   Message msg = new MimeMessage(session);
+		   msg.setFrom(new InternetAddress("babymoviecentral@gmail.com", false));
+
+		   msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+		   msg.setSubject("Account Confirmation");
+		   msg.setContent("<h2> Congratulations! Your account is verified.</h2> <p style='color: blue'>You can now start using our services.</p>", "text/html");
+		   msg.setSentDate(new Date());
+
+		   MimeBodyPart messageBodyPart = new MimeBodyPart();
+		   messageBodyPart.setContent("Tutorials point email", "text/html");
+
+		   Transport.send(msg);   
+		}
 	
 	//logout
 		@RequestMapping(value = "/logout")
