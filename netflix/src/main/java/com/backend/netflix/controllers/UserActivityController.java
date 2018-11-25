@@ -15,6 +15,7 @@ import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.UserActivity;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserActivityController {
 	@Autowired
 	private UserActivityService userActivityService;

@@ -19,6 +19,7 @@ import com.backend.netflix.vo.User;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class MovieController {
 
     @Autowired
