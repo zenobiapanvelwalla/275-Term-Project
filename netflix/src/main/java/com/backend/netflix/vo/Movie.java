@@ -52,26 +52,7 @@ public class Movie{
     private boolean isDeleted;
     private int noOfStars;
     private Long noOfPlays;
-    //@ManyToMany(mappedBy = "movies", targetEntity = User.class)
-    
-    @OneToMany(mappedBy="movie", fetch = FetchType.LAZY)
-    @JsonBackReference
-    //@OneToMany
-    private List<UserMovie> userMovies;
-    
-    
-    public List<UserMovie> getUsersMovies() {
-        return userMovies;
-    }
 
-	public void setUsersMovies(List<UserMovie> userMovies) {
-		this.userMovies = userMovies;
-	}
-    
-//    public void addActivity(UserActivity activity) {
-//    	activites.add(activity);
-//        activity.setMovie(this);
-//    }
 
 	public Long getNoOfPlays() {
 		return noOfPlays;

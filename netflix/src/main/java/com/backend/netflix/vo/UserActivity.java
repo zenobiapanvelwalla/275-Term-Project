@@ -15,22 +15,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity(name="UserMovie")
-@Table(name = "users_movies")
-public class UserMovie implements Serializable{
+@Entity(name="UserActivity")
+@Table(name = "users_activities")
+public class UserActivity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	private int userId;
 	
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	//@ManyToOne
-	private User user;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name="movie_id")
-	//@ManyToOne
 	private Movie movie;
 	
 	private boolean watched;
@@ -43,11 +37,11 @@ public class UserMovie implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public Movie getMovie() {
 		return movie;
