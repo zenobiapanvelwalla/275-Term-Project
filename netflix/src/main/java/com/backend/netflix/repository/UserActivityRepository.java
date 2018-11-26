@@ -34,7 +34,8 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    
    @Query(value = "select count(*) from users_activities where movie_id=? and DATEDIFF(now(),updated_at)<=30;",nativeQuery= true)
    public int getNumberOfPlaysForMovieInAMonth(int movieId);
-   
+
+   /*------TOP 10 Movies----------*/
    @Transactional
    @Query(value="select movie_id from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY movie_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
    public List<Integer> getTopTenMoviesInTwentyFourHours();
@@ -67,5 +68,30 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    @Query(value = "SELECT * FROM users_activities WHERE user_id=? ORDER BY updated_at DESC", nativeQuery = true)
    List<UserActivity> findByUserIdOrderByUpdatedAt(int userId);
 
+   /*------TOP 10 Users----------*/
+   @Transactional
+   @Query(value="select user_id from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   List<Integer> getTopTenUsersInTwentyFourHours();
 
+
+   @Transactional
+   @Query(value="select COUNT(*) from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   List<BigInteger> getTopTenUsersPlayCountsInTwentyFourHours();
+
+
+   @Transactional
+   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
+   List<BigInteger> getTopTenUsersPlayCountsInAWeek();
+
+   @Transactional
+   @Query(value="select user_id from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
+   List<Integer> getTopTenUsersInWeek();
+
+   @Transactional
+   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
+   List<BigInteger> getTopTenUsersPlayCountsInAMonth();
+
+   @Transactional
+   @Query(value="select user_id from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
+   List<Integer> getTopTenUsersInAMonth();
 }
