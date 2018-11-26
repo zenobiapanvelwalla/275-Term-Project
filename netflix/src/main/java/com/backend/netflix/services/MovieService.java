@@ -42,6 +42,9 @@ public class MovieService {
 		movie1.setMovieUrl(movie.getMovieUrl());
 		movie1.setNoOfStars(movie.getNoOfStars());
 		movie1.setRating(movie.getRating());
+		movie1.setStudio(movie.getStudio());
+		movie1.setSynopsis(movie.getSynopsis());
+		movie1.setYear(movie.getYear());
 
 		movieRepository.save(movie1);
 	}

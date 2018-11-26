@@ -2,17 +2,13 @@ package com.backend.netflix.controllers;
 
 import java.util.HashMap;
 import java.util.List;
-
-import com.backend.netflix.vo.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.backend.netflix.services.UserActivityService;
-import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.UserActivity;
+import com.backend.netflix.beans.TopMovie;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -47,10 +43,24 @@ public class UserActivityController {
 
 		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
+	
 	@GetMapping("/movies/play-count/{movieId}/{type}")
 	public ResponseEntity<?> getNumberOfPlaysForMovie(@PathVariable int movieId,@PathVariable int type){
 		HashMap<String, Object> response = new HashMap<String, Object>();
 		int playCount = userActivityService.getNumberOfPlaysForMovie(movieId,type);
+		response.put("success", true);
+		response.put("message", playCount);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/movies/top-ten/{type}")
+	public ResponseEntity<?> getTopTenMovies(@PathVariable int type){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		List<TopMovie> topTenMovies = userActivityService.getTopTenMovies(type);
+		response.put("success", true);
+		response.put("message", topTenMovies);
+		response.put("statusCode", 200);
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 

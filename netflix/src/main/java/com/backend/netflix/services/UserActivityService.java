@@ -1,12 +1,15 @@
 package com.backend.netflix.services;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +19,9 @@ import com.backend.netflix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.backend.netflix.vo.UserActivity;
-import  com.backend.netflix.vo.User;
+import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.Movie;
+import com.backend.netflix.beans.TopMovie;
 import com.backend.netflix.repository.UserActivityRepository;
 
 @Service
@@ -28,7 +32,7 @@ public class UserActivityService {
 	private UserRepository uRepo;
 	@Autowired
 	private MovieRepository mRepo;
-
+	
 	public List<UserActivity> getUserActivityByUserId(int userId) {
 		return uaRepo.findByUserId(userId);
 	}
@@ -63,21 +67,68 @@ public class UserActivityService {
 		int count = 0;
 		if(type==24) {
 			count = uaRepo.getNumberOfPlaysForMovieInTwentyFourHours(movieId);
+		
+		}else if(type==7) {
+			count = uaRepo.getNumberOfPlaysForMovieInAWeek(movieId);
+		}else {
+			count = uaRepo.getNumberOfPlaysForMovieInAMonth(movieId);
 		}
-//		}else if(type==7) {
-//			count = uaRepo.getNumberOfPlaysForMovieInAWeek(movieId);
-//		}else {
-//			count = uaRepo.getNumberOfPlaysForMovieInAMonth(movieId);
-//		}
 		return count;
 	}
+	
+	public List<TopMovie>getTopTenMovies(int type) {
+		
+		List<BigInteger> countList= null;
+		List<Integer> movieList= null ;
+		
+		if(type==24) {
+			
+			countList = uaRepo.getTopTenMoviesPlayCountsInTwentyFourHours();
+			movieList = uaRepo.getTopTenMoviesInTwentyFourHours();
+			
+		} else if(type==7) {
+			countList = uaRepo.getTopTenMoviesPlayCountsInAWeek();
+			movieList = uaRepo.getTopTenMoviesInWeek();
+		}else {
+			
+			countList = uaRepo.getTopTenMoviesPlayCountsInAMonth();
+			movieList = uaRepo.getTopTenMoviesInAMonth();
+		}
+		List<TopMovie> topMovies = new ArrayList<TopMovie>();
+		for(int i=0; i<movieList.size();i++) {
+			Movie movie = mRepo.findById(movieList.get(i)).get();
+			TopMovie movie1 = new TopMovie();
+			
+			movie1.setMovieId(movie.getMovieId());
+			movie1.setTitle(movie.getTitle());
+			movie1.setActors(movie.getActors());
+			movie1.setAvailability(movie.getAvailability());
+			movie1.setCountry(movie.getCountry());
+			movie1.setDirector(movie.getDirector());
+			movie1.setGenre(movie.getGenre());
+			movie1.setImageUrl(movie.getImageUrl());
+			movie1.setIsDeleted(movie.getIsDeleted());
+			movie1.setNoOfPlays(movie.getNoOfPlays());
+			movie1.setPrice(movie.getPrice());
+			movie1.setMovieUrl(movie.getMovieUrl());
+			movie1.setNoOfStars(movie.getNoOfStars());
+			movie1.setRating(movie.getRating());
+			movie1.setStudio(movie.getStudio());
+			movie1.setSynopsis(movie.getSynopsis());
+			movie1.setYear(movie.getYear());
+			movie1.setPlayCount(countList.get(i));
+			
+			topMovies.add(movie1);
+		}
+		
+		return topMovies;
+	}
+	
 	public void utilAddUserActivity(int userId, int movieId) {
 		Optional<User> optuser = uRepo.findById(userId);
 		User user = (User) optuser.get();
 		user.setNoOfPlays(user.getNoOfPlays()+1);
 		uRepo.save(user);
-
-		//Optional<Movie> optmovie = mRepo.findById(movieId);
 
 		Movie movie = mRepo.findById(movieId);
 		movie.setNoOfPlays(movie.getNoOfPlays()+1);

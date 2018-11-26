@@ -1,48 +1,39 @@
- 
-package com.backend.netflix.vo;
+package com.backend.netflix.beans;
 
-import com.backend.netflix.vo.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.math.BigInteger;
 
-import javax.persistence.*;
-
-import org.springframework.lang.Nullable;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
-@Entity
-@Table(name="movies")
-public class Movie{
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+public class TopMovie {
+	
     private int id;
-
     private String title;
-
     private String genre;
-
     private String year;
     private String studio;
     private String synopsis;
     private String imageUrl;
     private String movieUrl;
     private String actors;
-    @Nullable
     private String director;
     private String country;
     private String rating;
-
     private String availability;
-    @Nullable
     private double price;
     private boolean isDeleted;
     private int noOfStars;
-    private int noOfPlays = 0;
+    private int noOfPlays;
+    private BigInteger playCount;
 
+
+	public BigInteger getPlayCount() {
+		return playCount;
+	}
+
+	public void setPlayCount(BigInteger playCount) {
+		this.playCount = playCount;
+	}
 
 	public int getNoOfPlays() {
 		return noOfPlays;
@@ -178,10 +169,4 @@ public class Movie{
 		this.noOfStars = noOfStars;
 	}
 
-
-
-
 }
-
-
-
