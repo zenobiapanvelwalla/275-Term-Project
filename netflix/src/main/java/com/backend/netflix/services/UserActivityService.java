@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import com.backend.netflix.beans.TopUser;
 import com.backend.netflix.repository.MovieRepository;
 import com.backend.netflix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,5 +152,40 @@ public class UserActivityService {
 		ua.setWatched(false);
 
 		uaRepo.save(ua);
+	}
+
+	public List<TopUser> getTopTenUsers(int type) {
+
+
+		List<BigInteger> countList= null;
+		List<Integer> userList= null ;
+
+		if(type==24) {
+
+			countList = uaRepo.getTopTenUsersPlayCountsInTwentyFourHours();
+			userList = uaRepo.getTopTenUsersInTwentyFourHours();
+
+		} else if(type==7) {
+			countList = uaRepo.getTopTenUsersPlayCountsInAWeek();
+			userList = uaRepo.getTopTenUsersInWeek();
+		}else {
+
+			countList = uaRepo.getTopTenUsersPlayCountsInAMonth();
+			userList = uaRepo.getTopTenUsersInAMonth();
+		}
+		List<TopUser> topUsers = new ArrayList<TopUser>();
+		for(int i=0; i<userList.size();i++) {
+			User user = uRepo.findById(userList.get(i)).get();
+			TopUser user1 = new TopUser();
+
+			user1.setId(user.getId());
+			user1.setDisplayName(user.getDisplayName());
+			user1.setEmail(user.getEmail());
+			user1.setPlayCount(countList.get(i));
+
+			topUsers.add(user1);
+		}
+
+		return topUsers;
 	}
 }

@@ -2,6 +2,8 @@ package com.backend.netflix.controllers;
 
 import java.util.HashMap;
 import java.util.List;
+
+import com.backend.netflix.beans.TopUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ public class UserActivityController {
 	private UserActivityService userActivityService;
 	/*
 	@RequestMapping("/user-activities/{user_id}")
-	public List<UserActivity> getAllUserActitities(@PathVariable int user_id) {
+	public List<UserActivity> getAllUserActivities(@PathVariable int user_id) {
 		//return "Hello";
 		
 		return userActivityService.getUserActivityByUserId(user_id);
@@ -25,7 +27,7 @@ public class UserActivityController {
 	*/
 
 	@RequestMapping("/user-activities/{user_id}")
-	public List<UserActivity> getUseractivityInReverseOrder(@PathVariable int user_id) {
+	public List<UserActivity> getUserActivityInReverseOrder(@PathVariable int user_id) {
 		return userActivityService.getUserActivityByUserIdOrderByUpdatedAt(user_id);
 	}
 
@@ -60,6 +62,16 @@ public class UserActivityController {
 		List<TopMovie> topTenMovies = userActivityService.getTopTenMovies(type);
 		response.put("success", true);
 		response.put("message", topTenMovies);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	@GetMapping("/users/top-ten/{type}")
+	public ResponseEntity<?> getTopTenUsers(@PathVariable int type){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		List<TopUser> topTenUsers = userActivityService.getTopTenUsers(type);
+		response.put("success", true);
+		response.put("message", topTenUsers);
 		response.put("statusCode", 200);
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
