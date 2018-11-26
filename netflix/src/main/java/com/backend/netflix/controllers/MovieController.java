@@ -31,6 +31,16 @@ public class MovieController {
         return movieService.getAllMovies();
 
     }
+    @RequestMapping("/movies/{movieId}")
+    public ResponseEntity<?> getMovie(@PathVariable int movieId){
+    	Movie movie = movieService.getMovie(movieId);
+    	HashMap<String, Object> response = new HashMap<>();
+    	response.put("success", true);
+        response.put("message", movie);
+        response.put("statusCode", 200);
+        
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 
     @RequestMapping("/admin/movies")
     public ResponseEntity<?> getAllMoviesForAdmin(HttpSession session) throws Exception {

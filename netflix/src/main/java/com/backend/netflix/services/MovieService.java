@@ -59,5 +59,10 @@ public class MovieService {
 		return movieRepository.getAllMoviesByIsDeleted(false);
 	}
 
+	public Movie getMovie(int movieId) {
+		Movie movie = movieRepository.findById(movieId);
+		return movie;
+	}
+
 
 }
