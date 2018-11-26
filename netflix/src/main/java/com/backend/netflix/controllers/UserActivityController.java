@@ -41,5 +41,11 @@ public class UserActivityController {
 
 		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
+	@GetMapping("/movies/play-count/{movieId}/{type}")
+	public ResponseEntity<?> getNumberOfPlaysForMovie(@PathVariable int movieId,@PathVariable int type){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		int playCount = userActivityService.getNumberOfPlaysForMovie(movieId,type);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
 
 }

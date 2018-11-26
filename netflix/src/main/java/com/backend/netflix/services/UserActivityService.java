@@ -54,7 +54,18 @@ public class UserActivityService {
 			utilAddUserActivity(userId, movieId);
 		}
 	}
-
+	public int getNumberOfPlaysForMovie(int movieId, int type) {
+		int count = 0;
+		if(type==24) {
+			count = uaRepo.getNumberOfPlaysForMovieInTwentyFourHours(movieId);
+		}
+//		}else if(type==7) {
+//			count = uaRepo.getNumberOfPlaysForMovieInAWeek(movieId);
+//		}else {
+//			count = uaRepo.getNumberOfPlaysForMovieInAMonth(movieId);
+//		}
+		return count;
+	}
 	public void utilAddUserActivity(int userId, int movieId) {
 		Optional<User> optuser = uRepo.findById(userId);
 		User user = (User) optuser.get();
