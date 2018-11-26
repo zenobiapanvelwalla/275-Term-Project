@@ -19,12 +19,18 @@ import com.backend.netflix.vo.UserActivity;
 public class UserActivityController {
 	@Autowired
 	private UserActivityService userActivityService;
-	
+	/*
 	@RequestMapping("/user-activities/{user_id}")
 	public List<UserActivity> getAllUserActitities(@PathVariable int user_id) {
 		//return "Hello";
 		
 		return userActivityService.getUserActivityByUserId(user_id);
+	}
+	*/
+
+	@RequestMapping("/user-activities/{user_id}")
+	public List<UserActivity> getUseractivityInReverseOrder(@PathVariable int user_id) {
+		return userActivityService.getUserActivityByUserIdOrderByUpdatedAt(user_id);
 	}
 
 	@RequestMapping(value = "/user-activities/store/{user_id}/{movie_id}",method = RequestMethod.GET)

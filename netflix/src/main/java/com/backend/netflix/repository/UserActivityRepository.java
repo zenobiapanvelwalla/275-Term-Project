@@ -16,7 +16,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    public List<UserActivity> findByUserId(int userid);
 
    @Transactional
-   @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY time_stamp", nativeQuery = true)
+   @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY created_at DESC", nativeQuery = true)
    public List<UserActivity> findByUserIdAndMovieId(int userId,int MovieId);
 
    @Query(value = "SELECT COUNT(*) FROM users_activities WHERE movie_id=? ",nativeQuery = true)
@@ -25,6 +25,11 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
 //   public int getNumberOfPlaysForMovieInAWeek(int movieId);
 //
 //   public int getNumberOfPlaysForMovieInAMonth(int movieId);
+
+
+   @Transactional
+   @Query(value = "SELECT * FROM users_activities WHERE user_id=? ORDER BY updated_at DESC", nativeQuery = true)
+   List<UserActivity> findByUserIdOrderByUpdatedAt(int userId);
 
 
 }
