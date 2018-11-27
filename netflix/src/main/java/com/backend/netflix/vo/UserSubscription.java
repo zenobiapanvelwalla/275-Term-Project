@@ -1,6 +1,7 @@
 package com.backend.netflix.vo;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,25 @@ public class UserSubscription {
 	private int id;
 	private int userId;
 	private int months;
-	private Date startDate;
-	private Date endDate;
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 
 	public int getUserId() {
 		return userId;
@@ -33,18 +51,7 @@ public class UserSubscription {
 		this.id = id;
 	}
 
-	public Date getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-	public Date getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+
 	
 	public int getMonths() {
 		return months;
