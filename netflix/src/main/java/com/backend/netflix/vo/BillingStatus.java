@@ -15,7 +15,6 @@ public class BillingStatus {
 	@Enumerated(EnumType.STRING)
 	private PaidStatus pstatus;
 
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int billId;
@@ -45,11 +44,5 @@ public class BillingStatus {
 	public void setPstatus(PaidStatus pstatus) {
 		this.pstatus = pstatus;
 	}
-
-	
-	
-	
-	
-	
 
 }
