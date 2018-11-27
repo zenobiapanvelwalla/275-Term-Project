@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserActivityRepository extends CrudRepository<UserActivity, Integer> {
 
-   public List<UserActivity> findByUserId(int userid);
+   List<UserActivity> findByUserId(int userid);
 
    @Transactional
    @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY created_at DESC", nativeQuery = true)

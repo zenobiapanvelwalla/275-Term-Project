@@ -13,7 +13,7 @@ import com.backend.netflix.vo.User;
 
 public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
-//	req-8-a search by name/actors/synopis/directors/title-satisfied
+//	req-8-a search by name/actors/synopsis/directors/title-satisfied
 
 	Movie findById(int movieId);
 	List<Movie> getAllMoviesByIsDeleted(boolean isDeleted);
@@ -26,7 +26,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 	
 	Set<Movie> findByGenreAndDirector(String genre,String director);
 	
-	Set<Movie> findByGenreAndNoOfStars(String genre,String noofstar);
+//	Set<Movie> findByGenreAndNoOfStars(String genre,String noofstar);
 
 	Set<Movie> findByGenreAndRating(String genre,String Rating);
 
@@ -36,7 +36,7 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
 	Set<Movie> findByYearAndRating(String Year,String Rating);
 
-	Set<Movie> findByYearAndNoOfStars(String Year,String Noofstar);
+//	Set<Movie> findByYearAndNoOfStars(String Year,String Noofstar);
 
 
 }

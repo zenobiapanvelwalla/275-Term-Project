@@ -40,7 +40,7 @@ public class MovieService {
 		movie1.setNoOfPlays(movie.getNoOfPlays());
 		movie1.setPrice(movie.getPrice());
 		movie1.setMovieUrl(movie.getMovieUrl());
-		movie1.setNoOfStars(movie.getNoOfStars());
+		movie1.setAvgStarRating(movie.getAvgStarRating());
 		movie1.setRating(movie.getRating());
 		movie1.setStudio(movie.getStudio());
 		movie1.setSynopsis(movie.getSynopsis());

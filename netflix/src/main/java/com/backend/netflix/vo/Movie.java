@@ -40,8 +40,12 @@ public class Movie{
     @Nullable
     private double price;
     private boolean isDeleted;
-    private int noOfStars;
+    private float avgStarRating;
     private int noOfPlays = 0;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="movieId")
+    private List<Review> reviews;
 
 
 	public int getNoOfPlays() {
@@ -163,10 +167,7 @@ public class Movie{
     public void setPrice(double price) {
         this.price = price;
     }
-    
-    public int getNoOfStars() {
-		return noOfStars;
-	}
+
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
@@ -174,9 +175,22 @@ public class Movie{
     public boolean getIsDeleted() {
         return isDeleted;
     }
-	public void setNoOfStars(int noOfStars) {
-		this.noOfStars = noOfStars;
-	}
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public float getAvgStarRating() {
+        return avgStarRating;
+    }
+
+    public void setAvgStarRating(float avgStarRating) {
+        this.avgStarRating = avgStarRating;
+    }
 
 
 

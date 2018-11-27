@@ -22,7 +22,7 @@ public class TopMovie {
     private String availability;
     private double price;
     private boolean isDeleted;
-    private int noOfStars;
+    private float avgStarRating;
     private int noOfPlays;
     private BigInteger playCount;
 
@@ -154,10 +154,7 @@ public class TopMovie {
     public void setPrice(double price) {
         this.price = price;
     }
-    
-    public int getNoOfStars() {
-		return noOfStars;
-	}
+
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
@@ -165,8 +162,13 @@ public class TopMovie {
     public boolean getIsDeleted() {
         return isDeleted;
     }
-	public void setNoOfStars(int noOfStars) {
-		this.noOfStars = noOfStars;
-	}
+
+    public float getAvgStarRating() {
+        return avgStarRating;
+    }
+
+    public void setAvgStarRating(float avgStarRating) {
+        this.avgStarRating = avgStarRating;
+    }
 
 }
