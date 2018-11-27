@@ -60,6 +60,5 @@ typings/
 .env
 /275-Term-Project.iml
 /.idea/workspace.xml
-/session_schema.sql
-/USER_ACTIVITY.sql
-netflix/src/main/java/com/backend/netflix/beans/TopUser.java
+
+

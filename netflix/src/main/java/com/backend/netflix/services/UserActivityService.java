@@ -155,8 +155,6 @@ public class UserActivityService {
 	}
 
 	public List<TopUser> getTopTenUsers(int type) {
-
-
 		List<BigInteger> countList= null;
 		List<Integer> userList= null ;
 
