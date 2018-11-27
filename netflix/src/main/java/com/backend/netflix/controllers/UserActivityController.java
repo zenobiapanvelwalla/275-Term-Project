@@ -3,7 +3,7 @@ package com.backend.netflix.controllers;
 import java.util.HashMap;
 import java.util.List;
 
-import com.backend.netflix.beans.TopUser;
+//import com.backend.netflix.beans.TopUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,14 +66,14 @@ public class UserActivityController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/users/top-ten/{type}")
-	public ResponseEntity<?> getTopTenUsers(@PathVariable int type){
-		HashMap<String, Object> response = new HashMap<String, Object>();
-		List<TopUser> topTenUsers = userActivityService.getTopTenUsers(type);
-		response.put("success", true);
-		response.put("message", topTenUsers);
-		response.put("statusCode", 200);
-		return new ResponseEntity(response, HttpStatus.OK);
-	}
+//	@GetMapping("/users/top-ten/{type}")
+//	public ResponseEntity<?> getTopTenUsers(@PathVariable int type){
+//		HashMap<String, Object> response = new HashMap<String, Object>();
+//		List<TopUser> topTenUsers = userActivityService.getTopTenUsers(type);
+//		response.put("success", true);
+//		response.put("message", topTenUsers);
+//		response.put("statusCode", 200);
+//		return new ResponseEntity(response, HttpStatus.OK);
+//	}
 
 }
