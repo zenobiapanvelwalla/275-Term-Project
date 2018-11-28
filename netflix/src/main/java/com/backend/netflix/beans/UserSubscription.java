@@ -1,6 +1,6 @@
 package com.backend.netflix.beans;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class UserSubscription {
 	
@@ -9,6 +9,8 @@ public class UserSubscription {
 	private int Months;
 	
 private Date startDate;
+
+private Date endDate;
 	
 	public int getUid() {
 	return Uid;
@@ -50,6 +52,6 @@ public void setEndDate(Date endDate) {
 	this.endDate = endDate;
 }
 
-	private Date endDate;
+	
 
 }
