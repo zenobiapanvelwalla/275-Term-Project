@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-import com.backend.netflix.beans.TopUser;
+//import com.backend.netflix.beans.TopUser;
 import com.backend.netflix.repository.MovieRepository;
 import com.backend.netflix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,7 @@ import com.backend.netflix.vo.UserActivity;
 import com.backend.netflix.vo.User;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.beans.TopMovie;
+import com.backend.netflix.beans.TopUser;
 import com.backend.netflix.repository.UserActivityRepository;
 
 @Service

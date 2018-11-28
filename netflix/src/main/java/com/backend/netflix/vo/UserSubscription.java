@@ -18,25 +18,27 @@ public class UserSubscription {
 	private int id;
 	private int userId;
 	private int months;
+	
+	private Date startDate;
+	private Date endDate;
 
-	public LocalDateTime getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDateTime getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
-	private LocalDateTime startDate;
-	private LocalDateTime endDate;
+	
 
 	public int getUserId() {
 		return userId;

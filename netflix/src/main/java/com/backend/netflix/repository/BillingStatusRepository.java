@@ -7,7 +7,7 @@ import java.util.Set;
 import com.backend.netflix.beans.BillingStatus;
 import com.backend.netflix.beans.UserSubscription;
 
-public interface BillingStatusRepository extends CrudRepository<BillingStatus, Long> {
+public interface BillingStatusRepository extends CrudRepository<BillingStatus, Integer> {
 	
-	Set<UserSubscription> findByUserid(String userId);
+	  BillingStatus findByUserid(int userid);
 }
