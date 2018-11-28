@@ -94,4 +94,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    @Transactional
    @Query(value="select user_id from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
    List<Integer> getTopTenUsersInAMonth();
+   
+   @Query(value="SELECT * FROM users_activities WHERE user_id=? AND movie_id=? ORDER BY updated_at DESC LIMIT 1",nativeQuery=true)
+   UserActivity findLatestByUserIdAndMovieId(int userId, int movieId);
 }

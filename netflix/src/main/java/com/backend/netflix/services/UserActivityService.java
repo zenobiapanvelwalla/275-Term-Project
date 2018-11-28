@@ -41,7 +41,10 @@ public class UserActivityService {
 	public List<UserActivity> getUserActivityByUserIdOrderByUpdatedAt(int userId) {
 		return uaRepo.findByUserIdOrderByUpdatedAt(userId);
 	}
-
+	
+	public UserActivity getLatestUserActivityByUserIdAndMovieId(int userId, int movieId) {
+		return uaRepo.findLatestByUserIdAndMovieId(userId, movieId);
+	}
 	public void addUserActivity(int userId, int movieId) {
 		List<UserActivity> ua = uaRepo.findByUserIdAndMovieId(userId, movieId);
 
@@ -64,6 +67,36 @@ public class UserActivityService {
 			utilAddUserActivity(userId, movieId);
 		}
 	}
+	public void utilAddUserActivity(int userId, int movieId) {
+		Optional<User> optuser = uRepo.findById(userId);
+		User user = (User) optuser.get();
+		user.setNoOfPlays(user.getNoOfPlays()+1);
+		uRepo.save(user);
+
+		Movie movie = mRepo.findById(movieId);
+		movie.setNoOfPlays(movie.getNoOfPlays()+1);
+		mRepo.save(movie);
+
+		UserActivity ua = new UserActivity();
+		ua.setUserId(userId);
+		ua.setMovie(movie);
+		//java.sql.Date sqlDate = new java.sql.Date(new LocalDateTime.now());
+		ua.setCreatedAt(LocalDateTime.now());
+		ua.setUpdatedAt(LocalDateTime.now());
+		//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		/*Calendar now = Calendar.getInstance();
+		now.set(Calendar.HOUR,0);
+		now.set(Calendar.MINUTE,0);
+		now.set(Calendar.SECOND,0);
+*/
+		ua.setCheckpoint(LocalTime.MIN);
+		ua.setWatching(true);
+		ua.setWatched(false);
+
+		uaRepo.save(ua);
+	}
+
+
 	public int getNumberOfPlaysForMovie(int movieId, int type) {
 		int count = 0;
 		if(type==24) {
@@ -125,36 +158,7 @@ public class UserActivityService {
 		return topMovies;
 	}
 	
-	public void utilAddUserActivity(int userId, int movieId) {
-		Optional<User> optuser = uRepo.findById(userId);
-		User user = (User) optuser.get();
-		user.setNoOfPlays(user.getNoOfPlays()+1);
-		uRepo.save(user);
-
-		Movie movie = mRepo.findById(movieId);
-		movie.setNoOfPlays(movie.getNoOfPlays()+1);
-		mRepo.save(movie);
-
-		UserActivity ua = new UserActivity();
-		ua.setUserId(userId);
-		ua.setMovie(movie);
-		//java.sql.Date sqlDate = new java.sql.Date(new LocalDateTime.now());
-		ua.setCreatedAt(LocalDateTime.now());
-		ua.setUpdatedAt(LocalDateTime.now());
-		//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		/*Calendar now = Calendar.getInstance();
-		now.set(Calendar.HOUR,0);
-		now.set(Calendar.MINUTE,0);
-		now.set(Calendar.SECOND,0);
-*/
-		ua.setCheckpoint(LocalTime.MIN);
-		ua.setWatching(true);
-		ua.setWatched(false);
-
-		uaRepo.save(ua);
-	}
-
-	public List<TopUser> getTopTenUsers(int type) {
+		public List<TopUser> getTopTenUsers(int type) {
 		List<BigInteger> countList= null;
 		List<Integer> userList= null ;
 

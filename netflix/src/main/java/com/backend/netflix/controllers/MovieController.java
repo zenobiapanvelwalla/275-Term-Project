@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.netflix.services.MovieService;
+import com.backend.netflix.services.UserActivityService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.User;
+import com.backend.netflix.vo.UserActivity;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,6 +26,9 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+    
+    @Autowired
+    private UserActivityService uaService;
 
     @RequestMapping("/movies")
     public List<Movie> getAllMovies() {
@@ -32,9 +37,37 @@ public class MovieController {
 
     }
     @RequestMapping("/movies/{movieId}")
-    public ResponseEntity<?> getMovie(@PathVariable int movieId){
+    public ResponseEntity<?> getMovie(@PathVariable int movieId,HttpSession session){
+    	/*for testing*/
+    	session.setAttribute("userId",1);
+    	session.setAttribute("role", "ADMIN");
+    	/*END TEESTING*/
     	Movie movie = movieService.getMovie(movieId);
+    	
     	HashMap<String, Object> response = new HashMap<>();
+    	boolean canUserWatch = false;
+    	if(session.getAttribute("role").toString().compareTo("CUSTOMER")==0) {
+    		int userId = (int)session.getAttribute("userId");
+    		UserActivity userActivity = uaService.getLatestUserActivityByUserIdAndMovieId(userId, movieId);
+    		if(movie.getIsDeleted()) {
+    			if(userActivity.isWatching()) {
+    			
+    				canUserWatch = true;
+    			}
+    			if(userActivity.isWatched()) {
+    				canUserWatch = false;
+    			}
+    		}
+    	}else {
+    		if(movie.getIsDeleted()) {
+    			canUserWatch = false;
+    		}else {
+    			canUserWatch = true;
+    		}
+    		
+    	}
+    	
+    	response.put("canUserWatch",canUserWatch);
     	response.put("success", true);
         response.put("message", movie);
         response.put("statusCode", 200);
