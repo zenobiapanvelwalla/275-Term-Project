@@ -1,64 +1,67 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import Modal from 'react-modal';
-var wrapperStyle = {
-    fontFamily: "Lato",
-fontSize: "1.5rem",
-textAlign: "center",
-boxSizing: "border-box",
-color: "#333"
-};
+import config from '../config.js';
+import axios from 'axios';
 
-var dialogStyle = {
-    border: "solid 1px #ccc",
-margin: "10px auto",
-padding: "20px 30px",
-display: "inline-block",
-boxShadow: "0 0 4px #ccc",
-backgroundColor: "#FAF8F8",
-overflow: "hidden",
-position: "relative",
-maxWidth: "450px"
-};
-var inputStyle = {
-    margin: "0 5px",
-textAlign: "center",
-lineHeight: "80px",
-fontSize: "35px",
-border: "solid 1px #ccc",
-boxShadow: "0 0 5px #ccc inset",
-outline: "none",
-width: "20%",
-transition: "all .2s ease-in-out",
-borderRadius: "3px",
-    width: "30px",
-height: "40px",
-marginLeft: "15px"
-};
-var marginTopFormStyle = {
-    marginTop: "25px",
-};
-var buttonStyle={
-    display: "inherit",
-marginLeft: "auto",
-align:"center",
-height: "30px",
-marginTop: "10px",
-textAlign: "center",
-padding: "0px",
-    width:"70px"
-}
- 
-const customStyles = {
-  content : {
-    top                   : '40%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+  var wrapperStyle = {
+      fontFamily: "Lato",
+      fontSize: "1.5rem",
+      textAlign: "center",
+      boxSizing: "border-box",
+      color: "#333"
+  };
+
+  var dialogStyle = {
+      border: "solid 1px #ccc",
+      margin: "10px auto",
+      padding: "20px 30px",
+      display: "inline-block",
+      boxShadow: "0 0 4px #ccc",
+      backgroundColor: "#FAF8F8",
+      overflow: "hidden",
+      position: "relative",
+      maxWidth: "450px"
+  };
+  var inputStyle = {
+      margin: "0 5px",
+      textAlign: "center",
+      lineHeight: "80px",
+      fontSize: "35px",
+      border: "solid 1px #ccc",
+      boxShadow: "0 0 5px #ccc inset",
+      outline: "none",
+      width: "20%",
+      transition: "all .2s ease-in-out",
+      borderRadius: "3px",
+      width: "30px",
+      height: "40px",
+      marginLeft: "15px"
+  };
+  var marginTopFormStyle = {
+      marginTop: "25px",
+  };
+  var buttonStyle={
+      display: "inherit",
+      marginLeft: "auto",
+      align:"center",
+      height: "30px",
+      marginTop: "10px",
+      textAlign: "center",
+      padding: "0px",
+      width:"70px"
   }
-};
+  
+  const customStyles = {
+    content : {
+      top                   : '40%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)'
+    }
+  };
  
 class VerifyUser extends Component {
   constructor() {
@@ -71,6 +74,7 @@ class VerifyUser extends Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.verificationCheck = this.verificationCheck.bind(this);
   }
  
   openModal() {
@@ -85,6 +89,31 @@ class VerifyUser extends Component {
   closeModal() {
     this.setState({modalIsOpen: false});
   }
+
+  verificationCheck(e)
+  {
+    let payload = {
+      user_id : localStorage.getItem('user_id'),
+      verification_code : this.refs.a.value + this.refs.b.value + this.refs.c.value + this.refs.d.value
+    }
+    let path = "/users/verify" + payload.user_id.toString();
+    let self = this;
+    axios.post(config.API_URL+path,payload)
+      .then(function (response) {
+        console.log(response);
+        if(response.data.success)
+        {
+          
+        }
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+
+    
+    console.log(payload);
+  }
+
  
   render() {
     const { code, password } = this.state;
@@ -104,10 +133,10 @@ class VerifyUser extends Component {
                             <h6>Please enter the 4-digit verification code we sent via email:</h6>
 
                             <div id="form">
-                                <input type="text" id="text1" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" id="text2" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" id="text3" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
-                                <input type="text" id="text4" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" ref="a" id="text1" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" ref="b" id="text2" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" ref="c" id="text3" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+                                <input type="text" ref="d" id="text4" style={inputStyle} maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
                                 <button className="btn btn-success" onClick={() =>{this.verificationCheck()}} style={buttonStyle}>Verify</button>
                             </div>
                         </div>

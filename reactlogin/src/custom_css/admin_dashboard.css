@@ -12,6 +12,21 @@
     text-align: center;
 }
 
+.adminvmBackgound{
+    background-image: url('../images/mainbackground.png');
+    height:-webkit-fill-available;
+    opacity: 0.9;
+    color: #212529;
+    background-color: whitesmoke;
+}
+
+.cardMoive{
+    /* width:80%; */
+    margin: 15%;
+}
+
+
+
 .add-movie-back{
     margin-right: 6px;
     color: #f1f1f1;
