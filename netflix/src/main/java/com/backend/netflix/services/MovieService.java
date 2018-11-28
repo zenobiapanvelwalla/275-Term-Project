@@ -58,6 +58,10 @@ public class MovieService {
 	public List<Movie> getAllMoviesForAdmin(){
 		return movieRepository.getAllMoviesByIsDeleted(false);
 	}
+	
+	public List<Movie> getAllMoviesCustomer(String availability[]){
+		return movieRepository.getAllMoviesByAvailability(availability);
+	}
 
 	public Movie getMovie(int movieId) {
 		Movie movie = movieRepository.findById(movieId);

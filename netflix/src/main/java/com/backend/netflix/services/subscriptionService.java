@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backend.netflix.beans.BillingStatus;
-import com.backend.netflix.beans.UserSubscription;
+import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.MovieRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
@@ -24,17 +24,18 @@ public class subscriptionService {
 	private BillingStatusRepository billingStatusRepository;
 	
 	@Autowired
-	private UserSubscriptionRepository UserSubscriptionRepository;
+	private UserSubscriptionRepository userSubscriptionRepository;
 	
 //	for checking the subscribed user or not
 	public UserSubscription subscribedDetails(int uid) {
 	
 		UserSubscription userSubscription=null;
-	Optional<UserSubscription> userSubsription=UserSubscriptionRepository.findById(uid);
-	if(userSubsription.isPresent()) {
-		userSubscription= userSubsription.get();
-	}
-		return userSubscription;
+		UserSubscription userSubsription=userSubscriptionRepository.findByUserId(uid);
+//		boolean subscriptionPresent = false;
+//		if(userSubsription!=null) {
+			
+			return userSubscription;
+//		}	
 	}
 	
 
@@ -43,14 +44,25 @@ public class subscriptionService {
 		// TODO Auto-generated method stub
 		
 		
-		UserSubscription newSubscription= new UserSubscription(uid,(moneyPaid/10),startDate,endDate);
+		UserSubscription newSubscription= new UserSubscription();
+		//uid,(moneyPaid/10),startDate,endDate
+		newSubscription.setUserId(uid);
+		newSubscription.setMonths(moneyPaid/10);
+		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
+		newSubscription.setStartDate(sDate);
+		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
+		newSubscription.setEndDate(eDate);
+		
 		
 		BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
-		
 		billingStatusRepository.save(billingStatus);
 		
-		UserSubscriptionRepository.save(newSubscription);
+		userSubscriptionRepository.save(newSubscription);
 		return "Subscribed thanks";
+	}
+	
+	public UserSubscription findByUserId(int userId) {
+		return userSubscriptionRepository.findByUserId(userId);
 	}
 	
 	

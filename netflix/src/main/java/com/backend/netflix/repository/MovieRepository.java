@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.backend.netflix.vo.Movie;
@@ -17,6 +18,9 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 
 	Movie findById(int movieId);
 	List<Movie> getAllMoviesByIsDeleted(boolean isDeleted);
+	
+	@Query(value="SELECT * FROM movies WHERE availability IN ?",nativeQuery=true)
+	List<Movie> getAllMoviesByAvailability(String availability[]);
 
 	Set<Movie> findByTitleOrSynopsisOrActorsOrDirector(String title,String Synopsis,List<String> actors, List<String> directors);
 	

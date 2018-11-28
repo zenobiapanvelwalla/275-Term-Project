@@ -1,7 +1,7 @@
 package com.backend.netflix.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import com.backend.netflix.beans.UserSubscription;
+import com.backend.netflix.vo.UserSubscription;
 
 
 import java.util.List;
@@ -16,7 +16,7 @@ import com.backend.netflix.vo.User;
 @Repository
 public interface UserSubscriptionRepository extends CrudRepository<UserSubscription, Integer> {
 
-	UserSubscription findByUid(int  Uid);
+	UserSubscription findByUserId(int  Uid);
 	
 	
 

@@ -20,15 +20,16 @@ public class UserSubscription {
 	private int months;
 	
 	private Date startDate;
+	
 	private Date endDate;
 
 	public Date getStartDate() {
 		return startDate;
 	}
-
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	public UserSubscription() {}
 
 	public Date getEndDate() {
 		return endDate;
