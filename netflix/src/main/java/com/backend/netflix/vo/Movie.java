@@ -40,7 +40,7 @@ public class Movie{
     @Nullable
     private double price;
     private boolean isDeleted;
-    private float avgStarRating;
+    private float avgStarRating = 0;
     private int noOfPlays = 0;
 
     @OneToMany(fetch = FetchType.EAGER)
