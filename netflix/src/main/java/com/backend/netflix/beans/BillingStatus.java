@@ -7,12 +7,17 @@ public class BillingStatus {
 	
 	private PaidStatus pstatus;
 	
-	
 private int billId;
 	
 	public int userid;
 	
 	
+public BillingStatus(int billId, int userid) {
+		super();
+		this.billId = billId;
+		this.userid = userid;
+	}
+
 public PaidStatus getPstatus() {
 		return pstatus;
 	}
