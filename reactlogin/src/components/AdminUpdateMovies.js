@@ -10,7 +10,7 @@ import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
 
-class AddMovies extends Component {
+class AdminUpdateMovies extends Component {
 
     constructor(props) {
         super(props);
@@ -48,121 +48,18 @@ class AddMovies extends Component {
 
     }
 
-    // validateProjectName() {
-    //     if (this.state.projectData.projectname != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // validateDescription(){
-    //     if (this.state.projectData.projectdescription != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-    // validateBudget() {
-    //     if (this.state.projectData.projectBudgetMin != '' && this.state.projectData.projectBudgetMax != '' && this.state.projectData.projectBudgetMin<this.state.projectData.projectBudgetMax)
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // validateProjectFile(){
-    //     if (this.state.projectData.projectFile != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-    // validateSkills(){
-    //     if (this.state.projectData.selectedskills.length > 2)
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // handleSubmit = () => {
-
-    //     if(this.validateProjectName() == true) {
-    //         if(this.validateDescription() == true) {
-    //             if(this.validateProjectFile() == true) {
-    //                 if(this.validateSkills() == true) {
-    //                     if(this.validateBudget() == true) {
-    //                         this.props.dispatch(this.props.addProject(this.state.projectData))
-    //                     .then(() => this.props.history.push('/dashboard'));
-    //                     }
-    //                     else{
-    //                         this.setState({isBudgetMin: false})
-    //                     }
-    //                 }
-    //                 else{
-    //                     this.setState({isSelectedSkills: false})
-    //                 }
-    //             }
-    //             else{
-    //                 this.setState({isProjectFile: false})
-    //             }
-    //         }
-    //         else {
-    //             this.setState({isProjectDescription: false})
-    //         }
-    //     }
-    //     else {
-    //         this.setState({isProjectName: false})
-    //     }
-    // }
-
-    // handleFileUpload = (event) => {
-
-    //     const payload = new FormData();
-
-    //     payload.append('myfile', event.target.files[0]);
-
-    //     API.uploadFile(payload)
-    //         .then((response) => {
-    //             if (response.success) {
-    //                 alert("File uploaded: Upload again to replace file");
-    //                 this.setState({
-    //                     projectData: {
-    //                         ...this.state.projectData,
-    //                         projectFile: "./uploads/doc" + response.filename
-    //                     }
-    //                 });
-    //                 this.setState({isProjectFile: true});
-
-    //             }
-    //         });
-    // };
-
-
-    // handleOptionSelected(option){
-    //     this.setState({
-    //         projectData: {
-    //             ...this.state.projectData,
-    //             selectedskills:option
-    //         }
-    //     });
-
-    // }
+    
 
     componentDidMount(){
-        // var payload ={id:'admin@gmail.com'};
-        // API.fetchskills(payload)
-        //     .then(
-        //         (response) =>{
-        //             console.log(response);
-        //             console.log("-----------------------");
-        //             this.setState({
-        //                 skills : response.skill
-        //             });
-        //             console.log(this.state.skills)
-        //         }
-        //     );
+        payload = {movieId : 1}
+        axios.post(config.API_URL+'/movies/store', payload)
+        .then(function (response) {
+          console.log(response);
+          this.setState({message: "Hey" , messageEnable : true})
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
 
     componentDidUpdate() {
@@ -170,10 +67,6 @@ class AddMovies extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        // if (nextProps.isProjectAdded === true) {
-        //     nextProps.history.push('/dashboard');
-        // }
-
 
     }
 
@@ -354,4 +247,4 @@ class AddMovies extends Component {
     }
 }
 
-export default withRouter(AddMovies);
+export default withRouter(AdminUpdateMovies);

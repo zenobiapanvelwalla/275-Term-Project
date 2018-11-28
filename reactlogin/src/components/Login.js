@@ -83,11 +83,11 @@ class Login extends Component {
                             )}
                         </div>
                         <div className="card-body">
+                        { this.state.emailorusernameValid ? null : <div className="text-left text-small text-white">Username is required.</div>}
                                 <div className="input-group form-group">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="fas fa-user"></i></span>
                                     </div>
-                                    { this.state.emailorusernameValid ? null : <div className="text-input-error-wrapper text-left errormessage">Username is required.</div>}
                                     <input type="text" name = "email" className="form-control" placeholder="email"
                                            ref="email"
                                            onFocus={(event) => {
@@ -95,11 +95,11 @@ class Login extends Component {
                                     }} />
 
                                 </div>
+                                { this.state.passwordValid ? null : <div className="text-left text-small text-white">Password is required.</div>}
                                 <div className="input-group form-group">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="fas fa-key"></i></span>
                                     </div>
-                                    { this.state.passwordValid ? null : <div className="text-input-error-wrapper text-left errormessage">Password is required.</div>}
                                     <input name = "password" type="password" className="form-control" placeholder="password"
                                            ref = "password"
                                            onFocus={(event) => {

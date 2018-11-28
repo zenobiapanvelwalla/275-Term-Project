@@ -7,6 +7,8 @@ import NavBar from "./NavBar";
 import AdminNavBar from "./AdminNavBar";
 import AdminDashboard from "./AdminDashboard";
 import AddMovies from "./AddMovies";
+import AdminViewMovies from "./AdminViewMovies";
+import VerifyUser from "./verifyUser";
 
 
 class NewerHomePage extends Component {
@@ -21,6 +23,9 @@ class NewerHomePage extends Component {
                     <Route exact path="/dashboard" component={AdminDashboard}/>
                     <Route exact path="/navbar" component={NavBar}/>
                     <Route exact path="/addmovies" component={AddMovies}/>
+                    <Route exact path="/adminviewmovies" component={AdminViewMovies}/>
+                    <Route exact path="/verifyuser" component={VerifyUser}/>
+                    
                     
                 </Switch>
             </Router>
