@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.netflix.beans.Plan;
-import com.backend.netflix.beans.UserSubscription;
+import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.services.MovieService;
 import com.backend.netflix.services.subscriptionService;
 import com.backend.netflix.services.UserService;
