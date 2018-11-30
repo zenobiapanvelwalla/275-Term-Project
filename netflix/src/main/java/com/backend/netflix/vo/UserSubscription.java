@@ -1,5 +1,6 @@
 package com.backend.netflix.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -14,24 +15,19 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_subscriptions")
-public class UserSubscription {
+public class UserSubscription implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	private int userId;
-//	@OneToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
 	
+	
+	
+	private int userId;
+
 	public UserSubscription() {}
 	
-//	public User getUser() {
-//		return user;
-//	}
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
+
 	private int months;
 	
 	private Date startDate;
@@ -44,7 +40,6 @@ public class UserSubscription {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
 
 	public Date getEndDate() {
 		return endDate;
@@ -53,8 +48,6 @@ public class UserSubscription {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
-	
 
 	public int getUserId() {
 		return userId;
@@ -69,8 +62,6 @@ public class UserSubscription {
 		this.id = id;
 	}
 
-
-	
 	public int getMonths() {
 		return months;
 	}

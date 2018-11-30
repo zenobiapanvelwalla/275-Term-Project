@@ -31,7 +31,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.netflix.services.UserService;
+import com.backend.netflix.services.UserSubscriptionService;
 import com.backend.netflix.vo.User;
+import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.vo.Encryption;
 
 @RestController
@@ -41,7 +43,8 @@ public class UserController {
 	@Autowired
 	private UserService userService ;
 	
-	
+	@Autowired
+	private UserSubscriptionService usService;
 	
 	@RequestMapping("/users")
 	public List<User> getAllUsers() {
@@ -60,8 +63,10 @@ public class UserController {
 		session.setAttribute("role", "ADMIN");
 		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
 			Optional<User> user = userService.getUser(userId);
+			UserSubscription subscription = usService.findByUserId(userId);
 			response.put("statusCode", 200);
-			response.put("message",user);
+			response.put("user",user);
+			response.put("subscription", subscription);
 			response.put("success",true);
 		} else  {
 			response.put("statusCode", 401);
@@ -268,12 +273,16 @@ public class UserController {
 		
 		
 	//get user profile
-		@RequestMapping("/users/profile/{id}")
-		public ResponseEntity getUser(@PathVariable int id) {
+		@RequestMapping("/users/profile")
+		public ResponseEntity getUser(HttpSession session) {
+			//session.setAttribute("userId", 2);
 			HashMap<String,Object> response = new HashMap<>();
-			Optional<User> user = userService.getUser(id);
+			int userId = (int)session.getAttribute("userId");
+			UserSubscription subscription = usService.findByUserId(userId);
+			Optional<User> user = userService.getUser(userId);
 			if(user!=null) {
-				response.put("message", user);
+				response.put("user", user);
+				response.put("subscription",subscription);
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {

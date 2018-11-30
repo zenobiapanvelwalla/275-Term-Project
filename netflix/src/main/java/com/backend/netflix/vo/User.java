@@ -30,14 +30,6 @@ public class User {
 	private String verificationCode;
 	private String role;
 	
-	@OneToOne(fetch = FetchType.EAGER,
-            cascade =  CascadeType.ALL)
-	@JoinColumn(name="userId")
-	private UserSubscription subscription;
-	
-//	@OneToMany(fetch=FetchType.EAGER, mappedBy = "userId")
-//	private List<BillingStatus> bills;
-	
 	public User() {}
 	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
 			String role) {
@@ -105,13 +97,6 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public UserSubscription getSubscription() {
-		return subscription;
-	}
-
-	public void setSubscription(UserSubscription subscription) {
-		this.subscription = subscription;
 	}
 	
 }
