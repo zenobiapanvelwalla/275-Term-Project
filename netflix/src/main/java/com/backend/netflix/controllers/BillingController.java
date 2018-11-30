@@ -2,18 +2,13 @@ package com.backend.netflix.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-
-import com.backend.netflix.vo.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.backend.netflix.vo.BillingStatus;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
@@ -30,8 +25,6 @@ import javax.servlet.http.HttpSession;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class BillingController {
-
-	
 
 	@Autowired
 	private BillingService billingService ;

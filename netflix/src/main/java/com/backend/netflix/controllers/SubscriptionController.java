@@ -38,7 +38,6 @@ public class SubscriptionController {
 	@Autowired
 	private UserSubscriptionService userSubscriptionService;
 
-
 	@Autowired
 	private UserService userService ;
 
@@ -52,12 +51,8 @@ public class SubscriptionController {
 	@RequestMapping("/subscribe")
 	public String subscribe(HttpSession session) throws Exception { 
 
-
-		uid=(int)session.getAttribute("userId");
+		uid =(int)session.getAttribute("userId");
 		String role=(String)session.getAttribute("role");
-		
-		
-		
 		UserSubscription userSubsription=userSubscriptionService.subscribedDetails(uid);
 		Date endDate=userSubsription.getEndDate();
 		//converting java.sql.Date to java.util.Date 
@@ -73,16 +68,14 @@ public class SubscriptionController {
 		return "plan selection";
 	}
 
-
-
 	@PostMapping("/subscribe/plan")
 	public String subscribeForParticularPlan(@RequestBody Plan plan ) throws Exception { 
 		
 		//creating instances of java.util.Date which represents today's date and time
 		java.util.Date now = new java.util.Date();
-		Date startDate=plan.getStrtDate()==null?now:plan.getStrtDate();
-		Date endDate=plan.getEndDate();
-		int moneyPaid=plan.getMoneyPaid();
+		Date startDate = plan.getStrtDate()==null?now:plan.getStrtDate();
+		Date endDate = plan.getEndDate();
+		int moneyPaid = plan.getMoneyPaid();
 //		Keep or make a validation in frontend
 		if(moneyPaid<10) {
 			return "Please pay atleast 10 dollars";

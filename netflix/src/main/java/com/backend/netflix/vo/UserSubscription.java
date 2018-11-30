@@ -19,19 +19,19 @@ public class UserSubscription {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	//private int userId;
-	@OneToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+	private int userId;
+//	@OneToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
 	
 	public UserSubscription() {}
 	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+//	public User getUser() {
+//		return user;
+//	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 	private int months;
 	
 	private Date startDate;
@@ -56,12 +56,12 @@ public class UserSubscription {
 
 	
 
-//	public int getUserId() {
-//		return userId;
-//	}
-//	public void setUserId(int userId) {
-//		this.userId = userId;
-//	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public int getId() {
 		return id;
 	}

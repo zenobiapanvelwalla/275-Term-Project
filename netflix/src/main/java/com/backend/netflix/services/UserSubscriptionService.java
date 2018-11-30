@@ -44,25 +44,22 @@ public class UserSubscriptionService {
 	
 
 
-	public String subscribeUser(int uid, Date startDate, Date endDate, int moneyPaid) {
-		// TODO Auto-generated method stub
-		
-		
+	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
+
 		UserSubscription newSubscription= new UserSubscription();
-		
-		User user = userRepo.findById(uid).get();
-		newSubscription.setUser(user);
-		//newSubscription.setUserId(uid);
+		User user = userRepo.findById(userId).get();
+		//newSubscription.setUser(user);
+		newSubscription.setUserId(userId);
 		newSubscription.setMonths(moneyPaid/10);
 		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
 		newSubscription.setStartDate(sDate);
 		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
 		newSubscription.setEndDate(eDate);
-		
-		
+		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
 		BillingStatus billingStatus= new BillingStatus();
+		billingStatus.setUserId(userId);
 		billingStatus.setPstatus(PaidStatus.paid);
-		billingStatus.setUserId(uid);
+		billingStatus.setMoneyPaid(moneyPaid);
 		billingStatusRepository.save(billingStatus);
 		
 		userSubscriptionRepository.save(newSubscription);

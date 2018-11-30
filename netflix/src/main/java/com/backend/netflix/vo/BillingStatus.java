@@ -13,15 +13,13 @@ import javax.persistence.Table;
 @Table(name="billing_Status")
 public class BillingStatus {
 	
-	@Enumerated(EnumType.STRING)
-	private PaidStatus pstatus;
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int billId;
-	
-	
 	public int userId;
+	private int moneyPaid;
+	@Enumerated(EnumType.STRING)
+	private PaidStatus pstatus;
 	
 	public int getBillId() {
 		return billId;
@@ -37,6 +35,14 @@ public class BillingStatus {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public int getMoneyPaid() {
+		return moneyPaid;
+	}
+
+	public void setMoneyPaid(int moneyPaid) {
+		this.moneyPaid = moneyPaid;
 	}
 
 	public PaidStatus getPstatus() {
