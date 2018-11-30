@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.services.MovieService;
 import com.backend.netflix.services.UserActivityService;
-import com.backend.netflix.services.subscriptionService;
+import com.backend.netflix.services.UserSubscriptionService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.UserActivity;
 
@@ -33,7 +33,7 @@ public class MovieController {
     private UserActivityService uaService;
     
     @Autowired
-    private subscriptionService subService;
+    private UserSubscriptionService subService;
 
     @RequestMapping("/movies")
     public List<Movie> getAllMovies() {

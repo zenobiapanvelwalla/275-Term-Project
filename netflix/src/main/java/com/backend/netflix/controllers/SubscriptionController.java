@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.backend.netflix.beans.Plan;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.services.MovieService;
-import com.backend.netflix.services.subscriptionService;
+import com.backend.netflix.services.UserSubscriptionService;
 import com.backend.netflix.services.UserService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.User;
@@ -30,13 +30,13 @@ import javax.servlet.http.HttpSession;
 //@ComponentScan(basePackages = "com.backend.netflix.beans,com.backend.netflix.services,com.backend.netflix.vo" ) ;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class subscriptionController {
+public class SubscriptionController {
 
 	@Autowired
 	private MovieService movieService;
 
 	@Autowired
-	private subscriptionService subscriptionService;
+	private UserSubscriptionService userSubscriptionService;
 
 
 	@Autowired
@@ -58,7 +58,7 @@ public class subscriptionController {
 		
 		
 		
-		UserSubscription userSubsription=subscriptionService.subscribedDetails(uid);
+		UserSubscription userSubsription=userSubscriptionService.subscribedDetails(uid);
 		Date endDate=userSubsription.getEndDate();
 		//converting java.sql.Date to java.util.Date 
 		java.util.Date enddate = new java.util.Date(endDate.getTime());
@@ -88,7 +88,7 @@ public class subscriptionController {
 			return "Please pay atleast 10 dollars";
 		}
 
-		return subscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
+		return userSubscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
 	}
 
 

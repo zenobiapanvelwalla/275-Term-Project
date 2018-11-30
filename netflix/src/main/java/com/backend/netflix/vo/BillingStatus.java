@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +19,7 @@ public class BillingStatus {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int billId;
+	
 	
 	public int userId;
 	

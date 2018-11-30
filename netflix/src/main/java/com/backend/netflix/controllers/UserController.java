@@ -52,6 +52,23 @@ public class UserController {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/users/{userId}")
+	public ResponseEntity<?> getUser(@PathVariable int userId, HttpSession session) {
+		HashMap<String,Object> response = new HashMap<String,Object>();
+		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
+			User user = userService.getUser(userId).get();
+			response.put("statusCode", 200);
+			response.put("message",user);
+			response.put("success",true);
+		} else  {
+			response.put("statusCode", 401);
+			response.put("message","You are not authorized to get user details");
+			response.put("success",false);
+		}
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+	
 	//@RequestMapping(method=RequestMethod.POST,value="/users/store",)
 	@PostMapping(path="/users/store",consumes = MediaType.APPLICATION_JSON_VALUE) // Map ONLY POST Requests
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {

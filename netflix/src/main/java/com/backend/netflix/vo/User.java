@@ -23,26 +23,22 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int id;
-
-	
 	private String email;
 	private String password;
 	private String displayName;
 	private boolean verified;
 	private String verificationCode;
 	private String role;
-
-	private int noOfPlays =0;
-
-    public int getNoOfPlays() {
-        return noOfPlays;
-    }
-
-    public void setNoOfPlays(int noOfPlays) {
-        this.noOfPlays = noOfPlays;
-    }
-
-    public User() {}
+	
+//	@OneToOne(fetch = FetchType.EAGER,
+//            cascade =  CascadeType.ALL,
+//            mappedBy = "user")
+//	private UserSubscription subscription;
+	
+//	@OneToMany(fetch=FetchType.EAGER, mappedBy = "userId")
+//	private List<BillingStatus> bills;
+	
+	public User() {}
 	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
 			String role) {
 		super();
@@ -54,6 +50,18 @@ public class User {
 		this.verificationCode = verificationCode;
 		this.role = role;
 	}
+	
+	private int noOfPlays =0;
+
+    public int getNoOfPlays() {
+        return noOfPlays;
+    }
+
+    public void setNoOfPlays(int noOfPlays) {
+        this.noOfPlays = noOfPlays;
+    }
+
+    
 
 	public String getRole() {
 		return role;
@@ -98,5 +106,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+//	public UserSubscription getSubscription() {
+//		return subscription;
+//	}
+//
+//	public void setSubscription(UserSubscription subscription) {
+//		this.subscription = subscription;
+//	}
 	
 }

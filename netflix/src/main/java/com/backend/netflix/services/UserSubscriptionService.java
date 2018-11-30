@@ -8,23 +8,27 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.netflix.beans.BillingStatus;
+import com.backend.netflix.vo.BillingStatus;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.MovieRepository;
+import com.backend.netflix.repository.UserRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.PaidStatus;
 import com.backend.netflix.vo.User;
 
 @Service
-public class subscriptionService {
+public class UserSubscriptionService {
 
 	@Autowired
 	private BillingStatusRepository billingStatusRepository;
 	
 	@Autowired
 	private UserSubscriptionRepository userSubscriptionRepository;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 //	for checking the subscribed user or not
 	public UserSubscription subscribedDetails(int uid) {
@@ -45,8 +49,10 @@ public class subscriptionService {
 		
 		
 		UserSubscription newSubscription= new UserSubscription();
-		//uid,(moneyPaid/10),startDate,endDate
-		newSubscription.setUserId(uid);
+		
+		User user = userRepo.findById(uid).get();
+		newSubscription.setUser(user);
+		//newSubscription.setUserId(uid);
 		newSubscription.setMonths(moneyPaid/10);
 		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
 		newSubscription.setStartDate(sDate);
@@ -54,7 +60,9 @@ public class subscriptionService {
 		newSubscription.setEndDate(eDate);
 		
 		
-		BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
+		BillingStatus billingStatus= new BillingStatus();
+		billingStatus.setPstatus(PaidStatus.paid);
+		billingStatus.setUserId(uid);
 		billingStatusRepository.save(billingStatus);
 		
 		userSubscriptionRepository.save(newSubscription);

@@ -14,13 +14,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.backend.netflix.beans.BillingStatus;
+import com.backend.netflix.vo.BillingStatus;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.services.BillingService;
 import com.backend.netflix.services.MovieService;
 import com.backend.netflix.services.UserService;
+import com.backend.netflix.services.UserSubscriptionService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.User;
 
@@ -34,16 +35,14 @@ public class BillingController {
 
 	@Autowired
 	private BillingService billingService ;
-	@Autowired
-	private BillingStatusRepository billingStatusRepository;
 	
 	@Autowired
-	private UserSubscriptionRepository UserSubscriptionRepository;
+	private UserSubscriptionService usService;
 	
 	@RequestMapping("/users/billingStatus")
 	public String getStatus(User user) {
 		int uid=user.getId();
-		BillingStatus billingStatus=billingStatusRepository.findByUserid(uid);
+		BillingStatus billingStatus=billingService.findByUserId(uid);
 		return billingStatus.getPstatus().toString();
 		
 		
@@ -54,11 +53,12 @@ public class BillingController {
 	public Date renewalDate(User user) {
 		int uid=user.getId();
 		UserSubscription userSubscription=null;
-		Optional<UserSubscription> userSubsription=UserSubscriptionRepository.findById(uid);
-		if(userSubsription.isPresent()) {
-			userSubscription= userSubsription.get();
+		UserSubscription userSubsription=usService.findByUserId(uid);
+		Date endDate = new Date();
+		if(userSubsription!=null) {
+			endDate = userSubscription.getEndDate();
 		}
-		return userSubscription.getEndDate();
+		return endDate;
 	}
 	
 }
