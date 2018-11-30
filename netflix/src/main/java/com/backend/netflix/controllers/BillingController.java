@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.backend.netflix.vo.BillingStatus;
+import com.backend.netflix.vo.Billing;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
@@ -35,8 +35,8 @@ public class BillingController {
 	@RequestMapping("/users/billingStatus")
 	public String getStatus(User user) {
 		int uid=user.getId();
-		BillingStatus billingStatus=billingService.findByUserId(uid);
-		return billingStatus.getPstatus().toString();
+		Billing billing=billingService.findByUserId(uid);
+		return billing.getPstatus().toString();
 		
 		
 	}

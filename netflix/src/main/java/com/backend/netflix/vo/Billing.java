@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="billing_Status")
-public class BillingStatus {
+@Table(name="billing")
+public class Billing {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

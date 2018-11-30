@@ -2,13 +2,13 @@ package com.backend.netflix.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.backend.netflix.vo.BillingStatus;
+import com.backend.netflix.vo.Billing;
 
 
 @Repository
-public interface BillingStatusRepository extends CrudRepository<BillingStatus, Integer> {
+public interface BillingStatusRepository extends CrudRepository<Billing, Integer> {
 	
 
-	  BillingStatus findByUserId(int userId);
+	  Billing findByUserId(int userId);
 
 }

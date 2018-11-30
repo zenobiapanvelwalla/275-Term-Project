@@ -83,6 +83,11 @@ public class SubscriptionController {
 
 		return userSubscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
 	}
+	
+	@GetMapping("/unique-subscription-users")
+	public int getCountOfUniqueSubscriptionUsers(HttpSession session) {
+		return 0;
+	}
 
 
 

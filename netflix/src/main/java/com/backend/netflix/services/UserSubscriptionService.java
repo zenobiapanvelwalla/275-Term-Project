@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.netflix.vo.BillingStatus;
+import com.backend.netflix.vo.Billing;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.MovieRepository;
@@ -56,11 +56,11 @@ public class UserSubscriptionService {
 		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
 		newSubscription.setEndDate(eDate);
 		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
-		BillingStatus billingStatus= new BillingStatus();
-		billingStatus.setUserId(userId);
-		billingStatus.setPstatus(PaidStatus.paid);
-		billingStatus.setMoneyPaid(moneyPaid);
-		billingStatusRepository.save(billingStatus);
+		Billing billing= new Billing();
+		billing.setUserId(userId);
+		billing.setPstatus(PaidStatus.paid);
+		billing.setMoneyPaid(moneyPaid);
+		billingStatusRepository.save(billing);
 		
 		userSubscriptionRepository.save(newSubscription);
 		return "Subscribed thanks";
