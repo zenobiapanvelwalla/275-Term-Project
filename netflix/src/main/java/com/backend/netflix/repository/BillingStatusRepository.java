@@ -1,13 +1,9 @@
 package com.backend.netflix.repository;
-
-
-
 import org.springframework.data.repository.CrudRepository;
-import java.util.Set;
-import com.backend.netflix.beans.BillingStatus;
-import com.backend.netflix.beans.UserSubscription;
+import com.backend.netflix.vo.BillingStatus;
+
 
 public interface BillingStatusRepository extends CrudRepository<BillingStatus, Integer> {
 	
-	  BillingStatus findByUserid(int userid);
+	  BillingStatus findByUserId(int userId);
 }

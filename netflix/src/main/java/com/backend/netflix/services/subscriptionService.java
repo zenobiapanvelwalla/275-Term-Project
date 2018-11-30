@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.netflix.beans.BillingStatus;
+import com.backend.netflix.vo.BillingStatus;
 import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.repository.BillingStatusRepository;
 import com.backend.netflix.repository.MovieRepository;
@@ -40,21 +40,22 @@ public class subscriptionService {
 	
 
 
-	public String subscribeUser(int uid, Date startDate, Date endDate, int moneyPaid) {
-		// TODO Auto-generated method stub
-		
-		
+	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
+
 		UserSubscription newSubscription= new UserSubscription();
 		//uid,(moneyPaid/10),startDate,endDate
-		newSubscription.setUserId(uid);
+		newSubscription.setUserId(userId);
 		newSubscription.setMonths(moneyPaid/10);
 		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
 		newSubscription.setStartDate(sDate);
 		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
 		newSubscription.setEndDate(eDate);
-		
-		
-		BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
+
+		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
+		BillingStatus billingStatus= new BillingStatus();
+		billingStatus.setUserId(userId);
+		billingStatus.setPstatus(PaidStatus.paid);
+		billingStatus.setMoneyPaid(moneyPaid);
 		billingStatusRepository.save(billingStatus);
 		
 		userSubscriptionRepository.save(newSubscription);

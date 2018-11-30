@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.backend.netflix.beans.BillingStatus;
 import com.backend.netflix.repository.BillingStatusRepository;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class BillingService {
 	
 	@Autowired
