@@ -1,18 +1,36 @@
 package com.backend.netflix.beans;
 
+import java.sql.Date;
+
 import com.backend.netflix.vo.PaidStatus;
 
-public class BillingStatus {
+public class Billing {
 
 	
 	private PaidStatus pstatus;
-	
+	private Date billdate;
+public Date getBilldate() {
+		return billdate;
+	}
+
+	public void setBilldate(Date billdate) {
+		this.billdate = billdate;
+	}
+
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+
 private int billId;
 	
 	public int userid;
 	
 	
-public BillingStatus(int billId, int userid) {
+public Billing(int billId, int userid) {
 		super();
 		this.billId = billId;
 		this.userid = userid;
@@ -34,9 +52,17 @@ public PaidStatus getPstatus() {
 		this.billId = billId;
 	}
 
-	public BillingStatus(PaidStatus pstatus, int billId, int userid) {
+	public Billing(PaidStatus pstatus, int billId, int userid) {
 		super();
 		this.pstatus = pstatus;
+		this.billId = billId;
+		this.userid = userid;
+	}
+
+	public Billing(PaidStatus pstatus, Date billdate, int billId, int userid) {
+		super();
+		this.pstatus = pstatus;
+		this.billdate = billdate;
 		this.billId = billId;
 		this.userid = userid;
 	}

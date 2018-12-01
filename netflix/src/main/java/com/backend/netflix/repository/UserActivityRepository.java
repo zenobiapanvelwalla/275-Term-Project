@@ -97,4 +97,11 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    
    @Query(value="SELECT * FROM users_activities WHERE user_id=? AND movie_id=? ORDER BY updated_at DESC LIMIT 1",nativeQuery=true)
    UserActivity findLatestByUserIdAndMovieId(int userId, int movieId);
+   
+   @Transactional
+   @Query(value="select user_id from users_activities",nativeQuery=true)
+   List<Integer> getUniqueActiveusers();
+   
+   
+   
 }

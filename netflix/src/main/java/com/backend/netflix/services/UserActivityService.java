@@ -69,8 +69,8 @@ public class UserActivityService {
 		}
 	}
 	public void utilAddUserActivity(int userId, int movieId) {
-		Optional<User> optuser = uRepo.findById(userId);
-		User user = (User) optuser.get();
+		User optuser = uRepo.findById(userId);
+		User user = (User) optuser;
 		user.setNoOfPlays(user.getNoOfPlays()+1);
 		uRepo.save(user);
 

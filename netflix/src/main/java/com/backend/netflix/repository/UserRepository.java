@@ -15,6 +15,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	User findByEmail(String email);
 	List<User> findByEmailAndPassword(String email,String password);
 	
+//	for report
+	User findById(int id);
 	
 	Optional<User> findByDisplayName(String displayName);
 	
@@ -26,4 +28,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Query(value="UPDATE users SET verified=true WHERE id=?1",nativeQuery=true)
 	public void setVerifiedToTrue(int id);
 
+	
+	
+	
 }

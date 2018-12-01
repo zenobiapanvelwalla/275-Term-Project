@@ -29,7 +29,7 @@ public class UserService {
 		
 		userRepository.save(user);
 	}
-    public Optional<User> getUser(int id) {
+    public User getUser(int id) {
 		return userRepository.findById(id);
 	}
     

@@ -33,6 +33,9 @@ public class UserActivity{
 	
 	private boolean watched;
 	private boolean watching;
+	
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 
 	private LocalTime checkpoint;
 
@@ -52,8 +55,7 @@ public class UserActivity{
 		this.updatedAt = updatedAt;
 	}
 
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+
 
 
 	public int getId() {

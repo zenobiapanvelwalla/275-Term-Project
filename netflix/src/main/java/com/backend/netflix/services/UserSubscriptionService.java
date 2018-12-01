@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.backend.netflix.vo.Billing;
 import com.backend.netflix.vo.UserSubscription;
-import com.backend.netflix.repository.BillingStatusRepository;
+import com.backend.netflix.repository.BillingRepository;
+import com.backend.netflix.repository.BillingRepository;
 import com.backend.netflix.repository.MovieRepository;
 import com.backend.netflix.repository.UserRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
@@ -23,7 +24,7 @@ import com.backend.netflix.vo.User;
 public class UserSubscriptionService {
 
 	@Autowired
-	private BillingStatusRepository billingStatusRepository;
+	private BillingRepository billingStatusRepository;
 	
 	@Autowired
 	private UserSubscriptionRepository userSubscriptionRepository;
@@ -48,7 +49,7 @@ public class UserSubscriptionService {
 	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
 
 		
-		User user = userRepo.findById(userId).get();
+		User user = userRepo.findById(userId);
 		//newSubscription.setUser(user);
 		
 		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
@@ -77,7 +78,7 @@ public class UserSubscriptionService {
 		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
 		Billing billing= new Billing();
 		billing.setUserId(userId);
-		billing.setPstatus(PaidStatus.paid);
+		billing.setPstatus(PaidStatus.general);
 		billing.setMoneyPaid(moneyPaid);
 	
 		billingStatusRepository.save(billing);
@@ -95,7 +96,7 @@ public class UserSubscriptionService {
 	public String subscribeUserPerMovie(int uid, Date startDate, Date endDate, int moneyPaid, String movieid) {
 		// TODO Auto-generated method stub
 		UserSubscription newSubscription= new UserSubscription();
-		User user = userRepo.findById(uid).get();
+		User user = userRepo.findById(uid);
 		//newSubscription.setUser(user);
 		newSubscription.setUserId(uid);
 		newSubscription.setMonths(1);
@@ -106,7 +107,7 @@ public class UserSubscriptionService {
 		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
 		Billing billing= new Billing();
 		billing.setUserId(uid);
-		billing.setPstatus(PaidStatus.paid);
+		billing.setPstatus(PaidStatus.perMovie);
 		billing.setMoneyPaid(moneyPaid);
 		billing.setMovieId(movieid);
 		
