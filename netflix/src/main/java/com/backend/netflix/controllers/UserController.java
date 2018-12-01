@@ -47,10 +47,20 @@ public class UserController {
 	private UserSubscriptionService usService;
 	
 	@RequestMapping("/users")
-	public List<User> getAllUsers() {
-		//return "Hello";
+	public ResponseEntity<?> getAllUsers(HttpSession session) {
 		
-		return userService.getAllUsers();
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
+			List<User> users = userService.getAllUsers();
+			response.put("success", true);
+			response.put("statusCode",200);
+			response.put("users",users);
+		} else {
+			response.put("success", false);
+			response.put("statusCode",401);
+			response.put("message","You are not authorized to views all users");
+		}
+		return new ResponseEntity(response, HttpStatus.OK);
 		
 		
 	}
