@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BillingService {
-	
+
 	@Autowired
 	private BillingStatusRepository billingStatusRepository;
 
-//	public String getStat(int uid) {
+	//	public String getStat(int uid) {
 //		// TODO Auto-generated method stub
 //		
 //		
@@ -21,5 +21,10 @@ public class BillingService {
 //	}
 	public Billing findByUserId(int userId) {
 		return billingStatusRepository.findByUserId(userId);
+	}
+
+
+	public int getCountOfUniquePayPerViewUsers() {
+		return billingStatusRepository.getCountOfUniquePayPerViewUsers();
 	}
 }

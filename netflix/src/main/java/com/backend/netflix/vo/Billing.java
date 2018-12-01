@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.Nullable;
@@ -35,7 +34,8 @@ public class Billing {
 	}
 
 	@Enumerated(EnumType.STRING)
-	private PaidStatus pstatus;
+
+	private PaymentType pType;
 	
 	
 	
@@ -63,12 +63,12 @@ public class Billing {
 		this.moneyPaid = moneyPaid;
 	}
 
-	public PaidStatus getPstatus() {
-		return pstatus;
+	public PaymentType getPaymentType() {
+		return pType;
 	}
 
-	public void setPstatus(PaidStatus pstatus) {
-		this.pstatus = pstatus;
+	public void setPaymentType(PaymentType pType) {
+		this.pType = pType;
 	}
 
 }

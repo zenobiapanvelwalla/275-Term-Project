@@ -1,11 +1,11 @@
 package com.backend.netflix.beans;
 
-import com.backend.netflix.vo.PaidStatus;
+import com.backend.netflix.vo.PaymentType;
 
 public class BillingStatus {
 
 	
-	private PaidStatus pstatus;
+	private PaymentType pstatus;
 	
 private int billId;
 	
@@ -18,11 +18,11 @@ public BillingStatus(int billId, int userid) {
 		this.userid = userid;
 	}
 
-public PaidStatus getPstatus() {
+public PaymentType getPstatus() {
 		return pstatus;
 	}
 
-	public void setPstatus(PaidStatus pstatus) {
+	public void setPstatus(PaymentType pstatus) {
 		this.pstatus = pstatus;
 	}
 
@@ -34,7 +34,7 @@ public PaidStatus getPstatus() {
 		this.billId = billId;
 	}
 
-	public BillingStatus(PaidStatus pstatus, int billId, int userid) {
+	public BillingStatus(PaymentType pstatus, int billId, int userid) {
 		super();
 		this.pstatus = pstatus;
 		this.billId = billId;

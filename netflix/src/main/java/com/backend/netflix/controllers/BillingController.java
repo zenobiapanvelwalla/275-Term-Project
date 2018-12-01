@@ -36,7 +36,7 @@ public class BillingController {
 	public String getStatus(User user) {
 		int uid=user.getId();
 		Billing billing=billingService.findByUserId(uid);
-		return billing.getPstatus().toString();
+		return billing.getPaymentType().toString();
 		
 		
 	}
