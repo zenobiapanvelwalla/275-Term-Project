@@ -1,5 +1,6 @@
 package com.backend.netflix.vo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name="billing")
@@ -18,8 +21,23 @@ public class Billing {
 	private int billId;
 	public int userId;
 	private int moneyPaid;
+	
+	@Nullable
+	private String movieId;
+	
+
+	public String getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(String movieId) {
+		this.movieId = movieId;
+	}
+
 	@Enumerated(EnumType.STRING)
 	private PaidStatus pstatus;
+	
+	
 	
 	public int getBillId() {
 		return billId;

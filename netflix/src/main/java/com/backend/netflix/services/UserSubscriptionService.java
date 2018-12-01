@@ -1,6 +1,7 @@
 package com.backend.netflix.services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -46,20 +47,39 @@ public class UserSubscriptionService {
 
 	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
 
-		UserSubscription newSubscription= new UserSubscription();
+		
 		User user = userRepo.findById(userId).get();
 		//newSubscription.setUser(user);
+		
+		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
+	
+		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
+	
+		UserSubscription newSubscription= subscribedDetails(userId);
+		if(newSubscription!=null) {
+			java.sql.Date endDate_existing=newSubscription.getEndDate();
+			Calendar c = Calendar.getInstance();
+//			c.add(arg0, arg1);
+////			double millsecondsperDay=;
+//			java.sql.Date newEndDate=(( eDate.getTime() - sDate.getTime() )) ;
+////					+ endDate_existing;
+		newSubscription.setEndDate(endDate_existing);
+			
+		}else {
+			newSubscription=new UserSubscription();
+			newSubscription.setEndDate(eDate);
+		}
+		
+		newSubscription.setStartDate(sDate);
+	
 		newSubscription.setUserId(userId);
 		newSubscription.setMonths(moneyPaid/10);
-		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-		newSubscription.setStartDate(sDate);
-		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-		newSubscription.setEndDate(eDate);
 		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
 		Billing billing= new Billing();
 		billing.setUserId(userId);
 		billing.setPstatus(PaidStatus.paid);
 		billing.setMoneyPaid(moneyPaid);
+	
 		billingStatusRepository.save(billing);
 		
 		userSubscriptionRepository.save(newSubscription);
@@ -68,6 +88,34 @@ public class UserSubscriptionService {
 	
 	public UserSubscription findByUserId(int userId) {
 		return userSubscriptionRepository.findByUserId(userId);
+	}
+
+
+
+	public String subscribeUserPerMovie(int uid, Date startDate, Date endDate, int moneyPaid, String movieid) {
+		// TODO Auto-generated method stub
+		UserSubscription newSubscription= new UserSubscription();
+		User user = userRepo.findById(uid).get();
+		//newSubscription.setUser(user);
+		newSubscription.setUserId(uid);
+		newSubscription.setMonths(1);
+		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
+		newSubscription.setStartDate(sDate);
+		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
+		newSubscription.setEndDate(eDate);
+		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
+		Billing billing= new Billing();
+		billing.setUserId(uid);
+		billing.setPstatus(PaidStatus.paid);
+		billing.setMoneyPaid(moneyPaid);
+		billing.setMovieId(movieid);
+		
+		billingStatusRepository.save(billing);
+		
+		userSubscriptionRepository.save(newSubscription);
+		return "Subscribed thanks";
+		
+		
 	}
 	
 	

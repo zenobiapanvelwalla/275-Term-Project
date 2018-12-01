@@ -76,13 +76,20 @@ public class SubscriptionController {
 		Date startDate = plan.getStrtDate()==null?now:plan.getStrtDate();
 		Date endDate = plan.getEndDate();
 		int moneyPaid = plan.getMoneyPaid();
-//		Keep or make a validation in frontend
+		String movieid= plan.getMovieid();
+//		for permovie handling
 		if(moneyPaid<10) {
-			return "Please pay atleast 10 dollars";
+			return userSubscriptionService.subscribeUserPerMovie(uid,startDate,endDate,moneyPaid,movieid);
 		}
-
+		
+		
 		return userSubscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
 	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/unique-subscription-users")
 	public int getCountOfUniqueSubscriptionUsers(HttpSession session) {
