@@ -10,6 +10,7 @@ import AddMovies from "./AddMovies";
 import AdminViewMovies from "./AdminViewMovies";
 import VerifyUser from "./verifyUser";
 import BillingPage from './BillingPage';
+import UserProfile from './UserProfile';
 
 
 class NewerHomePage extends Component {
@@ -27,6 +28,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/adminviewmovies" component={AdminViewMovies}/>
                     <Route exact path="/verifyuser" component={VerifyUser}/>
                     <Route path = "/billing" component={BillingPage}/>
+                    <Route path="/user-profile" component={UserProfile}/>
                     
                     
                 </Switch>

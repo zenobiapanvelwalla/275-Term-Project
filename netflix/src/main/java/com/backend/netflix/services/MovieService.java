@@ -1,7 +1,9 @@
 package com.backend.netflix.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +68,30 @@ public class MovieService {
 	public Movie getMovie(int movieId) {
 		Movie movie = movieRepository.findById(movieId);
 		return movie;
+	}
+
+	public List<String> getUniqueDirectors() {
+		// TODO Auto-generated method stub
+		List<String> directors = movieRepository.getUniqueDirectors();
+		return directors;
+	}
+	
+	public List<String> getUniqueActors() {
+		// TODO Auto-generated method stub
+		List<String> actorsTemp = movieRepository.getUniqueActors();
+		List<String> actorsNonUnique = new ArrayList<String>();
+		List<String> actorsUnique = new ArrayList<String>();
+		for(String act: actorsTemp) {
+			actorsNonUnique.addAll(Arrays.asList(act.split("\\s*,\\s*")));
+		}
+		actorsUnique = actorsNonUnique.stream().distinct().collect(Collectors.toList());
+		return actorsUnique;
+	}
+	
+	public List<String> getUniqueGenres() {
+		// TODO Auto-generated method stub
+		List<String> genres = movieRepository.getUniqueGenres();
+		return genres;
 	}
 
 

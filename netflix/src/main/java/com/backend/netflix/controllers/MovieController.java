@@ -184,4 +184,18 @@ public class MovieController {
         return   new ResponseEntity(response, HttpStatus.OK);
 
     }
+    //genre,actors, directors,mpaa rating, number of stars (from front end only), year (from front end users only)
+    @GetMapping("/movies/get-unique-movie-attributes")
+    public ResponseEntity<?> getDirector(HttpSession session){
+    	List<String> directors = movieService.getUniqueDirectors();
+    	List<String> actors= movieService.getUniqueActors();
+    	List<String> genres = movieService.getUniqueGenres();
+    	HashMap<String,Object> response = new HashMap<String,Object>();
+    	response.put("success", true);
+    	response.put("statusCode",200);
+    	response.put("directors",directors);
+    	response.put("actors",actors);
+    	response.put("genres",genres);
+    	return   new ResponseEntity(response, HttpStatus.OK);
+    }
 }

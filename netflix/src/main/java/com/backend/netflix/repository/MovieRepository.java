@@ -39,6 +39,17 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 	Set<Movie> findByYearAndDirector(String Year,String Director);
 
 	Set<Movie> findByYearAndRating(String Year,String Rating);
+	
+	@Query(value="SELECT DISTINCT director FROM movies",nativeQuery=true)
+	List<String> getUniqueDirectors();
+	
+	@Query(value="SELECT DISTINCT actors FROM movies",nativeQuery=true)
+	List<String> getUniqueActors();
+	
+	@Query(value="SELECT DISTINCT genre FROM movies",nativeQuery=true)
+	List<String> getUniqueGenres();
+	
+	
 
 //	Set<Movie> findByYearAndNoOfStars(String Year,String Noofstar);
 
