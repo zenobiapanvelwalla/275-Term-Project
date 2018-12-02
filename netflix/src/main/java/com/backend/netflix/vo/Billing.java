@@ -1,13 +1,17 @@
 package com.backend.netflix.vo;
 
+import java.sql.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name="billing")
@@ -18,9 +22,22 @@ public class Billing {
 	private int billId;
 	public int userId;
 	private int moneyPaid;
+	private Date billdate;
+
+	@Nullable
+	private String movieId;
+
 	@Enumerated(EnumType.STRING)
-	private PaidStatus pstatus;
-	
+	private PaymentType pType;
+
+	public String getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(String movieId) {
+		this.movieId = movieId;
+	}
+
 	public int getBillId() {
 		return billId;
 	}
@@ -45,12 +62,19 @@ public class Billing {
 		this.moneyPaid = moneyPaid;
 	}
 
-	public PaidStatus getPstatus() {
-		return pstatus;
+	public PaymentType getPaymentType() {
+		return pType;
 	}
 
-	public void setPstatus(PaidStatus pstatus) {
-		this.pstatus = pstatus;
+	public void setPaymentType(PaymentType pType) {
+		this.pType = pType;
 	}
 
+	public Date getBilldate() {
+		return billdate;
+	}
+
+	public void setBilldate(Date billdate) {
+		this.billdate = billdate;
+	}
 }

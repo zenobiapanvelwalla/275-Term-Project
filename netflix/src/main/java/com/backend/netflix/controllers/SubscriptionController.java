@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.backend.netflix.services.BillingService;
 import com.backend.netflix.vo.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,6 +41,9 @@ public class SubscriptionController {
 
 	@Autowired
 	private UserService userService ;
+
+	@Autowired
+	private BillingService billingService;
 
 	public static int uid=0;
 
@@ -76,19 +80,26 @@ public class SubscriptionController {
 		Date startDate = plan.getStrtDate()==null?now:plan.getStrtDate();
 		Date endDate = plan.getEndDate();
 		int moneyPaid = plan.getMoneyPaid();
-//		Keep or make a validation in frontend
+		String movieid= plan.getMovieid();
+//		for permovie handling
 		if(moneyPaid<10) {
-			return "Please pay atleast 10 dollars";
+			return userSubscriptionService.subscribeUserPerMovie(uid,startDate,endDate,moneyPaid,movieid);
 		}
-
 		return userSubscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
 	}
 	
+
 	@GetMapping("/unique-subscription-users")
 	public int getCountOfUniqueSubscriptionUsers(HttpSession session) {
-		
-		return 0;
+
+		return userSubscriptionService.getCountOfUniqueSubscriptionUsers();
 	}
+
+//	@GetMapping("/unique-pay-per-view-users")
+//	public int getCountOfUniquePayPerViewUsers(HttpSession session) {
+//
+//		return billingService.getCountOfUniquePayPerViewUsers();
+//	}
 
 
 

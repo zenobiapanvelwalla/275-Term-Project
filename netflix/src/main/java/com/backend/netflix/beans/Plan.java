@@ -7,13 +7,25 @@ public class Plan {
 	Date strtDate;
 	Date  endDate;
 	int moneyPaid;
+	String movieid;
+	
+	public String getMovieid() {
+		return movieid;
+	}
+
+
+	public void setMovieid(String movieid) {
+		this.movieid = movieid;
+	}
 	
 	
-	public Plan(Date strtDate, Date endDate, int moneyPaid) {
+	
+	public Plan(Date strtDate, Date endDate, int moneyPaid,String movieid) {
 		super();
 		this.strtDate = strtDate;
 		this.endDate = endDate;
 		this.moneyPaid = moneyPaid;
+		this.movieid=movieid;
 	}
 	
 	
