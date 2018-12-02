@@ -8,3 +8,15 @@
     height: 100%;
     width: 100%;
 }
+.cardU{
+    background: white;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+.sub-button{
+    width: 103px;
+    height: 46px;
+    position: relative;
+    right: -250px;
+    bottom: -8px;
+}

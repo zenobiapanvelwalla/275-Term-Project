@@ -80,7 +80,7 @@ class UserProfile extends Component {
                 {/* Billing Status Section */}
                 {this.state.billingStatus == true?
 		        <div className="col-md-9">
-		        <div className="card">
+		        <div className="cardU">
 		        <div className="card-body">
 		            <div className="row">
 		                <div className="col-md-12">
@@ -120,7 +120,7 @@ class UserProfile extends Component {
                 
                 {this.state.subscribe == true?
                 <div className="col-md-9">
-                <div className="card">
+                <div className="cardU">
                     <div className="card-body">
                         <div className="row">
                             <div className="col-md-12">
@@ -147,7 +147,7 @@ class UserProfile extends Component {
                                   
                                   <div className="form-group row">
                                     <div className="offset-4 col-8">
-                                      <button name="submit" type="submit" className="btn btn-primary">Subscribe</button>
+                                      <button name="submit" type="submit" className="btn btn-primary sub-button">Subscribe</button>
                                     </div>
                                   </div>
                                 </form>
