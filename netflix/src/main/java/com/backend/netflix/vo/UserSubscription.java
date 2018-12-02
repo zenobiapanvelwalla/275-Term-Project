@@ -20,9 +20,7 @@ public class UserSubscription implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
-	
-	
+
 	private int userId;
 
 	public UserSubscription() {}
@@ -30,22 +28,22 @@ public class UserSubscription implements Serializable{
 
 	private int months;
 	
-	private Date startDate;
+	private LocalDateTime startDate;
 	
-	private Date endDate;
+	private LocalDateTime endDate;
 
-	public Date getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 

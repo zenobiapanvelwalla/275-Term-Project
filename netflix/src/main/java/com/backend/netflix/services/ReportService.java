@@ -31,31 +31,21 @@ public class ReportService {
 	@Autowired
 	private UserRepository userRepository;
 
-	//	public String getStat(int uid) {
-	//		// TODO Auto-generated method stub
-	//		
-	//		
-	//		return billingStatus.getPstatus().toString();
-	//	}
 	public Billing findByUserId(int userId) {
 		return billingRepository.findByUserId(userId);
 	}
 
-
-
 	public List<User> getAllUniqueSubscriptionUsers( PaymentType paymentType) {
-		// TODO Auto-generated method stub
-		List<User> allSubscribedUsers=new ArrayList<>();
-		List<Integer> UniqueBillUserids=billingRepository.findBilling(paymentType);
-		Set<User> allSubsribedUserUnique= new HashSet<User>();
+
+		List<User> allSubscribedUsers = new ArrayList<>();
+		List<Integer> UniqueBillUserids = billingRepository.getUserIdListByPaymentType(paymentType);
+		Set<User> allSubscribedUserUnique= new HashSet<User>();
 		for(int userIds:UniqueBillUserids) {
-			allSubsribedUserUnique.add((User) userRepository.findById(userIds));
+			allSubscribedUserUnique.add((User) userRepository.findById(userIds));
 		}
-		allSubscribedUsers.addAll(allSubsribedUserUnique);
+		allSubscribedUsers.addAll(allSubscribedUserUnique);
 		return allSubscribedUsers ;
 	}
-
-
 
 	public List<User> getAllUniqueActiveusers() {
 		List<User> UniqueActiveusers=new ArrayList<>();

@@ -73,10 +73,12 @@ public class UserController {
 		session.setAttribute("role", "ADMIN");
 		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
 			User user = userService.getUser(userId);
-			UserSubscription subscription = usService.findByUserId(userId);
+			List<UserSubscription> subscriptionList = usService.findLatestSubscriptionByUserId(userId);
+			UserSubscription subscription = subscriptionList.get(0);
+
 			response.put("statusCode", 200);
 			response.put("user",user);
-			response.put("subscription", subscription);
+			response.put("subscription", subscriptionList);
 			response.put("success",true);
 		} else  {
 			response.put("statusCode", 401);
@@ -289,11 +291,14 @@ public class UserController {
 			//session.setAttribute("userId", 2);
 			HashMap<String,Object> response = new HashMap<>();
 			int userId = (int)session.getAttribute("userId");
-			UserSubscription subscription = usService.findByUserId(userId);
+
+			List<UserSubscription> subscriptionList = usService.findLatestSubscriptionByUserId(userId);
+			UserSubscription subscription = subscriptionList.get(0);
+
 			User user = userService.getUser(userId);
 			if(user!=null) {
 				response.put("user", user);
-				response.put("subscription",subscription);
+				response.put("subscription",subscriptionList);
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {

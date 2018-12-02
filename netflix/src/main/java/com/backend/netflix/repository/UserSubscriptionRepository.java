@@ -16,7 +16,11 @@ import com.backend.netflix.vo.User;
 @Repository
 public interface UserSubscriptionRepository extends CrudRepository<UserSubscription, Integer> {
 
-	UserSubscription findByUserId(int  Uid);
+	UserSubscription findByUserId(int Uid);
+
+	@Transactional
+	@Query(value = "SELECT * FROM user_subscriptions WHERE user_id = ? ORDER BY end_date DESC", nativeQuery = true)
+	List<UserSubscription> findLatestSubscriptionByUserId(int userId);
 
 	@Transactional
 	@Query(value="SELECT COUNT(DISTINCT user_id) FROM user_subscriptions WHERE end_date >= NOW();",nativeQuery=true)

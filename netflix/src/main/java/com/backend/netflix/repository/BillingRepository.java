@@ -17,10 +17,10 @@ import com.backend.netflix.vo.Billing;
 public interface BillingRepository extends CrudRepository<Billing, Integer> {
 	
 	
-	public static final String FIND_USERS = "SELECT  userId FROM Billing where pstatus=?";
+	public static final String FIND_USERS = "SELECT userId FROM Billing where paymentType =?";
 
 	@Query(value = FIND_USERS, nativeQuery = true)
-	public List<Integer> findBilling(PaymentType paymentType);
+	public List<Integer> getUserIdListByPaymentType(PaymentType paymentType);
 
 	  Billing findByUserId(int userId);
 	  

@@ -31,7 +31,8 @@ public class BillingController {
 	
 	@Autowired
 	private UserSubscriptionService usService;
-	
+
+	/*
 	@RequestMapping("/users/billingStatus")
 	public String getStatus(User user) {
 		int uid=user.getId();
@@ -53,5 +54,5 @@ public class BillingController {
 		}
 		return endDate;
 	}
-	
+	*/
 }

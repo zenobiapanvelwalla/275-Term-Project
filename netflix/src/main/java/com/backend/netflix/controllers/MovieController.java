@@ -1,5 +1,6 @@
 package com.backend.netflix.controllers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -53,13 +54,14 @@ public class MovieController {
     	availability.add("PayPerViewOnly");
     	availability.add("Paid");
     	//check if user has a valid subscription
-    	UserSubscription subscription = subService.findByUserId(userId);
-    	Date endDate = subscription.getEndDate();
+    	List<UserSubscription> subscriptionList = subService.findLatestSubscriptionByUserId(userId);
+    	UserSubscription subscription = subscriptionList.get(0);
+    	LocalDateTime endDate = subscription.getEndDate();
     	//converting java.sql.Date to java.util.Date 
-		java.util.Date enddate = new java.util.Date(endDate.getTime());
+		//java.util.Date enddate = new java.util.Date(endDate.getTime());
 		//creating instances of java.util.Date which represents today's date and time
-		java.util.Date now = new java.util.Date();
-		if(subscription!=null && enddate.compareTo(now) >0) {
+        LocalDateTime now = LocalDateTime.now();
+		if(subscription!=null && endDate.compareTo(now) >0) {
 			System.out.println("Subscription valid.");
 			availability.add("SubscriptionOnly");
 			 movies = movieService.getAllMoviesCustomer(availability.toArray(new String[0]));

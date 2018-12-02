@@ -42,10 +42,10 @@ public class FinancialReportController {
 	@Autowired
 	private ReportService reportservice ;
 
-	//	Numbers of unique subscription users/ pay perview users,
-	@RequestMapping("/uniqueSubscritpionUsers/{PaidStatus}")
+	//	Numbers of unique subscription users/ pay per view users,
+	@RequestMapping("/uniqueSubscriptionUsers/{PaidStatus}")
 	public  List<User> uniqueSubscriptionUsers(@PathVariable PaymentType paymentType){
-		List<User> uniqueSubusers=reportservice.getAllUniqueSubscriptionUsers(paymentType );
+		List<User> uniqueSubusers=reportservice.getAllUniqueSubscriptionUsers(paymentType);
 		return uniqueSubusers;	
 	}
 
