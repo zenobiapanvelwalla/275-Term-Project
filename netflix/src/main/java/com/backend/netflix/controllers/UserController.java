@@ -72,7 +72,7 @@ public class UserController {
 		/*temp set role*/
 		session.setAttribute("role", "ADMIN");
 		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
-			Optional<User> user = userService.getUser(userId);
+			User user = userService.getUser(userId);
 			UserSubscription subscription = usService.findByUserId(userId);
 			response.put("statusCode", 200);
 			response.put("user",user);
@@ -208,16 +208,17 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity verify(@PathVariable int user_id,@RequestBody HashMap<String,String> data, HttpSession session){
 		HashMap<String, Object> response = new HashMap<String,Object>();
-		Optional<User> user = userService.getUser(user_id);
+		User user = userService.getUser(user_id);
 		
-		if(user.isPresent()) {
-			System.out.println(user.get().getVerificationCode());
+		
+		if(user!=null) {
+			System.out.println(user.getVerificationCode());
 			System.out.println(data.get("verification_code"));
-			if(user.get().getVerificationCode().compareTo(data.get("verification_code"))==0) {
+			if(user.getVerificationCode().compareTo(data.get("verification_code"))==0) {
 				userService.setVerifiedToTrue(user_id);
 				//Sending verification confirmation email to user
 				try {
-					sendVerificationConfirmationMail(user.get().getEmail());
+					sendVerificationConfirmationMail(user.getEmail());
 				} catch (AddressException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -289,7 +290,7 @@ public class UserController {
 			HashMap<String,Object> response = new HashMap<>();
 			int userId = (int)session.getAttribute("userId");
 			UserSubscription subscription = usService.findByUserId(userId);
-			Optional<User> user = userService.getUser(userId);
+			User user = userService.getUser(userId);
 			if(user!=null) {
 				response.put("user", user);
 				response.put("subscription",subscription);

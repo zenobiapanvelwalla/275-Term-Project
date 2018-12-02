@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.backend.netflix.vo.Billing;
 import com.backend.netflix.vo.UserSubscription;
-import com.backend.netflix.repository.BillingStatusRepository;
+import com.backend.netflix.repository.BillingRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.services.BillingService;
 import com.backend.netflix.services.MovieService;

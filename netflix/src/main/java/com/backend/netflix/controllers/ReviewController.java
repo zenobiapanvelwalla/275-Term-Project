@@ -38,7 +38,6 @@ public class ReviewController {
     public ResponseEntity<?> addReview(@RequestBody Review review) throws Exception {
 
         //Check if user has already given review from front end
-
         HashMap<String, Object> response = new HashMap<>();
         List<UserActivity> uaList = uaService.getUserActivityList(review.getUserId(),review.getMovieId());
         if(uaList.size()>0){

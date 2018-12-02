@@ -95,11 +95,11 @@ public class SubscriptionController {
 		return userSubscriptionService.getCountOfUniqueSubscriptionUsers();
 	}
 
-	@GetMapping("/unique-pay-per-view-users")
-	public int getCountOfUniquePayPerViewUsers(HttpSession session) {
-
-		return billingService.getCountOfUniquePayPerViewUsers();
-	}
+//	@GetMapping("/unique-pay-per-view-users")
+//	public int getCountOfUniquePayPerViewUsers(HttpSession session) {
+//
+//		return billingService.getCountOfUniquePayPerViewUsers();
+//	}
 
 
 

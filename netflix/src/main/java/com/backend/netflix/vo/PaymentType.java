@@ -1,7 +1,9 @@
 package com.backend.netflix.vo;
 
 public enum PaymentType {
-	paid,
 	payPerView,
+	perMovie,
+	paid,
+	general,
 	subscription
 }

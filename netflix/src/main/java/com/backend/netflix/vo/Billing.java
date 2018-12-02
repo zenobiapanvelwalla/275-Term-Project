@@ -1,5 +1,7 @@
 package com.backend.netflix.vo;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,10 +22,13 @@ public class Billing {
 	private int billId;
 	public int userId;
 	private int moneyPaid;
-	
+	private Date billdate;
+
 	@Nullable
 	private String movieId;
-	
+
+	@Enumerated(EnumType.STRING)
+	private PaymentType pType;
 
 	public String getMovieId() {
 		return movieId;
@@ -33,12 +38,6 @@ public class Billing {
 		this.movieId = movieId;
 	}
 
-	@Enumerated(EnumType.STRING)
-
-	private PaymentType pType;
-	
-	
-	
 	public int getBillId() {
 		return billId;
 	}
@@ -71,4 +70,11 @@ public class Billing {
 		this.pType = pType;
 	}
 
+	public Date getBilldate() {
+		return billdate;
+	}
+
+	public void setBilldate(Date billdate) {
+		this.billdate = billdate;
+	}
 }
