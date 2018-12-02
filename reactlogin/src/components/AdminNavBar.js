@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-
+import navbar from '../custom_css/navbar.css';
 
 class AdminNavBar extends Component
 {
@@ -8,7 +8,7 @@ class AdminNavBar extends Component
         return(
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <a href="#" className="navbar-brand">Logo</a>
+                    <a href="#" className="navbar-brand">baby MOVIE CENTRAL</a>
                     <button className="navbar-toggler" data-target="#navigation" data-control="navigation" data-toggle="collapse">
                         <span className="navbar-toggler-icon"></span>
                     </button>
