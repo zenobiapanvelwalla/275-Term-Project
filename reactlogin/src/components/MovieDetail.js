@@ -10,8 +10,8 @@ import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
 import details from '../custom_css/movie_detail.css';
-import YouTube from 'react-youtube';
-import Video from "../components/Video";
+// import YouTube from 'react-youtube';
+// import Video from "../components/Video";
 
 class MovieDetail extends Component {
 
@@ -23,6 +23,7 @@ class MovieDetail extends Component {
     }
 
     componentDidMount(){
+        console.log("Inside movie detail fetching")
         let self = this;
         let path = "/movies/" + '1';
         axios.get(config.API_URL+path)
@@ -79,10 +80,10 @@ class MovieDetail extends Component {
                                 <span className="color blue"></span>
                             </h5>
                             <div className="action">
-                                <Video videoDetails={this.handleVideoDetails}></Video>
-                                <button className="add-to-cart btn btn-default" type="button" onClick={(event) => {
-                                    this.handlePlay(event)
-                                }}><span className="fa fa-play">Play</span></button>
+                            
+                            <button className="add-to-cart btn btn-default" type="button" onClick={(event) => {
+                                this.handlePlay(event)
+                            }}><span className="fa fa-play">Play</span></button>
                             </div>
                         </div>
                     </div>
