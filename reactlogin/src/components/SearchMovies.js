@@ -8,6 +8,7 @@ import AdminDashboard from './AdminDashboard.js';
 import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
+import {DataSearch} from '@appbaseio/reactivesearch';
 
 class SearchMovies extends Component {
 
@@ -58,6 +59,10 @@ class SearchMovies extends Component {
         return(
             <div className="adminvmBackgound">
                 <AdminNavBar></AdminNavBar>
+                <DataSearch
+                    componentId="SearchSensor"
+                    dataField={this.state.allmovies.title}
+                    />
                 <div className="row">
                         <div className="col-sm-8 offset-2">
                             <div className="input-group">

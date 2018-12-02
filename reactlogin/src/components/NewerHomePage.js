@@ -11,6 +11,11 @@ import AdminViewMovies from "./AdminViewMovies";
 import VerifyUser from "./verifyUser";
 import BillingPage from './BillingPage';
 import UserProfile from './UserProfile';
+import MovieDetail from './MovieDetail';
+import Video from './Video';
+import SearchMovies from './SearchMovies';
+import MovieFilter from './MovieFilter';    
+import CustomerDashboard from './CustomerDashboard';
 
 
 class NewerHomePage extends Component {
@@ -20,8 +25,8 @@ class NewerHomePage extends Component {
             <div>
             <Router>
                 <Switch>
-                    <Route exact path="/signup" component={SignUp}/>
                     <Route exact path="/" component={Login}/>
+                    <Route exact path="/signup" component={SignUp}/>
                     <Route exact path="/dashboard" component={AdminDashboard}/>
                     <Route exact path="/navbar" component={NavBar}/>
                     <Route exact path="/addmovies" component={AddMovies}/>
@@ -29,8 +34,11 @@ class NewerHomePage extends Component {
                     <Route exact path="/verifyuser" component={VerifyUser}/>
                     <Route path = "/billing" component={BillingPage}/>
                     <Route path="/user-profile" component={UserProfile}/>
-                    
-                    
+                    <Route exact path="/moviedetail" component={MovieDetail}/> 
+                    <Route exact path="/video" component={Video}/> 
+                    <Route exact path="/searchmovies" component={SearchMovies}/> 
+                    <Route exact path="/moviefilter" component={MovieFilter}/> 
+                    <Route exact path="/customerdashboard" component={CustomerDashboard}/> 
                 </Switch>
             </Router>
 
