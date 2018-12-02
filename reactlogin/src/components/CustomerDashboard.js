@@ -8,8 +8,10 @@ import AdminDashboard from './AdminDashboard.js';
 import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
+import MovieFilter from './MovieFilter'
+import css from '../custom_css/movieList.css';
 
-class AdminViewMovies extends Component {
+class CustomerDashboard extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +19,7 @@ class AdminViewMovies extends Component {
             temp:0,
             movies:[]
         };
-        this.handleDelete = this.handleDelete.bind(this);
+    
     }
     componentDidMount(){
         let self = this;
@@ -32,45 +34,32 @@ class AdminViewMovies extends Component {
         });
     }
 
-    handleDelete(id){
-        console.log("Inside handle delete");
-        console.log(id);
-        let self = this;
-        let path = '/movies/delete/' + id.toString();
-        axios.delete(config.API_URL+path)
-        .then(function (response) {
-          console.log("Message " + JSON.stringify(response.data.message));
-        //   this.setState({movies:response.data.message[0]});
-        self.setState({
-            movies: self.state.movies.filter((item) => id != item.movieId)
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
+    handleMovieChange(e){
+        e.preventDefault();
+        this.setState({ movies: e.target.value });
     }
 
+  
     display_movies()
     {
         const item = this.state.movies.map((movie,index) =>{
 
             return(
-                <div className="col-md-4 ">
-                    <div className="card mt-2 cardMoive">
+                
+                    <div className="col-sm-3">
                         <img src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"} height="200" className="d-block"  />
-                        <div className="card-body mb">
+                        <div className="card-body">
                             <h5 className="card-title" >{movie.title}</h5>
-                            <button type="button" className="btn btn-secondary mb">Update</button>
-                            <button type="button" className="btn btn-danger mb" onClick={() => {this.handleDelete(movie.movieId)}}>Delete</button>
-                        </div> 
+                            </div> 
                     </div>
-                </div>
             )
         });
         return(
             <div className="row">
-                {item}
+                <div className="col-sm-2"><MovieFilter filterMovie = {this.handleMovieChange}/></div>
+                <div className="col-sm-9">
+                    {item}
+                </div>
             </div>
         )
     }
@@ -87,4 +76,4 @@ class AdminViewMovies extends Component {
     }
 }
 
-export default withRouter(AdminViewMovies);
+export default withRouter(CustomerDashboard);
