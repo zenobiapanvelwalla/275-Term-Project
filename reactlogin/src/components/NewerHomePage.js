@@ -16,6 +16,8 @@ import Video from './Video';
 import SearchMovies from './SearchMovies';
 import MovieFilter from './MovieFilter';    
 import CustomerDashboard from './CustomerDashboard';
+import BrowseCustomers from './BrowseCustomers';
+import FinancialReport from './FinancialReport';
 
 
 class NewerHomePage extends Component {
@@ -39,6 +41,8 @@ class NewerHomePage extends Component {
                     <Route exact path="/searchmovies" component={SearchMovies}/> 
                     <Route exact path="/moviefilter" component={MovieFilter}/> 
                     <Route exact path="/customerdashboard" component={CustomerDashboard}/> 
+                    <Route path="/browse-customers" component={BrowseCustomers}/>
+                    <Route path="/financial-report" component={FinancialReport}/>
                 </Switch>
             </Router>
 

@@ -18,6 +18,8 @@ class BillingPage extends Component {
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
+        //movie id, movie type (eg. pay per view or  paid) and amount to be paid, to be sent in the request body
+
         
     }
 
