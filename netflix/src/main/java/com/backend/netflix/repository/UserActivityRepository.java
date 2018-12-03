@@ -103,5 +103,19 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    List<Integer> getUniqueActiveusers();
    
    
+  
+   @Transactional
+   @Query(value="SELECT user_id FROM users_activities WHERE\r\n" + 
+   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 GROUP BY month(updated_at),year(updated_at)\r\n" + 
+   		"   ORDER BY year(updated_at) DESC, month(updated_at) DESC",nativeQuery=true)
+   List<Integer> getUsersWatchedMovedPerMonth();
+   
+   @Transactional
+   @Query(value="SELECT month(updated_at) FROM users_activities WHERE\r\n" + 
+   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 GROUP BY month(updated_at),year(updated_at)\r\n" + 
+   		"   ORDER BY year(updated_at) DESC, month(updated_at) DESC",nativeQuery=true)
+   List<Integer> getMonthsWatchedMovedPerMonth();
+   
+   
    
 }
