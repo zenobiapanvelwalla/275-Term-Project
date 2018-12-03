@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
+import com.backend.netflix.beans.MonthlyDetails;
 import com.backend.netflix.beans.MonthlyIncome;
+import com.backend.netflix.beans.userRegistered;
 import com.backend.netflix.vo.PaymentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class ReportService {
 
 	@Autowired
 	private UserActivityRepository UserActivityRepository;
+	
+	@Autowired
+	private UserRepository UserRepository;
 
 	@Autowired
 	private BillingRepository billingRepository;
@@ -49,13 +54,6 @@ public class ReportService {
 		MonthlyIncome monthlyIncome = new MonthlyIncome();
 		monthlyIncome.setIncome(incomeList);
 		monthlyIncome.setMonth(monthListStr);
-		/*for(int i=0; i<monthList.size();i++) {
-
-			MonthlyIncome monthlyIncome1 = new MonthlyIncome();
-			monthlyIncome1.setIncome(incomeList.get(i));
-			monthlyIncome1.setMonth(monthList.get(i));
-			monthlyIncomes.add(monthlyIncome1);
-		}*/
 
 		return monthlyIncome;
 	}
@@ -79,14 +77,6 @@ public class ReportService {
 		incomeList = billingRepository.getIncomeListForTotalIncome();
 		monthList = billingRepository.getMonthsListForTotalIncome();
 
-
-//		for(int i=0; i<monthList.size();i++) {
-//
-//			MonthlyIncome monthlyIncome1 = new MonthlyIncome();
-//			monthlyIncome1.setIncome(incomeList.get(i));
-//			monthlyIncome1.setMonth(monthList.get(i));
-//			monthlyIncomes.add(monthlyIncome1);
-//		}
 		List<String> monthListStr = convertIntToMonths(monthList);
 
 		MonthlyIncome monthlyIncome = new MonthlyIncome();
@@ -97,68 +87,66 @@ public class ReportService {
 
 	}
 
-	public BigInteger getCountOfUniqueSubscriptionUsers() {
+//	public BigInteger getCountOfUniqueSubscriptionUsers() {
+//
+//		return billingRepository.getCountOfUniqueSubscriptionUsers();
+//	}
 
-		return billingRepository.getCountOfUniqueSubscriptionUsers();
-	}
-/*
-	public List<User> getAllUniqueSubscriptionUsers( PaymentType paymentType) {
-
-		List<User> allSubscribedUsers = new ArrayList<>();
-		List<Integer> UniqueBillUserids = billingRepository.getUserIdListByPaymentType(paymentType);
-		Set<User> allSubscribedUserUnique= new HashSet<User>();
-		for(int userIds:UniqueBillUserids) {
-			allSubscribedUserUnique.add((User) userRepository.findById(userIds));
-		}
-		allSubscribedUsers.addAll(allSubscribedUserUnique);
-		return allSubscribedUsers ;
-	}
-
-	public List<User> getAllUniqueActiveusers() {
-		List<User> UniqueActiveusers=new ArrayList<>();
-		List<Integer> UniqueactiveUserids=UserActivityRepository.getUniqueActiveusers();
-		Set<User> allSubsribedUserUnique= new HashSet<User>();
-		for(int userIds:UniqueactiveUserids) {
-			allSubsribedUserUnique.add((User) userRepository.findById(userIds));
-		}
-		UniqueActiveusers.addAll(allSubsribedUserUnique);
-		return UniqueActiveusers ;
-
-	}
-
-
-
-	public int getIncomeBasedonSubscription(PaymentType paymentType) {
-		//		https://stackoverflow.com/questions/7182996/java-get-month-integer-from-date  refer this
-		//creating instances of java.util.Date which represents today's date and time
-		java.util.Date now = new java.util.Date();
-		now.getMonth();
+	
+	
+	
+	public MonthlyDetails getUsersBasedOnSubsription(String ptype) {
 		// TODO Auto-generated method stub
-		return 0;
+		List<Integer> userList= null;
+		List<Integer> monthList= null ;
+		userList = billingRepository.getUserMontlyUserbasedOnSubscriptionMonthly(ptype);
+		monthList = billingRepository.getMonthMontlyUserbasedOnSubscriptionMonthly(ptype);
+		List<String> monthListStr = convertIntToMonths(monthList);
+
+		MonthlyDetails MonthlyDetails = new MonthlyDetails();
+		MonthlyDetails.setMonth(monthList);
+		MonthlyDetails.setUserId(userList);
+		return MonthlyDetails;
+
 	}
 
-
-
-	public int getTotalIncome() {
-		//		https://stackoverflow.com/questions/7182996/java-get-month-integer-from-date  refer this
-		//creating instances of java.util.Date which represents today's date and time
-
-		int SubscriptionIncome=getIncomeBasedonSubscription(PaymentType.SubscriptionOnly);
-		int payPerViewMovieIncome=getIncomeBasedonSubscription(PaymentType.PayPerViewOnly);
-		int paidMovieIncome = getIncomeBasedonSubscription(PaymentType.Paid);
-
+	
+	public MonthlyDetails getUniqueActiveUserWatchedOnemovieperMonth() {
 		// TODO Auto-generated method stub
-		return SubscriptionIncome+payPerViewMovieIncome + paidMovieIncome;
+		List<Integer> userList= null;
+		List<Integer> monthList= null ;
+		userList =UserActivityRepository.getUsersWatchedMovedPerMonth();
+		monthList = UserActivityRepository.getMonthsWatchedMovedPerMonth();
+		List<String> monthListStr = convertIntToMonths(monthList);
+
+		MonthlyDetails MonthlyDetails = new MonthlyDetails();
+		MonthlyDetails.setMonth(monthList);
+		MonthlyDetails.setUserId(userList);
+		return MonthlyDetails;
+
 	}
 
 
+	public userRegistered getMonthlyRegisteredUsers() {
+		// TODO Auto-generated method stub
+		List<BigInteger> userList= null;
+		List<Integer> monthList= null ;
+		monthList =UserRepository.getMonthuserRegisteredMonthly();
+		userList = UserRepository.getUserRegisteredMonthly();
+		List<String> monthListStr = convertIntToMonths(monthList);
 
-	public HashMap<Integer, List<User>> getMonthbyMonthRegisteresUsers() {
+		userRegistered userRegistered = new userRegistered();
+		userRegistered.setMonth(monthList);
+		userRegistered.setUserId(userList);
+		return userRegistered;
 
-		return null;
 	}
+	
+	
 
-*/
+
+
+
 
 
 

@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import com.backend.netflix.beans.MonthlyDetails;
 import com.backend.netflix.beans.MonthlyIncome;
 import com.backend.netflix.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.backend.netflix.beans.Plan;
+import com.backend.netflix.beans.userRegistered;
 import com.backend.netflix.services.MovieService;
 import com.backend.netflix.services.ReportService;
 import com.backend.netflix.services.UserSubscriptionService;
@@ -63,57 +66,54 @@ public class FinancialReportController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
-	/*
-	@RequestMapping(value = "/uniqueSubscriptionUsers",method = RequestMethod.GET)
-	public ResponseEntity<?> getCountOfUniqueSubscriptonUsers(){
+	
+	
+//	"http://localhost:8080/uniqueSubscriptionUsersMonthly/subscription"
+//	"http://localhost:8080/uniqueSubscriptionUsersMonthly/payPerView"
+	@RequestMapping(value = "/uniqueSubscriptionUsersMonthly/{ptype}",method = RequestMethod.GET)
+	public ResponseEntity<?> getCountOfUniqueSubscriptonUsers(@PathVariable String  ptype){
 
 		HashMap<String, Object> response = new HashMap<String, Object>();
-		int count = reportservice.getCountOfUniqueSubscriptionUsers();
+		MonthlyDetails MonthlyDetails = reportservice.getUsersBasedOnSubsription(ptype);
 
 		response.put("success", true);
-		response.put("message", count);
+		response.put("message", MonthlyDetails);
 		response.put("statusCode", 200);
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
-	*/
+	
+	
+	
+	
 
+//	"http://localhost:8080/uniqueSubscriptionUsersMonthly"
+	@RequestMapping(value = "/UniqueActiveUserWatchedOnemovieperMonth",method = RequestMethod.GET)
+	public ResponseEntity<?> getUniqueActiveUserWatchedOnemovieperMonth(){
 
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		MonthlyDetails MonthlyDetails = reportservice.getUniqueActiveUserWatchedOnemovieperMonth();
 
-/*
-	//	Numbers of unique SubscriptionOnly users/ pay per view users,
-	@RequestMapping("/uniqueSubscriptionUsers")
-	public  List<User> uniqueSubscriptionUsers(@PathVariable PaymentType paymentType){
-		List<User> uniqueSubusers=reportservice.getAllUniqueSubscriptionUsers(paymentType);
-		return uniqueSubusers;	
+		response.put("success", true);
+		response.put("message", MonthlyDetails);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+	
+
+//	"http://localhost:8080/MonthlyregisterUsers"
+	@RequestMapping(value = "/MonthlyregisterUsers",method = RequestMethod.GET)
+	public ResponseEntity<?> getMonthlyRegisteredUsers(){
+
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		userRegistered userRegistered = reportservice.getMonthlyRegisteredUsers();
+
+		response.put("success", true);
+		response.put("message", userRegistered);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 
-	//	total unique users who played atleast a movie in month
-	@RequestMapping("/totalUniqueActiveUsers")
-	public  List<User> totalUniqueActiveUsers(){
-		List<User> uniqueSubusers=reportservice.getAllUniqueActiveusers();
-		return uniqueSubusers;	
-	}
 
-
-	//Not finished still
-
-
-	//Not finished Still
-	@RequestMapping("/TotalIncomePerMonth/")
-	public int montlyTotalIncome(){
-		return reportservice.getTotalIncome();
-	}
-
-
-
-	//users registered, month by month for the last 12 calendar months,
-	@RequestMapping("/MonthbyMonthRegisteresUsers/")
-	public HashMap<Integer,List<User>> MonthbyMonthRegisteresUsers(){
-		return reportservice.getMonthbyMonthRegisteresUsers();
-	}
-
-
-*/
 }
 
