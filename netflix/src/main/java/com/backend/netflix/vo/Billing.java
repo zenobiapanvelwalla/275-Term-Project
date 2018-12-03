@@ -26,16 +26,16 @@ public class Billing {
 	private LocalDateTime billdate;
 
 	@Nullable
-	private String movieId;
+	private int movieId;
 
 	@Enumerated(EnumType.STRING)
 	private PaymentType pType;
 
-	public String getMovieId() {
+	public int getMovieId() {
 		return movieId;
 	}
 
-	public void setMovieId(String movieId) {
+	public void setMovieId(int movieId) {
 		this.movieId = movieId;
 	}
 

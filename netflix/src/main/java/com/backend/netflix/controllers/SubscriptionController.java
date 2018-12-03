@@ -45,10 +45,14 @@ public class SubscriptionController {
 	@Autowired
 	private BillingService billingService;
 
-	public static int uid=0;
+	@RequestMapping(value = "/verifySubscription", method = RequestMethod.GET)
+	public boolean verifySubscription(HttpSession session){
+		int userId =(int)session.getAttribute("userId");
+		return userSubscriptionService.checkIfSubscriptionIsActive(userId);
+	}
 
 	@RequestMapping(value = "/subscribe/{noOfMonths}", method = RequestMethod.GET)
-	public ResponseEntity<?> addSubscription(@PathVariable int noOfMonths, HttpSession session) throws Exception {
+	ResponseEntity<?> addSubscription(@PathVariable int noOfMonths, HttpSession session) throws Exception {
 		// *******************For testing ONLY
 		session.setAttribute("userId",1);
 		HashMap<String, Object> response = new HashMap<>();
@@ -59,6 +63,7 @@ public class SubscriptionController {
 
 		response.put("success", true);
 		response.put("message", "Subscription Added Successfully");
+		response.put("isSubscribed", true);
 		response.put("statusCode", 200);
 
 		return new ResponseEntity(response, HttpStatus.CREATED);

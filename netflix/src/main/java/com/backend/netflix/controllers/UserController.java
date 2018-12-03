@@ -162,6 +162,8 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity login(@RequestBody User user, HttpSession session){
 		List<User> userList ;
+		boolean isSubscribed = false;
+
 		try {
 			Encryption enc = new Encryption();
 			String encrypted=enc.encrypt(user.getPassword());
@@ -175,21 +177,25 @@ public class UserController {
 				
 				user = userList.get(0);
 				if(user.isVerified()) {
+					isSubscribed = usService.checkIfSubscriptionIsActive(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
+					response.put("isSubscribed", isSubscribed);
 					response.put("success", true);
 					response.put("statusCode", 200);
 				}else {
 					response.put("verified", false);
 					response.put("message", "User is not verified!");
+					response.put("isSubscribed", isSubscribed);
 					response.put("success", false);
 					response.put("statusCode", 400);
 					
 				}
 			} else {
 				response.put("message","User Not Found");
+				response.put("isSubscribed", isSubscribed);
 				response.put("success",false);
 				response.put("statusCode", 400);
 				response.put("verified",false);

@@ -1,6 +1,9 @@
 package com.backend.netflix.services;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,20 +43,20 @@ public class UserSubscriptionService {
 			UserSubscription subscription = null;
 			subscription = subscriptionList.get(0);
 			LocalDateTime endDate = subscription.getEndDate();
-			//converting java.sql.Date to java.util.Date
-			//java.util.Date utilEndDate = new java.util.Date(sqlEndDate.getTime());
-			//creating instances of java.util.Date which represents today's date and time
+
 			LocalDateTime now = LocalDateTime.now();
+
 			if (endDate.compareTo(now) > 0) {
 				//user already has a subscription--> update end date based on months
-				//int futureDay = 30 * months;
 				LocalDateTime futureDate = endDate.plusMonths(months);
-				//Date futureDate = addMonth(utilEndDate, months);
-				//subscription.setEndDate(new java.sql.Date(futureDate.getTime()));
-				subscription.setEndDate(futureDate);
+
+				subscription.setEndDate(futureDate.with(LocalTime.MIN));
+				System.out.println("----------------Futeure DATE:" +futureDate.with(LocalTime.MIN));
 				subscription.setMonths(months);
 
-				addBillingDetails(userId,months,now,PaymentType.general);
+				userSubscriptionRepository.save(subscription);
+
+				addBillingDetails(userId,months,now,PaymentType.subscription);
 			} else {
 				utilAddNewSubscription(userId, months);
 			}
@@ -66,21 +69,14 @@ public class UserSubscriptionService {
 		UserSubscription newSubscription = new UserSubscription();
 		newSubscription.setUserId(userId);
 		newSubscription.setMonths(months);
-		//Date startDate = new java.util.Date();
+
 		LocalDateTime startDate = LocalDateTime.now();
-		//int futureDay = months;
-		//Date endDate = addMonth(startDate, months);
-//		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-//		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-//
-//		newSubscription.setStartDate(sDate);
-//		newSubscription.setEndDate(eDate);
 		LocalDateTime enddate = startDate.plusMonths(months);
 
 		newSubscription.setStartDate(startDate);
-		newSubscription.setEndDate(enddate);
+		newSubscription.setEndDate(enddate.with(LocalTime.MIN));
 
-		addBillingDetails(userId,months,startDate,PaymentType.general);
+		addBillingDetails(userId,months,startDate,PaymentType.subscription);
 		userSubscriptionRepository.save(newSubscription);
 	}
 
@@ -88,15 +84,27 @@ public class UserSubscriptionService {
 
 		Billing billing= new Billing();
 		billing.setUserId(userId);
-
 		billing.setPaymentType(paymentType);
-
 		billing.setMoneyPaid(months*10);
-		//billing.setBilldate(new java.sql.Date(billDate.getTime()));
 		billing.setBilldate(billDate);
 
 		billingRepository.save(billing);
 
+	}
+
+	public Boolean checkIfSubscriptionIsActive(int userId) {
+		List<UserSubscription> subscriptionList = userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
+		if( subscriptionList.size()>0) {
+			UserSubscription subscription = subscriptionList.get(0);
+			LocalDateTime endDate = subscription.getEndDate();
+			LocalDateTime now = LocalDateTime.now();
+
+			if (endDate.compareTo(now) > 0) {
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 
 	/*public static Date addMonth(Loca date, int months) {
@@ -111,17 +119,7 @@ public class UserSubscriptionService {
 	}
 */
 
-//	for checking the subscribed user or not
-	public UserSubscription subscribedDetails(int uid) {
-	
-		UserSubscription userSubscription=null;
-		UserSubscription userSubsription=userSubscriptionRepository.findByUserId(uid);
-//		boolean subscriptionPresent = false;
-//		if(userSubsription!=null) {
-			
-			return userSubscription;
-//		}	
-	}
+
 	
 /*
 
@@ -151,7 +149,7 @@ public class UserSubscriptionService {
 		Billing billing= new Billing();
 		billing.setUserId(userId);
 
-		billing.setPaymentType(PaymentType.general);
+		billing.setPaymentType(PaymentType.subscription);
 
 		billing.setMoneyPaid(moneyPaid);
 	

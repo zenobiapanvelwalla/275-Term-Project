@@ -46,35 +46,47 @@ public class MovieController {
     
     @RequestMapping("/get-movies-for-customer/")
     public ResponseEntity<?> getMoviesForCustomer(HttpSession session){
+
+        /************For TESTING ONLY**********/
+        session.setAttribute("userId",1);
     	int userId = (int)session.getAttribute("userId");
     	HashMap<String, Object> response = new HashMap<>();
-    	List<Movie> movies = null;
+    	List<Movie> movies = new ArrayList<Movie>();
     	List<String> availability = new ArrayList<String>();
     	availability.add("Free");
     	availability.add("PayPerViewOnly");
     	availability.add("Paid");
     	//check if user has a valid subscription
     	List<UserSubscription> subscriptionList = subService.findLatestSubscriptionByUserId(userId);
-    	UserSubscription subscription = subscriptionList.get(0);
-    	LocalDateTime endDate = subscription.getEndDate();
-    	//converting java.sql.Date to java.util.Date 
-		//java.util.Date enddate = new java.util.Date(endDate.getTime());
-		//creating instances of java.util.Date which represents today's date and time
-        LocalDateTime now = LocalDateTime.now();
-		if(subscription!=null && endDate.compareTo(now) >0) {
-			System.out.println("Subscription valid.");
-			availability.add("SubscriptionOnly");
-			 movies = movieService.getAllMoviesCustomer(availability.toArray(new String[0]));
-		}else {
-			System.out.println("Subscription not present or is invalid");
-			movies = movieService.getAllMoviesCustomer(availability.toArray(new String[0]));
+    	if(subscriptionList.size()>0) {
+            UserSubscription subscription = subscriptionList.get(0);
+            LocalDateTime endDate = subscription.getEndDate();
+            LocalDateTime now = LocalDateTime.now();
+            if (endDate.compareTo(now) > 0) {
+                System.out.println("Subscription valid.");
+                availability.add("SubscriptionOnly");
+                for(int i=0;i<availability.size();i++) {
+                    movies.addAll(movieService.getAllMoviesCustomer(availability.get(i)));
+                }
+            } else {
+                System.out.println("Subscription not present or is invalid");
+                for(int i=0;i<availability.size();i++) {
+                    movies.addAll(movieService.getAllMoviesCustomer(availability.get(i)));
+                }
 
-		}
+            }
+        }else  {
+            System.out.println("Subscription not present or is invalid");
+            for(int i=0;i<availability.size();i++) {
+                movies.addAll(movieService.getAllMoviesCustomer(availability.get(i)));
+            }
+        }
     	response.put("success",true);
     	response.put("statusCode", 200);
     	response.put("message",movies);
     	return new ResponseEntity(response, HttpStatus.OK);
     }
+
     @RequestMapping("/movies/{movieId}")
     public ResponseEntity<?> getMovie(@PathVariable int movieId,HttpSession session){
     	/*for testing*/
@@ -85,22 +97,33 @@ public class MovieController {
     	
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
+    	//
+        //check if movie type is pay per view--> if user has paid for movie
+        //if movie type is paid, unsubscribed user should have paid for movie
     	if(session.getAttribute("role").toString().compareTo("CUSTOMER")==0) {
-    		int userId = (int)session.getAttribute("userId");
-    		UserActivity userActivity = uaService.getLatestUserActivityByUserIdAndMovieId(userId, movieId);
-    		if(movie.getIsDeleted()) {
-    			if(userActivity.isWatching()) {
-    			
-    				canUserWatch = true;
-    			}
-    			if(userActivity.isWatched()) {
-    				canUserWatch = false;
-    			}
-    		}
-    	}else {
+            int userId = (int) session.getAttribute("userId");
+            UserActivity userActivity = uaService.getLatestUserActivityByUserIdAndMovieId(userId, movieId);
+            if (userActivity == null) {
+                if (movie.getIsDeleted()) {
+                    canUserWatch = false;
+                } else
+                    canUserWatch = true;
+            } else {
+                if (movie.getIsDeleted()) {
+                    if (userActivity.isWatching())
+                        canUserWatch = true;
+                    if (userActivity.isWatched())
+                        canUserWatch = false;
+                }
+                else
+                    canUserWatch = true;
+            }
+
+    	} else {
     		if(movie.getIsDeleted()) {
     			canUserWatch = false;
     		}else {
+
     			canUserWatch = true;
     		}
     		

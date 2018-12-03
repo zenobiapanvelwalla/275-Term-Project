@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import com.backend.netflix.beans.MonthlyIncome;
 import com.backend.netflix.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -42,8 +43,45 @@ public class FinancialReportController {
 	@Autowired
 	private ReportService reportservice ;
 
+	@RequestMapping(value = "/monthlyincome",method = RequestMethod.GET)
+	public ResponseEntity<?> getMonthlyIncome(){
+
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		MonthlyIncome monthlyIncomeSubscription = reportservice.getIncomeByMonth("subscription");
+
+		MonthlyIncome monthlyIncomePayPerView = reportservice.getIncomeByMonth("payPerView");
+
+		//List<MonthlyIncome> monthlyIncomePaid = reportservice.getIncomeByMonth("paid");
+		MonthlyIncome monthlyIncomeTotal = reportservice.getIncomeTotal();
+
+		response.put("success", true);
+		response.put("message", "success");
+		response.put("subscriptionIncome", monthlyIncomeSubscription);
+		response.put("payPerMovieIncome", monthlyIncomePayPerView);
+		response.put("totalIncome", monthlyIncomeTotal);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	/*
+	@RequestMapping(value = "/uniqueSubscriptionUsers",method = RequestMethod.GET)
+	public ResponseEntity<?> getCountOfUniqueSubscriptonUsers(){
+
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		int count = reportservice.getCountOfUniqueSubscriptionUsers();
+
+		response.put("success", true);
+		response.put("message", count);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+	*/
+
+
+
+/*
 	//	Numbers of unique subscription users/ pay per view users,
-	@RequestMapping("/uniqueSubscriptionUsers/{PaidStatus}")
+	@RequestMapping("/uniqueSubscriptionUsers")
 	public  List<User> uniqueSubscriptionUsers(@PathVariable PaymentType paymentType){
 		List<User> uniqueSubusers=reportservice.getAllUniqueSubscriptionUsers(paymentType);
 		return uniqueSubusers;	
@@ -59,12 +97,6 @@ public class FinancialReportController {
 
 
 	//Not finished still
-	@RequestMapping("/subscriptionIncomeMonth/{PaidStatus}")
-	public int monthlySubscriptionIncome(@PathVariable PaymentType paymentType){
-		int totalIncome=reportservice.getIncomeBasedonSubscription(paymentType);
-		return totalIncome;	
-	}
-
 
 
 	//Not finished Still
@@ -82,6 +114,6 @@ public class FinancialReportController {
 	}
 
 
-
+*/
 }
 
