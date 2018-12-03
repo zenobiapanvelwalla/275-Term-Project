@@ -163,6 +163,15 @@ public class MovieController {
     public ResponseEntity<?> addMovie(@RequestBody Movie movie) throws Exception {
 
         HashMap<String, Object> response = new HashMap<>();
+        Movie existingMovie = new Movie();
+        existingMovie = movieService.getMovieByTitle(movie.getTitle());
+        if(existingMovie!=null) {
+        	response.put("success", false);
+            response.put("message", "Movie Already Exists!");
+            response.put("statusCode", 400);
+
+            return new ResponseEntity(response, HttpStatus.IM_USED);
+        }
 
         //Saving movie
         movieService.addMovie(movie);
