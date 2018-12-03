@@ -103,6 +103,18 @@ public class UserController {
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {
 		
 		HashMap<String,Object> response =new HashMap<>();
+//		Check if user already present
+		User existingUser = new User();
+		existingUser = userService.findUserByEmail(user.getEmail());
+		if(existingUser!=null) {
+			response.put("success", false);
+			response.put("message", "User Already Exists");
+			response.put("statusCode",400);
+			
+			
+			return new ResponseEntity(response,HttpStatus.IM_USED);
+		}
+//		End - Check if user already present
 		//encrypting user password
 		Encryption enc = new Encryption();
 		String encrypted=enc.encrypt(user.getPassword());
@@ -192,6 +204,8 @@ public class UserController {
 					List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
+					response.put("userId",userList.get(0).getId());
+					response.put("role", user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("isSubscribed", isSubscribed);
@@ -199,11 +213,12 @@ public class UserController {
 					response.put("success", true);
 					response.put("statusCode", 200);
 				}else {
+					response.put("userId",userList.get(0).getId());
 					response.put("verified", false);
-					response.put("message", "User is not verified!");
+					response.put("message", "User is not verified!"	);
 					response.put("isSubscribed", isSubscribed);
 					response.put("moviesPaidForList",null);
-					response.put("success", false);
+					response.put("success", true);
 					response.put("statusCode", 400);
 					
 				}
@@ -239,7 +254,7 @@ public class UserController {
 			System.out.println(data.get("verification_code"));
 			if(user.getVerificationCode().compareTo(data.get("verification_code"))==0) {
 				userService.setVerifiedToTrue(user_id);
-				//Sending verification confirmation email to user
+				//Sending verification confirmation email to user	
 				try {
 					sendVerificationConfirmationMail(user.getEmail());
 				} catch (AddressException e) {

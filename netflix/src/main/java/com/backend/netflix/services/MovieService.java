@@ -95,5 +95,10 @@ public class MovieService {
 		return genres;
 	}
 
+	public Movie getMovieByTitle(String title) {
+		// TODO Auto-generated method stub
+		return movieRepository.findByTitle(title);
+	}
+
 
 }

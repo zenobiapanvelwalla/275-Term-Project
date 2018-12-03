@@ -17,7 +17,7 @@ class SignUp extends Component {
         emailValid: true,
         usernameValid: true,
         passwordValid: true,
-        msg:false
+        msgResult:true
     }
 
     constructor(props){
@@ -60,8 +60,12 @@ class SignUp extends Component {
                         localStorage.setItem('user_id',response.data.user_id);
                         self.props.history.push('/verifyuser');
                       }
+                      else{
+                        self.setState({msgResult:false})
+                      }
                     })
                     .catch(function (error) {
+                      self.setState({msgResult:false})
                       console.log(error);
                     });
 
@@ -110,7 +114,6 @@ class SignUp extends Component {
     render() {
         return (
             <div className="backgroundLogin">
-            <NavBar/>
             <div className="container">
                 <div className="d-flex justify-content-center h-100">
                     <div className="cardL card">
@@ -124,6 +127,7 @@ class SignUp extends Component {
                             </div>
                         </div>
                         <div className="card-body">
+                        { this.state.msgResult ? null : <div className="text-left text-small small alert alert-warning">SignUp failed, Username Already Taken.</div>}
                         { this.state.emailValid ? null : <div className="text-left text-small small text-white">Please enter valid email address.</div>}
                                 <div className="input-group form-group">
                                     <div className="input-group-prepend">
@@ -131,7 +135,7 @@ class SignUp extends Component {
                                     </div>
                                     <input type="text" ref="email" className="form-control" placeholder="Email"
                                     onFocus={(event) => {
-                                        this.setState({emailValid: true, msg : false});
+                                        this.setState({emailValid: true, msgResult : true});
                                     }}/>
 
                                 </div>
@@ -143,7 +147,7 @@ class SignUp extends Component {
             
                                     <input type="text" ref="displayName" className="form-control" placeholder="Display Name"
                                     onFocus={(event) => {
-                                        this.setState({usernameValid: true, msg : false});
+                                        this.setState({usernameValid: true, msgResult : true});
                                     }}/>
 
                                 </div>
@@ -155,7 +159,7 @@ class SignUp extends Component {
                                     
                                     <input type="password" ref="password" className="form-control" placeholder="Password"
                                     onFocus={(event) => {
-                                       this.setState({passwordValid: true, msg : false});
+                                       this.setState({passwordValid: true, msgResult : true});
                                     }}/>
                                 </div>
                                 <div className="form-group">

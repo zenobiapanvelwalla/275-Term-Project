@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import NavBar from './NavBar';
 import login from "../custom_css/login.css";
+import config from '../config.js';
+import axios from 'axios';
 
 
 class Login extends Component {
@@ -13,7 +15,7 @@ class Login extends Component {
         },
         emailorusernameValid: true,
         passwordValid: true,
-        msg:false
+        msgResult:true
     }
 
     constructor(props){
@@ -28,7 +30,40 @@ class Login extends Component {
         {
             if(this.validatePassword() === true)
             {
-                
+                var data = {
+                    "email":this.refs.email.value,
+                    "password":this.refs.password.value
+                    }
+                let self = this;
+                console.log("User Data:" + JSON.stringify(data))
+                axios.post(config.API_URL+'/login',data)
+                .then(function (response) {
+                  console.log(response);
+                  if(response.data.success)
+                  {
+                        localStorage.setItem('user_id',response.data.userId);
+                        localStorage.setItem('role',response.data.role);
+                        if(response.data.verified)
+                        {
+                            localStorage.setItem('user_details',response.data.message);
+                            localStorage.setItem('isSubscribed',response.data.isSubscribed);
+                            localStorage.setItem('moviesPaidForList', response.data.moviesPaidForList);
+
+                            self.props.history.push('/customerdashboard');
+                        }
+                        else
+                        {
+                            self.props.history.push('/verifyuser');
+                        }
+                  }
+                  else{
+                    self.setState({msgResult:false})
+                  }
+                })
+                .catch(function (error) {
+                    self.setState({msgResult:false}) 
+                    console.log(error);
+                });
             }
             else
             {
@@ -62,7 +97,6 @@ class Login extends Component {
     render() {
         return (
             <div className="backgroundLogin">
-                <NavBar/>
                 <div className="container">
                 <div className="d-flex justify-content-center h-100">
                     <div className="cardL card">
@@ -83,6 +117,7 @@ class Login extends Component {
                             )}
                         </div>
                         <div className="card-body">
+                        { this.state.msgResult ? null : <div className="text-left text-small small alert alert-warning">Username or Password not found.</div>}
                         { this.state.emailorusernameValid ? null : <div className="text-left text-small text-white">Username is required.</div>}
                                 <div className="input-group form-group">
                                     <div className="input-group-prepend">
@@ -91,7 +126,7 @@ class Login extends Component {
                                     <input type="text" name = "email" className="form-control" placeholder="email"
                                            ref="email"
                                            onFocus={(event) => {
-                                           this.setState({emailorusernameValid: true, msg : false});
+                                           this.setState({emailorusernameValid: true, msgResult : true});
                                     }} />
 
                                 </div>
@@ -103,7 +138,7 @@ class Login extends Component {
                                     <input name = "password" type="password" className="form-control" placeholder="password"
                                            ref = "password"
                                            onFocus={(event) => {
-                                               this.setState({passwordValid: true , msg: false});
+                                               this.setState({passwordValid: true , msgResult: true});
                                            }}
                                     />
                                 </div>
