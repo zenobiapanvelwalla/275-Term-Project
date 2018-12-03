@@ -145,6 +145,7 @@ public class MovieController {
     	}
     	
     	response.put("canUserWatch",canUserWatch);
+    	response.put("canUserReview", canUserReview);
     	response.put("success", true);
         response.put("message", movie);
         response.put("statusCode", 200);

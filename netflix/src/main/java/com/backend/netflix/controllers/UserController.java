@@ -184,6 +184,7 @@ public class UserController {
 	@PostMapping(path="/login",consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity login(@RequestBody User user, HttpSession session){
+		
 		List<User> userList ;
 		boolean isSubscribed = false;
 
@@ -314,6 +315,8 @@ public class UserController {
 	    @ResponseStatus(HttpStatus.NO_CONTENT)
 	    public ResponseEntity logout(HttpSession session) {
 	        System.out.println(session.getAttribute("userId"));
+	        session.removeAttribute("role");
+	        session.removeAttribute("userId");
 	        session.invalidate();
 	        HashMap<String,Object> response =new HashMap<>();
 	        response.put("success", true);
