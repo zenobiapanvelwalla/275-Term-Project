@@ -1,6 +1,7 @@
 package com.backend.netflix.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+
+import com.backend.netflix.services.BillingService;
+import com.backend.netflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +49,12 @@ public class UserController {
 	
 	@Autowired
 	private UserSubscriptionService usService;
+
+	@Autowired
+	private MovieService movieService;
+
+	@Autowired
+	private BillingService billingService;
 	
 	@RequestMapping("/users")
 	public ResponseEntity<?> getAllUsers(HttpSession session) {
@@ -73,10 +83,12 @@ public class UserController {
 		session.setAttribute("role", "ADMIN");
 		if(session.getAttribute("role").toString().compareTo("ADMIN")==0) {
 			User user = userService.getUser(userId);
-			UserSubscription subscription = usService.findByUserId(userId);
+			List<UserSubscription> subscriptionList = usService.findLatestSubscriptionByUserId(userId);
+			UserSubscription subscription = subscriptionList.get(0);
+
 			response.put("statusCode", 200);
 			response.put("user",user);
-			response.put("subscription", subscription);
+			response.put("SubscriptionOnly", subscriptionList);
 			response.put("success",true);
 		} else  {
 			response.put("statusCode", 401);
@@ -91,6 +103,18 @@ public class UserController {
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {
 		
 		HashMap<String,Object> response =new HashMap<>();
+//		Check if user already present
+		User existingUser = new User();
+		existingUser = userService.findUserByEmail(user.getEmail());
+		if(existingUser!=null) {
+			response.put("success", false);
+			response.put("message", "User Already Exists");
+			response.put("statusCode",400);
+			
+			
+			return new ResponseEntity(response,HttpStatus.IM_USED);
+		}
+//		End - Check if user already present
 		//encrypting user password
 		Encryption enc = new Encryption();
 		String encrypted=enc.encrypt(user.getPassword());
@@ -111,7 +135,8 @@ public class UserController {
 		Random rnd = new Random();
 		String random = String.format("%04d", rnd.nextInt(10000));
 		user.setVerificationCode(random);
-		
+		user.setRegisteredAt(LocalDateTime.now());
+
 		//Saving user
 		userService.addUser(user);
 		
@@ -160,6 +185,8 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity login(@RequestBody User user, HttpSession session){
 		List<User> userList ;
+		boolean isSubscribed = false;
+
 		try {
 			Encryption enc = new Encryption();
 			String encrypted=enc.encrypt(user.getPassword());
@@ -173,21 +200,29 @@ public class UserController {
 				
 				user = userList.get(0);
 				if(user.isVerified()) {
+					isSubscribed = usService.checkIfSubscriptionIsActive(user.getId());
+					List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
+					response.put("isSubscribed", isSubscribed);
+					response.put("moviesPaidForList",moviesPaidForList);
 					response.put("success", true);
 					response.put("statusCode", 200);
 				}else {
 					response.put("verified", false);
 					response.put("message", "User is not verified!");
-					response.put("success", false);
+					response.put("isSubscribed", isSubscribed);
+					response.put("moviesPaidForList",null);
+					response.put("success", true);
 					response.put("statusCode", 400);
 					
 				}
 			} else {
 				response.put("message","User Not Found");
+				response.put("isSubscribed", isSubscribed);
+				response.put("moviesPaidForList",null);
 				response.put("success",false);
 				response.put("statusCode", 400);
 				response.put("verified",false);
@@ -289,11 +324,14 @@ public class UserController {
 			//session.setAttribute("userId", 2);
 			HashMap<String,Object> response = new HashMap<>();
 			int userId = (int)session.getAttribute("userId");
-			UserSubscription subscription = usService.findByUserId(userId);
+
+			List<UserSubscription> subscriptionList = usService.findLatestSubscriptionByUserId(userId);
+			UserSubscription subscription = subscriptionList.get(0);
+
 			User user = userService.getUser(userId);
 			if(user!=null) {
 				response.put("user", user);
-				response.put("subscription",subscription);
+				response.put("SubscriptionOnly",subscriptionList);
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {

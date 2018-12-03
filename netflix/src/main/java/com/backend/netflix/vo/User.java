@@ -2,6 +2,7 @@ package com.backend.netflix.vo;
 
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class User {
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String email;
 	private String password;
@@ -29,6 +30,8 @@ public class User {
 	private boolean verified;
 	private String verificationCode;
 	private String role;
+	private int noOfPlays =0;
+	private LocalDateTime registeredAt;
 	
 	public User() {}
 	public User(int id, String email, String password, String displayName, boolean verified, String verificationCode,
@@ -42,8 +45,6 @@ public class User {
 		this.verificationCode = verificationCode;
 		this.role = role;
 	}
-	
-	private int noOfPlays =0;
 
     public int getNoOfPlays() {
         return noOfPlays;
@@ -97,6 +98,15 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public LocalDateTime getRegisteredAt() {
+		return registeredAt;
+	}
+
+	public void setRegisteredAt(LocalDateTime registeredAt) {
+		this.registeredAt = registeredAt;
 	}
 	
 }

@@ -1,7 +1,8 @@
 package com.backend.netflix.services;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import com.backend.netflix.repository.BillingRepository;
 import com.backend.netflix.repository.UserRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.vo.PaymentType;
-import com.backend.netflix.vo.User;
 
 @Service
 public class UserSubscriptionService {
@@ -26,94 +26,89 @@ public class UserSubscriptionService {
 	
 	@Autowired
 	private UserRepository userRepo;
-	
-//	for checking the subscribed user or not
-	public UserSubscription subscribedDetails(int uid) {
-	
-		UserSubscription userSubscription=null;
-		UserSubscription userSubsription=userSubscriptionRepository.findByUserId(uid);
-//		boolean subscriptionPresent = false;
-//		if(userSubsription!=null) {
-			
-			return userSubscription;
-//		}	
+
+	public List<UserSubscription> findLatestSubscriptionByUserId(int userId) {
+		return userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
 	}
-	
 
+	public void addSubscription(int userId, int months) {
+		List<UserSubscription> subscriptionList = userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
+		if(subscriptionList.size()>0) {
 
-	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
+			UserSubscription subscription = null;
+			subscription = subscriptionList.get(0);
+			LocalDateTime endDate = subscription.getEndDate();
 
-		User user = userRepo.findById(userId);
+			LocalDateTime now = LocalDateTime.now();
 
-		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-	
-		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-	
-		UserSubscription newSubscription= subscribedDetails(userId);
-		if(newSubscription!=null) {
-			java.sql.Date endDate_existing=newSubscription.getEndDate();
+			if (endDate.compareTo(now) > 0) {
+				//user already has a SubscriptionOnly--> update end date based on months
+				LocalDateTime futureDate = endDate.plusMonths(months);
 
-		newSubscription.setEndDate(endDate_existing);
-			
-		}else {
-			newSubscription=new UserSubscription();
-			newSubscription.setEndDate(eDate);
+				subscription.setEndDate(futureDate.with(LocalTime.MIN));
+				System.out.println("----------------Futeure DATE:" +futureDate.with(LocalTime.MIN));
+				subscription.setMonths(months);
+
+				userSubscriptionRepository.save(subscription);
+
+				addBillingDetails(userId,months,now,PaymentType.SubscriptionOnly);
+			} else {
+				utilAddNewSubscription(userId, months);
+			}
 		}
-		
-		newSubscription.setStartDate(sDate);
+		else
+			utilAddNewSubscription(userId,months);
+	}
+
+	public void utilAddNewSubscription(int userId,int months){
+		UserSubscription newSubscription = new UserSubscription();
 		newSubscription.setUserId(userId);
-		newSubscription.setMonths(moneyPaid/10);
+		newSubscription.setMonths(months);
+
+		LocalDateTime startDate = LocalDateTime.now();
+		LocalDateTime enddate = startDate.plusMonths(months);
+
+		newSubscription.setStartDate(startDate);
+		newSubscription.setEndDate(enddate.with(LocalTime.MIN));
+
+		addBillingDetails(userId,months,startDate,PaymentType.SubscriptionOnly);
+		userSubscriptionRepository.save(newSubscription);
+	}
+
+	public void addBillingDetails(int userId,int months,LocalDateTime billDate,PaymentType paymentType) {
 
 		Billing billing= new Billing();
 		billing.setUserId(userId);
+		billing.setPaymentType(paymentType);
+		billing.setMoneyPaid(months*10);
+		billing.setBilldate(billDate);
 
-		/**********billing.setPaymentType(PaymentType.subscription);    **********/
-
-		billing.setPaymentType(PaymentType.general);
-
-		billing.setMoneyPaid(moneyPaid);
-	
 		billingRepository.save(billing);
-		
-		userSubscriptionRepository.save(newSubscription);
-		return "Subscribed thanks";
+
 	}
-	
+
+	public Boolean checkIfSubscriptionIsActive(int userId) {
+		List<UserSubscription> subscriptionList = userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
+		if( subscriptionList.size()>0) {
+			UserSubscription subscription = subscriptionList.get(0);
+			LocalDateTime endDate = subscription.getEndDate();
+			LocalDateTime now = LocalDateTime.now();
+
+			if (endDate.compareTo(now) > 0) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+	/*
 	public UserSubscription findByUserId(int userId) {
 		return userSubscriptionRepository.findByUserId(userId);
 	}
 
-
-
-	public String subscribeUserPerMovie(int uid, Date startDate, Date endDate, int moneyPaid, String movieid) {
-		// TODO Auto-generated method stub
-		UserSubscription newSubscription= new UserSubscription();
-		User user = userRepo.findById(uid);
-		//newSubscription.setUser(user);
-		newSubscription.setUserId(uid);
-		newSubscription.setMonths(1);
-		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-		newSubscription.setStartDate(sDate);
-		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-		newSubscription.setEndDate(eDate);
-		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
-		Billing billing= new Billing();
-		billing.setUserId(uid);
-		billing.setPaymentType(PaymentType.perMovie);
-		billing.setMoneyPaid(moneyPaid);
-		billing.setMovieId(movieid);
-		
-		billingRepository.save(billing);
-		
-		userSubscriptionRepository.save(newSubscription);
-		return "Subscribed thanks";
-		
-		
-	}
-	
 	public int getCountOfUniqueSubscriptionUsers(){
 		return userSubscriptionRepository.getCountOfUniqueSubscriptionUsers();
 	}
 
-
+	*/
 }
