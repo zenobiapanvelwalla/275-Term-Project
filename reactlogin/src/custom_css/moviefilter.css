@@ -1,0 +1,29 @@
+.b{
+    font-size: 10px;
+    line-height: -0.0;
+    color: black !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    background-color : black !important;
+}
+
+.h{
+    height:auto;
+}
+
+.mycontent-left {
+    border-right: 1px solid lightgrey;
+    height: 800px;
+  }
+
+  .rating{
+      overflow: unset !important;
+      height : 10px !important;
+      
+  }
+.ratingText{
+    font-size: 10px;
+    vertical-align:bottom !important;
+    height: 15px;
+
+}
