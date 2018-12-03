@@ -1,6 +1,7 @@
 package com.backend.netflix.controllers;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -91,13 +92,14 @@ public class MovieController {
     @RequestMapping("/movies/{movieId}")
     public ResponseEntity<?> getMovie(@PathVariable int movieId,HttpSession session){
     	/*for testing*/
-    	session.setAttribute("userId",1);
-    	session.setAttribute("role", "ADMIN");
+//    	session.setAttribute("userId",1);
+//    	session.setAttribute("role", "ADMIN");
     	/*END TEESTING*/
     	Movie movie = movieService.getMovie(movieId);
     	
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
+    	boolean canUserReview = false;
     	//
         //check if movie type is pay per view--> if user has Paid for movie
         //if movie type is Paid, unsubscribed user should have Paid for movie
@@ -109,7 +111,10 @@ public class MovieController {
                     canUserWatch = false;
                 } else
                     canUserWatch = true;
+                //if user activity is null->user has not started/finished watching->cannot review
+                canUserReview = false;
             } else {
+            	
                 if (movie.getIsDeleted()) {
                     if (userActivity.isWatching())
                         canUserWatch = true;
@@ -118,6 +123,13 @@ public class MovieController {
                 }
                 else
                     canUserWatch = true;
+                //if user activity checkpoint time is greater than 00:00 than he can review
+                LocalTime checkpoint = userActivity.getCheckpoint();
+                if(checkpoint.compareTo(LocalTime.MIN)==0) {
+                	canUserReview= false;
+                } else {
+                	canUserReview= true;
+                }
             }
 
     	} else {
@@ -127,6 +139,8 @@ public class MovieController {
 
     			canUserWatch = true;
     		}
+    		//If user is admin, he can't review the movie
+    		canUserReview = false;
     		
     	}
     	
