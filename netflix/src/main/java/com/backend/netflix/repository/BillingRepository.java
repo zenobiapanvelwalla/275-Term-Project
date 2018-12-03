@@ -23,6 +23,9 @@ public interface BillingRepository extends CrudRepository<Billing, Integer> {
 
 	Billing findByUserId(int userId);
 
+	@Query(value="SELECT movie_id FROM billing WHERE user_id=? AND p_type IN('payPerView','paid')",nativeQuery = true)
+	public List<Integer> getListOfMoviesUserHasPaidFor(int userId);
+
 	@Transactional
 	@Query(value="SELECT SUM(money_paid) FROM billing WHERE p_type = ? AND TIMESTAMPDIFF(MONTH,billdate, now())<=12 GROUP BY month(billdate),year(billdate) ORDER BY year(billdate) DESC, month(billdate) DESC;",nativeQuery=true)
 	List<BigDecimal>  getIncomeListBasedOnPaymentType(String pType);

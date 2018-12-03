@@ -38,6 +38,9 @@ public class BillingService {
 
 	}
 
+	public List<Integer> getListOfMoviesUserHasPaidFor(int userId) {
+		return billingRepository.getListOfMoviesUserHasPaidFor(userId);
+	}
 
 
 

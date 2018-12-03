@@ -17,7 +17,8 @@ public class MovieService {
 	
 	@Autowired
 	private MovieRepository movieRepository;
-	
+
+
 	public List<Movie> getAllMovies() {
 		List<Movie> movies = new ArrayList<>();
 		movieRepository.findAll().forEach(movies::add);

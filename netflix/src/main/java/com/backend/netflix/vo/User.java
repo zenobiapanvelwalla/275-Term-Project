@@ -22,7 +22,7 @@ public class User {
 	
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String email;
 	private String password;

@@ -1,6 +1,7 @@
 package com.backend.netflix.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+
+import com.backend.netflix.services.BillingService;
+import com.backend.netflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +49,12 @@ public class UserController {
 	
 	@Autowired
 	private UserSubscriptionService usService;
+
+	@Autowired
+	private MovieService movieService;
+
+	@Autowired
+	private BillingService billingService;
 	
 	@RequestMapping("/users")
 	public ResponseEntity<?> getAllUsers(HttpSession session) {
@@ -113,7 +123,8 @@ public class UserController {
 		Random rnd = new Random();
 		String random = String.format("%04d", rnd.nextInt(10000));
 		user.setVerificationCode(random);
-		
+		user.setRegisteredAt(LocalDateTime.now());
+
 		//Saving user
 		userService.addUser(user);
 		
@@ -178,17 +189,20 @@ public class UserController {
 				user = userList.get(0);
 				if(user.isVerified()) {
 					isSubscribed = usService.checkIfSubscriptionIsActive(user.getId());
+					List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("isSubscribed", isSubscribed);
+					response.put("moviesPaidForList",moviesPaidForList);
 					response.put("success", true);
 					response.put("statusCode", 200);
 				}else {
 					response.put("verified", false);
 					response.put("message", "User is not verified!");
 					response.put("isSubscribed", isSubscribed);
+					response.put("moviesPaidForList",null);
 					response.put("success", false);
 					response.put("statusCode", 400);
 					
@@ -196,6 +210,7 @@ public class UserController {
 			} else {
 				response.put("message","User Not Found");
 				response.put("isSubscribed", isSubscribed);
+				response.put("moviesPaidForList",null);
 				response.put("success",false);
 				response.put("statusCode", 400);
 				response.put("verified",false);

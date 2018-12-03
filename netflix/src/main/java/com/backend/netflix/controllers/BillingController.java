@@ -32,7 +32,7 @@ public class BillingController {
 	public ResponseEntity<?> AddBiiligDetailsForMovie(@RequestBody HashMap<String,String> data, HttpSession session) throws Exception {
 
 		// *******************For testing ONLY  ***************
-		session.setAttribute("userId",1);
+		//session.setAttribute("userId",1);
 
 		HashMap<String, Object> response = new HashMap<>();
 		int userId =(int)session.getAttribute("userId");
@@ -41,10 +41,13 @@ public class BillingController {
 		int moneyPaid = Integer.parseInt(data.get("moneyPaid"));
 		String paymentType = data.get("paymentType");
 		billingService.addBillingDetails(userId, movieId, moneyPaid, paymentType);
-
 		userActivityService.addUserActivity(userId,movieId);
+
+		List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(userId);
+
 		response.put("success", true);
 		response.put("message", "Billing done for Pay per view Movie Successfully");
+		response.put("moviesPaidForList", moviesPaidForList);
 		response.put("statusCode", 200);
 
 		return new ResponseEntity(response, HttpStatus.CREATED);
