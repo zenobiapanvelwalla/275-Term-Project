@@ -1,16 +1,13 @@
 package com.backend.netflix.services;
 
-import com.backend.netflix.beans.MonthlyIncome;
 import com.backend.netflix.vo.PaymentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.backend.netflix.vo.Billing;
 import com.backend.netflix.repository.BillingRepository;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,10 +22,10 @@ public class BillingService {
 
 		Billing billing= new Billing();
 		billing.setUserId(userId);
-		if(paymentType.compareTo("payPerView")==0) {
-			billing.setPaymentType(PaymentType.payPerView);
-		} else if (paymentType.compareTo("paid")==0) {
-			billing.setPaymentType(PaymentType.paid);
+		if(paymentType.compareTo("PayPerViewOnly")==0) {
+			billing.setPaymentType(PaymentType.PayPerViewOnly);
+		} else if (paymentType.compareTo("Paid")==0) {
+			billing.setPaymentType(PaymentType.Paid);
 		}
 		billing.setMovieId(movieId);
 		billing.setMoneyPaid(moneyPaid);

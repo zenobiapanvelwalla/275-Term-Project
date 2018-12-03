@@ -47,11 +47,11 @@ public class FinancialReportController {
 	public ResponseEntity<?> getMonthlyIncome(){
 
 		HashMap<String, Object> response = new HashMap<String, Object>();
-		MonthlyIncome monthlyIncomeSubscription = reportservice.getIncomeByMonth("subscription");
+		MonthlyIncome monthlyIncomeSubscription = reportservice.getIncomeByMonth("SubscriptionOnly");
 
-		MonthlyIncome monthlyIncomePayPerView = reportservice.getIncomeByMonth("payPerView");
+		MonthlyIncome monthlyIncomePayPerView = reportservice.getIncomeByMonth("PayPerViewOnly");
 
-		//List<MonthlyIncome> monthlyIncomePaid = reportservice.getIncomeByMonth("paid");
+		//List<MonthlyIncome> monthlyIncomePaid = reportservice.getIncomeByMonth("Paid");
 		MonthlyIncome monthlyIncomeTotal = reportservice.getIncomeTotal();
 
 		response.put("success", true);
@@ -80,7 +80,7 @@ public class FinancialReportController {
 
 
 /*
-	//	Numbers of unique subscription users/ pay per view users,
+	//	Numbers of unique SubscriptionOnly users/ pay per view users,
 	@RequestMapping("/uniqueSubscriptionUsers")
 	public  List<User> uniqueSubscriptionUsers(@PathVariable PaymentType paymentType){
 		List<User> uniqueSubusers=reportservice.getAllUniqueSubscriptionUsers(paymentType);

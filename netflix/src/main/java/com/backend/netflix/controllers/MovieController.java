@@ -48,15 +48,16 @@ public class MovieController {
     public ResponseEntity<?> getMoviesForCustomer(HttpSession session){
 
         /************For TESTING ONLY**********/
-        session.setAttribute("userId",1);
+        //session.setAttribute("userId",1);
     	int userId = (int)session.getAttribute("userId");
+    	System.out.println("doooooooooooooooooooooooooooo"+ userId);
     	HashMap<String, Object> response = new HashMap<>();
     	List<Movie> movies = new ArrayList<Movie>();
     	List<String> availability = new ArrayList<String>();
     	availability.add("Free");
     	availability.add("PayPerViewOnly");
     	availability.add("Paid");
-    	//check if user has a valid subscription
+    	//check if user has a valid SubscriptionOnly
     	List<UserSubscription> subscriptionList = subService.findLatestSubscriptionByUserId(userId);
     	if(subscriptionList.size()>0) {
             UserSubscription subscription = subscriptionList.get(0);
@@ -98,8 +99,8 @@ public class MovieController {
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
     	//
-        //check if movie type is pay per view--> if user has paid for movie
-        //if movie type is paid, unsubscribed user should have paid for movie
+        //check if movie type is pay per view--> if user has Paid for movie
+        //if movie type is Paid, unsubscribed user should have Paid for movie
     	if(session.getAttribute("role").toString().compareTo("CUSTOMER")==0) {
             int userId = (int) session.getAttribute("userId");
             UserActivity userActivity = uaService.getLatestUserActivityByUserIdAndMovieId(userId, movieId);

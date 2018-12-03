@@ -54,11 +54,12 @@ public class SubscriptionController {
 	@RequestMapping(value = "/subscribe/{noOfMonths}", method = RequestMethod.GET)
 	ResponseEntity<?> addSubscription(@PathVariable int noOfMonths, HttpSession session) throws Exception {
 		// *******************For testing ONLY
-		session.setAttribute("userId",1);
+		//session.setAttribute("userId",1);
+		System.out.println("----------------USerId:"+ session.getAttribute("userId"));
 		HashMap<String, Object> response = new HashMap<>();
 		int userId =(int)session.getAttribute("userId");
 
-		//check if user has subscription already
+		//check if user has SubscriptionOnly already
 		userSubscriptionService.addSubscription(userId, noOfMonths);
 
 		response.put("success", true);
@@ -69,7 +70,7 @@ public class SubscriptionController {
 		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
 
-	//    user comes and check his subscription " subscribe:method" , if not then bills the new plan by selecting the dates 
+	//    user comes and check his SubscriptionOnly " subscribe:method" , if not then bills the new plan by selecting the dates
 	//    no months and then pushes it to the "subscribeForParticularPlan " 
 
 	//    check the subscribed or not
@@ -111,7 +112,7 @@ public class SubscriptionController {
 	}
 	
 
-	@GetMapping("/unique-subscription-users")
+	@GetMapping("/unique-SubscriptionOnly-users")
 	public int getCountOfUniqueSubscriptionUsers(HttpSession session) {
 
 		return userSubscriptionService.getCountOfUniqueSubscriptionUsers();

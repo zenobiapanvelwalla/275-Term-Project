@@ -2,10 +2,6 @@ package com.backend.netflix.services;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +14,6 @@ import com.backend.netflix.repository.BillingRepository;
 import com.backend.netflix.repository.UserRepository;
 import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.vo.PaymentType;
-import com.backend.netflix.vo.User;
 
 @Service
 public class UserSubscriptionService {
@@ -47,7 +42,7 @@ public class UserSubscriptionService {
 			LocalDateTime now = LocalDateTime.now();
 
 			if (endDate.compareTo(now) > 0) {
-				//user already has a subscription--> update end date based on months
+				//user already has a SubscriptionOnly--> update end date based on months
 				LocalDateTime futureDate = endDate.plusMonths(months);
 
 				subscription.setEndDate(futureDate.with(LocalTime.MIN));
@@ -56,7 +51,7 @@ public class UserSubscriptionService {
 
 				userSubscriptionRepository.save(subscription);
 
-				addBillingDetails(userId,months,now,PaymentType.subscription);
+				addBillingDetails(userId,months,now,PaymentType.SubscriptionOnly);
 			} else {
 				utilAddNewSubscription(userId, months);
 			}
@@ -76,7 +71,7 @@ public class UserSubscriptionService {
 		newSubscription.setStartDate(startDate);
 		newSubscription.setEndDate(enddate.with(LocalTime.MIN));
 
-		addBillingDetails(userId,months,startDate,PaymentType.subscription);
+		addBillingDetails(userId,months,startDate,PaymentType.SubscriptionOnly);
 		userSubscriptionRepository.save(newSubscription);
 	}
 
@@ -106,89 +101,9 @@ public class UserSubscriptionService {
 		}
 		return false;
 	}
-
-	/*public static Date addMonth(Loca date, int months) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.add(Calendar.MONTH, months);
-//		c.set(Calendar.HOUR_OF_DAY, 0);
-//		c.set(Calendar.MINUTE, 0);
-//		c.set(Calendar.SECOND, 0);
-//		c.set(Calendar.MILLISECOND, 0);
-		return c.getTime();
-	}
-*/
-
-
-	
-/*
-
-	public String subscribeUser(int userId, Date startDate, Date endDate, int moneyPaid) {
-
-		User user = userRepo.findById(userId);
-
-		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-	
-		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-	
-		UserSubscription newSubscription= subscribedDetails(userId);
-		if(newSubscription!=null) {
-			java.sql.Date endDate_existing=newSubscription.getEndDate();
-
-		newSubscription.setEndDate(endDate_existing);
-			
-		}else {
-			newSubscription=new UserSubscription();
-			newSubscription.setEndDate(eDate);
-		}
-		
-		newSubscription.setStartDate(sDate);
-		newSubscription.setUserId(userId);
-		newSubscription.setMonths(moneyPaid/10);
-
-		Billing billing= new Billing();
-		billing.setUserId(userId);
-
-		billing.setPaymentType(PaymentType.subscription);
-
-		billing.setMoneyPaid(moneyPaid);
-	
-		billingRepository.save(billing);
-		
-		userSubscriptionRepository.save(newSubscription);
-		return "Subscribed thanks";
-	}
-
+	/*
 	public UserSubscription findByUserId(int userId) {
 		return userSubscriptionRepository.findByUserId(userId);
-	}
-
-
-
-	public String subscribeUserPerMovie(int uid, Date startDate, Date endDate, int moneyPaid, String movieid) {
-
-		UserSubscription newSubscription= new UserSubscription();
-		User user = userRepo.findById(uid);
-		//newSubscription.setUser(user);
-		newSubscription.setUserId(uid);
-		newSubscription.setMonths(1);
-		java.sql.Date sDate = new java.sql.Date(startDate.getTime());
-		newSubscription.setStartDate(sDate);
-		java.sql.Date eDate = new java.sql.Date(endDate.getTime());
-		newSubscription.setEndDate(eDate);
-		//BillingStatus billingStatus= new BillingStatus(PaidStatus.paid,0,uid);
-		Billing billing= new Billing();
-		billing.setUserId(uid);
-		billing.setPaymentType(PaymentType.perMovie);
-		billing.setMoneyPaid(moneyPaid);
-		billing.setMovieId(movieid);
-		
-		billingRepository.save(billing);
-		
-		userSubscriptionRepository.save(newSubscription);
-		return "Subscribed thanks";
-		
-		
 	}
 
 	public int getCountOfUniqueSubscriptionUsers(){

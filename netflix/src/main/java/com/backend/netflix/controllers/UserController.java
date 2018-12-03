@@ -88,7 +88,7 @@ public class UserController {
 
 			response.put("statusCode", 200);
 			response.put("user",user);
-			response.put("subscription", subscriptionList);
+			response.put("SubscriptionOnly", subscriptionList);
 			response.put("success",true);
 		} else  {
 			response.put("statusCode", 401);
@@ -319,7 +319,7 @@ public class UserController {
 			User user = userService.getUser(userId);
 			if(user!=null) {
 				response.put("user", user);
-				response.put("subscription",subscriptionList);
+				response.put("SubscriptionOnly",subscriptionList);
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {

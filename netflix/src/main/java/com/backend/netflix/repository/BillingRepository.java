@@ -23,7 +23,7 @@ public interface BillingRepository extends CrudRepository<Billing, Integer> {
 
 	Billing findByUserId(int userId);
 
-	@Query(value="SELECT movie_id FROM billing WHERE user_id=? AND p_type IN('payPerView','paid')",nativeQuery = true)
+	@Query(value="SELECT movie_id FROM billing WHERE user_id=? AND p_type IN('PayPerViewOnly','Paid')",nativeQuery = true)
 	public List<Integer> getListOfMoviesUserHasPaidFor(int userId);
 
 	@Transactional

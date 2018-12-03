@@ -39,7 +39,7 @@ public class ReportService {
 		List<Integer> monthList= null;
 		List<BigDecimal> incomeList= null ;
 
-		//if(paymentType.compareTo("payPerView")==0) {
+		//if(paymentType.compareTo("PayPerViewOnly")==0) {
 
 		incomeList = billingRepository.getIncomeListBasedOnPaymentType(paymentType);
 		monthList = billingRepository.getMonthsListBasedOnPaymentType(paymentType);
@@ -74,7 +74,7 @@ public class ReportService {
 		List<Integer> monthList= null;
 		List<BigDecimal> incomeList= null ;
 
-		//if(paymentType.compareTo("payPerView")==0) {
+		//if(paymentType.compareTo("PayPerViewOnly")==0) {
 
 		incomeList = billingRepository.getIncomeListForTotalIncome();
 		monthList = billingRepository.getMonthsListForTotalIncome();
@@ -143,9 +143,9 @@ public class ReportService {
 		//		https://stackoverflow.com/questions/7182996/java-get-month-integer-from-date  refer this
 		//creating instances of java.util.Date which represents today's date and time
 
-		int SubscriptionIncome=getIncomeBasedonSubscription(PaymentType.subscription);
-		int payPerViewMovieIncome=getIncomeBasedonSubscription(PaymentType.payPerView);
-		int paidMovieIncome = getIncomeBasedonSubscription(PaymentType.paid);
+		int SubscriptionIncome=getIncomeBasedonSubscription(PaymentType.SubscriptionOnly);
+		int payPerViewMovieIncome=getIncomeBasedonSubscription(PaymentType.PayPerViewOnly);
+		int paidMovieIncome = getIncomeBasedonSubscription(PaymentType.Paid);
 
 		// TODO Auto-generated method stub
 		return SubscriptionIncome+payPerViewMovieIncome + paidMovieIncome;

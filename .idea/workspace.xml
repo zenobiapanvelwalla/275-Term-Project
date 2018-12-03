@@ -3,12 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="1e0c7323-3924-4e34-a7e5-10442af11cc4" name="Default" comment="Merging changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java" />
       <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java" />
       <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/BillingRepository.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/BillingRepository.java" />
       <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/BillingService.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/BillingService.java" />
-      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/MovieService.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/MovieService.java" />
-      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/User.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/User.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,11 +26,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="SubscriptionController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="434">
+              <caret line="57" column="85" lean-forward="false" selection-start-line="57" selection-start-column="85" selection-end-line="57" selection-end-column="85" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
+            <state relative-caret-position="-4154">
               <caret line="128" column="24" lean-forward="false" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PaymentType.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserSubscriptionService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2450">
+              <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -53,51 +86,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MovieRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/MovieRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BillingRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/BillingRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BillingController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BillingController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
+            <state relative-caret-position="400">
               <caret line="34" column="10" lean-forward="false" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymentType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java">
+      <file leaf-file-name="MovieController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BillingService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/BillingService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="42" column="5" lean-forward="false" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
+            <state relative-caret-position="1109">
+              <caret line="82" column="9" lean-forward="false" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -210,14 +213,10 @@
         <option value="$PROJECT_DIR$/netflix/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/UserSubscription.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/Billing.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/MonthlyIncome.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/MovieRepository.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/BillingRepository.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/BillingService.java" />
@@ -225,6 +224,10 @@
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/MovieService.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/User.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java" />
       </list>
     </option>
   </component>
@@ -704,7 +707,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="PlantUML" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -714,11 +716,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24407583" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20734598" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Sequence" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15758294" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13744076" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07783784" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37513512" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1138,9 +1140,9 @@
         <state relative-caret-position="175">
           <caret line="66" column="46" lean-forward="false" selection-start-line="66" selection-start-column="46" selection-end-line="66" selection-end-column="46" />
           <folding>
-            <element signature="e#1834#1842#0" expanded="false" />
-            <marker date="1543809430605" expanded="false" signature="3212:3218" ph="&lt;~&gt;" />
-            <marker date="1543809430605" expanded="false" signature="3653:3659" ph="&lt;~&gt;" />
+            <element signature="e#1838#1846#0" expanded="false" />
+            <marker date="1543822329733" expanded="false" signature="3220:3226" ph="&lt;~&gt;" />
+            <marker date="1543822329733" expanded="false" signature="3661:3667" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -1157,40 +1159,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
           <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="89" column="30" lean-forward="false" selection-start-line="89" selection-start-column="30" selection-end-line="89" selection-end-column="30" />
-          <folding>
-            <element signature="e#1608#1615#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="106" column="21" lean-forward="false" selection-start-line="106" selection-start-column="21" selection-end-line="106" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -1227,14 +1195,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="128" column="24" lean-forward="false" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -1261,8 +1221,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
+        <state relative-caret-position="400">
           <caret line="34" column="10" lean-forward="false" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1109">
+          <caret line="82" column="9" lean-forward="false" selection-start-line="82" selection-start-column="9" selection-end-line="82" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4154">
+          <caret line="128" column="24" lean-forward="false" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/vo/PaymentType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/UserSubscriptionService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2450">
+          <caret line="107" column="0" lean-forward="true" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/SubscriptionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="57" column="85" lean-forward="false" selection-start-line="57" selection-start-column="85" selection-end-line="57" selection-end-column="85" />
           <folding />
         </state>
       </provider>
