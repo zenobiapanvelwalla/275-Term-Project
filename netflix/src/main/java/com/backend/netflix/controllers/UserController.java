@@ -103,6 +103,18 @@ public class UserController {
 	public ResponseEntity<?> addUser(@RequestBody User user) throws Exception {
 		
 		HashMap<String,Object> response =new HashMap<>();
+//		Check if user already present
+		User existingUser = new User();
+		existingUser = userService.findUserByEmail(user.getEmail());
+		if(existingUser!=null) {
+			response.put("success", false);
+			response.put("message", "User Already Exists");
+			response.put("statusCode",400);
+			
+			
+			return new ResponseEntity(response,HttpStatus.IM_USED);
+		}
+//		End - Check if user already present
 		//encrypting user password
 		Encryption enc = new Encryption();
 		String encrypted=enc.encrypt(user.getPassword());
@@ -203,7 +215,7 @@ public class UserController {
 					response.put("message", "User is not verified!");
 					response.put("isSubscribed", isSubscribed);
 					response.put("moviesPaidForList",null);
-					response.put("success", false);
+					response.put("success", true);
 					response.put("statusCode", 400);
 					
 				}
