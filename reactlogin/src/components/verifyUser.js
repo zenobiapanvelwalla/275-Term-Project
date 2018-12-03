@@ -6,9 +6,9 @@ import axios from 'axios';
 
   var wrapperStyle = {
       fontFamily: "Lato",
-      fontSize: "1.5rem",
+      fontSize: "1 rem",
       textAlign: "center",
-      boxSizing: "border-box",
+      // boxSizing: "border-box",
       color: "#333"
   };
 
@@ -24,17 +24,17 @@ import axios from 'axios';
       maxWidth: "450px"
   };
   var inputStyle = {
-      margin: "0 5px",
+      margin: "0 5px" ,
       textAlign: "center",
       lineHeight: "80px",
-      fontSize: "35px",
-      border: "solid 1px #ccc",
+      fontSize: "20px",
+      // border_bottom: "solid 1px #ccc",
       boxShadow: "0 0 5px #ccc inset",
       outline: "none",
-      width: "20%",
+      width: "40%",
       transition: "all .2s ease-in-out",
       borderRadius: "3px",
-      width: "30px",
+      width: "40px",
       height: "40px",
       marginLeft: "15px"
   };
@@ -93,23 +93,21 @@ class VerifyUser extends Component {
   verificationCheck(e)
   {
     let payload = {
-      user_id : localStorage.getItem('user_id'),
-      verification_code : this.refs.a.value + this.refs.b.value + this.refs.c.value + this.refs.d.value
+      verification_code : parseInt(this.refs.a.value + this.refs.b.value + this.refs.c.value + this.refs.d.value)
     }
-    let path = "/users/verify" + payload.user_id.toString();
+    let path = "/users/verify/" + parseInt(localStorage.getItem('user_id'));
     let self = this;
     axios.post(config.API_URL+path,payload)
       .then(function (response) {
         console.log(response);
         if(response.data.success)
         {
-          
+          self.props.history.push('/');
         }
       })
       .catch(function (error) {
       console.log(error);
       });
-
     
     console.log(payload);
   }

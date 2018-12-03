@@ -5,6 +5,9 @@ import Picky from 'react-picky';
 import 'react-picky/dist/picky.css'; // Include CSS
 import config from '../config.js';
 import axios from 'axios';
+import css from '../custom_css/moviefilter.css'
+// import styled from 'styled-components';
+
 
 class MovieFilter extends Component {
 
@@ -16,52 +19,71 @@ class MovieFilter extends Component {
                 { id: 'Thing 1', name: 1},
                 { id: 'Thing 2', name: 2},
               ],
+              director : [],
               value: null,
-              arrayValue: []
+              arrayValue: [],
+              allMovies : props.movies
         };
-        this.selectOption = this.selectOption.bind(this);
-        this.selectMultipleOption = this.selectMultipleOption.bind(this);
+        this.setState({allMovies : this.props.movies});
+        this.handleMovieChange = this.handleMovieChange.bind(this);
+        this.handleOnChangeDirector = this.handleOnChangeDirector.bind(this);
+        console.log("Inside Constructor : " + this.props.movies);
     }
 
-    
-    selectOption(value) {
-        console.log("Vals", value);
-        this.setState({ value });
-    }
+    componentWillReceiveProps(nextProps) {
+        console.log("Inside component will receive props");
+        this.setState({ allMovies: nextProps.movies });  
+      }
 
-    selectMultipleOption(value) {
-        console.log("Val", value);
-        this.setState({ arrayValue: value });
-        console.log(this.props.filterMovie);  
+    componentDidMount(){
         let self = this;
-        axios.get(config.API_URL+'/admin/movies')
+        axios.get(config.API_URL+'/movies/get-unique-movie-attributes')
         .then(function (response) {
-          console.log("Message " + JSON.stringify(response.data.message));
-          self.setState({movies:response.data.message});
-          self.setState({
-            movies: self.state.movies.filter((item) => 1 != item.movieId)
-          });
-          this.props.filterMovie(this.state.movies);
+          console.log("Attributes " + JSON.stringify(response.data.directors));
+        //   this.setState({movies:response.data.message[0]});
+        self.setState({director:response.data.directors});
         })
         .catch(function (error) {
           console.log(error);
-        });  
+        });
     }
 
+    handleOnChangeDirector(value) {
+        // console.log("Val", value);
+        this.setState({ arrayValue: value }, () => {
+            this.props.filterMovie(this.state.arrayValue);
+        }); 
+
+    }
+
+    handleMovieChange() {
+        this.setState({
+            movies: this.props.movies.filter((item) => 1 != item.movieId)
+          }, () => {
+            this.props.filterMovie(this.state.movies);
+          });
+    }
+
+
     render() {
+        
+       
+
         return (
-            <div>
+            <div className="h">
                   <Picky
                     value={this.state.arrayValue}
-                    options={this.state.options}
-                    onChange={this.selectMultipleOption}
-                    open={true}
-                    valueKey="name"
-                    labelKey="id"
+                    options={this.state.director}
+                    onChange={this.handleOnChangeDirector}
+                    // open={true}
+                    // valueKey="name"
+                    // labelKey="id"   
                     multiple={true}
                     includeSelectAll={true}
-                    includeFilter={true}
-                    dropdownHeight={600}
+                    // keepOpen={true}
+                    // includeFilter={true}
+                    numberDisplayed = "2"
+                    className = "b"
             />
             </div>
         );

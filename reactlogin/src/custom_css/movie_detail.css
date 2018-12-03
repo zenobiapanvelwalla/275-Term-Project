@@ -50,7 +50,7 @@
       -webkit-animation-duration: .3s;
               animation-duration: .3s; }
   
-  .card {
+  .cardMD {
     background: black;
     padding: 3em;
     line-height: 1.5em; }

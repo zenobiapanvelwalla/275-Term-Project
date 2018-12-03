@@ -204,6 +204,8 @@ public class UserController {
 					List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
+					response.put("userId",userList.get(0).getId());
+					response.put("role", user.getRole());
 					response.put("verified",true);
 					response.put("message", userList.get(0));
 					response.put("isSubscribed", isSubscribed);
@@ -211,8 +213,9 @@ public class UserController {
 					response.put("success", true);
 					response.put("statusCode", 200);
 				}else {
+					response.put("userId",userList.get(0).getId());
 					response.put("verified", false);
-					response.put("message", "User is not verified!");
+					response.put("message", "User is not verified!"	);
 					response.put("isSubscribed", isSubscribed);
 					response.put("moviesPaidForList",null);
 					response.put("success", true);
@@ -251,7 +254,7 @@ public class UserController {
 			System.out.println(data.get("verification_code"));
 			if(user.getVerificationCode().compareTo(data.get("verification_code"))==0) {
 				userService.setVerifiedToTrue(user_id);
-				//Sending verification confirmation email to user
+				//Sending verification confirmation email to user	
 				try {
 					sendVerificationConfirmationMail(user.getEmail());
 				} catch (AddressException e) {

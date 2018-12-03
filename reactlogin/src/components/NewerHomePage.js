@@ -18,6 +18,10 @@ import MovieFilter from './MovieFilter';
 import CustomerDashboard from './CustomerDashboard';
 import BrowseCustomers from './BrowseCustomers';
 import FinancialReport from './FinancialReport';
+import MovieFilterActors from './MovieFilterActors';
+import MovieFilterGenre from './MovieFilterGenre';
+import MovieFilterRating from './MovieFilterRating';
+import GiveReviews from './GiveReviews';
 
 
 class NewerHomePage extends Component {
@@ -40,9 +44,14 @@ class NewerHomePage extends Component {
                     <Route exact path="/video" component={Video}/> 
                     <Route exact path="/searchmovies" component={SearchMovies}/> 
                     <Route exact path="/moviefilter" component={MovieFilter}/> 
+                    <Route exact path="/moviefilteractors" component={MovieFilterActors}/> 
                     <Route exact path="/customerdashboard" component={CustomerDashboard}/> 
                     <Route path="/browse-customers" component={BrowseCustomers}/>
                     <Route path="/financial-report" component={FinancialReport}/>
+                    <Route exact path="/moviefiltergenre" component={MovieFilterGenre}/>
+                    <Route exact path="/moviefilterrating" component={MovieFilterRating}/>
+                    <Route exact path="/givereviews" component={GiveReviews}/>
+                    
                 </Switch>
             </Router>
 
