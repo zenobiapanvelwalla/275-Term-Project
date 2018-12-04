@@ -96,7 +96,8 @@ public class MovieController {
 //    	session.setAttribute("role", "ADMIN");
     	/*END TEESTING*/
     	Movie movie = movieService.getMovie(movieId);
-    	
+    	System.out.println("USER ID"+ session.getAttribute("userId"));
+    	System.out.println("USER ROLE"+session.getAttribute("role"));
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
     	boolean canUserReview = false;
