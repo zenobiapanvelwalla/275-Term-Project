@@ -77,6 +77,7 @@ class Video extends Component {
 
 
         return (
+        
           <div>
               {/* <button class Name="btn btn-warning" onClick={this.endVideo}>Stop</button> */}
               <ReactPlayer

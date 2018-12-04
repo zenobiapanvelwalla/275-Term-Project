@@ -41,7 +41,8 @@ public class BillingController {
 		int moneyPaid = Integer.parseInt(data.get("moneyPaid"));
 		String paymentType = data.get("paymentType");
 		billingService.addBillingDetails(userId, movieId, moneyPaid, paymentType);
-		userActivityService.addUserActivity(userId,movieId);
+		//pass the checkpoint as 0, since the user has not begun watching the movie
+		userActivityService.addUserActivity(userId,movieId,0);
 
 		List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(userId);
 
