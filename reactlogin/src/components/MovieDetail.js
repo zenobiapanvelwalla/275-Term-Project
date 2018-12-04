@@ -25,7 +25,7 @@ class MovieDetail extends Component {
         this.watchMovie = this.watchMovie.bind(this);
     }
 
-    componentDidMount(){
+    componentWillMount(){
         console.log("Inside movie detail fetching")
         let self = this;
         let path = "/movies/" + this.props.match.params.movieId;

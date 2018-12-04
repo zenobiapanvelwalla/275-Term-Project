@@ -100,6 +100,8 @@ public class MovieController {
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
     	boolean canUserReview = false;
+    	System.out.println("USER ID"+session.getAttribute("userId"));
+    	System.out.println("USER ROLE"+session.getAttribute("role"));
     	//
         //check if movie type is pay per view--> if user has Paid for movie
         //if movie type is Paid, unsubscribed user should have Paid for movie
