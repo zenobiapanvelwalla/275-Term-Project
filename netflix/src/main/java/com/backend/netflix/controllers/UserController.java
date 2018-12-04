@@ -17,6 +17,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import com.backend.netflix.services.BillingService;
@@ -317,6 +318,9 @@ public class UserController {
 	        System.out.println(session.getAttribute("userId"));
 	        session.removeAttribute("role");
 	        session.removeAttribute("userId");
+	        ServletContext context = session.getServletContext();
+	        context.removeAttribute("role");
+	        context.removeAttribute("userId");       
 	        session.invalidate();
 	        HashMap<String,Object> response =new HashMap<>();
 	        response.put("success", true);
