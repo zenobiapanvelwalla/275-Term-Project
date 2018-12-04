@@ -13,6 +13,7 @@ public class Review {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private int userId;
+    private String userName;
 
 //    public Movie getMovie() {
 //        return movie;
@@ -23,7 +24,9 @@ public class Review {
 //    }
 
 
-    private int movieId;
+    
+
+	private int movieId;
     private int starRating;
     @Nullable
     private String reviewText;
@@ -40,6 +43,13 @@ public class Review {
     public int getUserId() {
         return userId;
     }
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
     public void setUserId(int userId) {
         this.userId = userId;

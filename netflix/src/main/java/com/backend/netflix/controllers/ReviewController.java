@@ -4,6 +4,7 @@ package com.backend.netflix.controllers;
 import com.backend.netflix.beans.HighRatedMovie;
 import com.backend.netflix.services.ReviewService;
 import com.backend.netflix.services.UserActivityService;
+import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.Review;
 import com.backend.netflix.vo.UserActivity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,10 @@ public class ReviewController {
         List<UserActivity> uaList = uaService.getUserActivityList(review.getUserId(),review.getMovieId());
         if(uaList.size()>0){
             //Saving user reviews
-            reviewService.addReview(review);
+            Movie updatedMovie = reviewService.addReview(review);
             response.put("success", true);
             response.put("message", "Review Added Successfully");
+            response.put("updatedMovie",updatedMovie);
             response.put("statusCode", 200);
         } else {
             response.put("success", false);
