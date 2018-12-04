@@ -11,8 +11,7 @@ import config from '../config.js';
 import axios from 'axios';
 import details from '../custom_css/movie_detail.css';
 import ReactStars  from 'react-stars';
-// import YouTube from 'react-youtube';
-// import Video from "../components/Video";
+import Video from "../components/Video";
 
 class MovieDetail extends Component {
 
@@ -23,12 +22,14 @@ class MovieDetail extends Component {
             giveReview: false,
             rating:''
         }
+        this.watchMovie = this.watchMovie.bind(this);
     }
 
     componentDidMount(){
         console.log("Inside movie detail fetching")
         let self = this;
         let path = "/movies/" + this.props.match.params.movieId;
+        console.log(config.API_URL+path);
         axios.get(config.API_URL+path)
         .then(function (response) {
           console.log("Message " + JSON.stringify(response));
@@ -41,6 +42,17 @@ class MovieDetail extends Component {
 
     handleVideoDetails = (details) => {
         this.setState({videoDetails:details})            
+    }
+
+    watchMovie(event){
+        let watchingDetails = {
+            userId : localStorage.getItem('user_id'),
+            movieId : this.props.match.params.movieId,
+            url : this.state.movie_details.movieUrl,
+            checkpoint : 0
+        }
+        localStorage.setItem('watchingDetails',watchingDetails);
+        this.props.history.push('/video');
     }
 
     render(){
@@ -132,15 +144,18 @@ class MovieDetail extends Component {
                                 <b>Cast: </b><p>{this.state.movie_details.actors}</p>
                     </div>
                     <div className="row">
-                        <button type="button" className="btn btn-danger">Watch Now</button>
+                        <button type="button" onClick={this.watchMovie} className="btn btn-danger">Watch Now</button>     
                     </div>
 
                     <div className="row">
-                        <button type="button" className="btn btn-danger">Watch Now</button>
+                        <div className="line"></div>
                     </div>
 
                     </div>
                 </div>
+
+                {/* //reviews section */}
+                <div className="row"></div>
             </div>
 
         )

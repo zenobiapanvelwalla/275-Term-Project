@@ -30,3 +30,7 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: darkgray;
 }
+
+.line{
+  border-bottom: 1px solid #ccc;
+}
