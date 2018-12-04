@@ -12,6 +12,7 @@ import axios from 'axios';
 import details from '../custom_css/movie_detail.css';
 import YouTube from 'react-youtube';
 import Modal from 'react-modal';
+import ReactPlayer from 'react-player';
 
 const customStyles = {
     content : {
@@ -32,7 +33,7 @@ class Video extends Component {
         let watchingDetails = {
             userId : 1,
             movieId : 1,
-            url : "EXeTwQWrcwY",
+            url : "EXeTwQWrcwY?start=20s",
             checkpoint : '0.0',
             player : ''
         }
@@ -42,7 +43,7 @@ class Video extends Component {
             watchingDetails : watchingDetails
           };
         
-          this.ref = this.ref.bind(this);
+        //   this.ref = this.ref.bind(this);
           this.endVideo = this.endVideo.bind(this);  
           
     }
@@ -54,8 +55,8 @@ class Video extends Component {
     }
 
     ref = player => {
-        this.state.player = player
-    }
+        this.player=player 
+        }
 
       render() {
         const opts = {
@@ -70,16 +71,40 @@ class Video extends Component {
         return (
           <div>
               <button className="btn btn-warning" onClick={this.endVideo}>Stop</button>
+              <ReactPlayer
+              ref={this.ref}
+                playing
+                controls
+                url='https://www.youtube.com/watch?v=Mh5LY4Mz15o?start=20s'
+                youtubeConfig={{ playerVars: { end: 40 }}}
+                onPause = {(event) => {
+                    // console.log("Current Time " + this.state.player.getCurrentTime());
+                    console.log("Current Time " + this.player.getCurrentTime());
+                    // console.log("Current Time " + ref.getCurrentTime());
+                    // this.player.seekTo(parseFloat(event.target.value))
+                    console.log(event);
+                }}
+                />
               <YouTube
                 ref={this.ref}
+                youtubeConfig={{
+                    playerVars: {
+                      start: 33
+                    }
+                  }}
                 videoId={this.state.watchingDetails.url}  // defaults -> null
                 // id={string}                       // defaults -> null
                 // className={string}                // defaults -> null
                 // containerClassName={string}       // defaults -> ''
                 opts={opts}                        // defaults -> {}
-                // onReady={func}                    // defaults -> noop
-                // onPlay={func}                     // defaults -> noop
+                onReady={(event) => {
+                    event.target.start = 10.0;
+                }}                    // defaults -> noop
+                onPlay={(event) => {
+                    event.target.start = 10.0;
+                }}                     // defaults -> noop
                 onPause={(event) => {
+                    
                     console.log("Pause at: " + event.target.getCurrentTime())
                 }}                    // defaults -> noop
                 onEnd={(event) => {
