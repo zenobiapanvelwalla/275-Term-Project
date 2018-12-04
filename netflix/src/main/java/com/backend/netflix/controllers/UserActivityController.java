@@ -52,7 +52,7 @@ public class UserActivityController {
 //		userActivityService.addOrUpdateUserActivity(user_id,movie_id);
 //		return new ResponseEntity(response,HttpStatus.OK);
 //	}
-	@RequestMapping(value="/user-activities-update/{user_id}/{movie_id}")
+	@RequestMapping(value="/user-activities-update/{user_id}/{movie_id}/{checkpoint}")
 	public ResponseEntity<?> updateUserActivity(@PathVariable int user_id, @PathVariable int movie_id,@PathVariable long checkpoint){
 		HashMap<String, Object> response = new HashMap<>();
 

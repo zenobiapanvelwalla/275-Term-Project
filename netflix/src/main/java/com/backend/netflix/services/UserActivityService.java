@@ -115,6 +115,10 @@ public class UserActivityService {
 	public void updateUserActivity(int user_id, int movie_id, long checkpoint) {
 		UserActivity activity = uaRepo.findLatestByUserIdAndMovieId(user_id, movie_id);
 		activity.setCheckpoint(checkpoint);
+		activity.setUpdatedAt(LocalDateTime.now());
+		activity.setWatched(true);
+		activity.setWatching(false);
+		uaRepo.save(activity);
 		
 	}
 
