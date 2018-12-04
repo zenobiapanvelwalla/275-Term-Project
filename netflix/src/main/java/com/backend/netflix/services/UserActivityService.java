@@ -46,14 +46,26 @@ public class UserActivityService {
 	public UserActivity getLatestUserActivityByUserIdAndMovieId(int userId, int movieId) {
 		return uaRepo.findLatestByUserIdAndMovieId(userId, movieId);
 	}
-	public void addUserActivity(int userId, int movieId) {
+	
+	//create another api for end of movie which will set the checkpoint and isWatched to true
+	
+	
+	public void addUserActivity(int userId, int movieId,long checkpoint) {
 		List<UserActivity> ua = uaRepo.findByUserIdAndMovieId(userId, movieId);
 
 		if (ua.size() > 0) {
 			UserActivity uactivity = ua.get(0);
+			
+			//if user activity exists then we need to update the checkpoint. If the user plays and the previous checkpoint value is 
+			//> 0 then the new checkpoint is old + new
+			long newCheckPoint = uactivity.getCheckpoint() + checkpoint;
+			uactivity.setCheckpoint(newCheckPoint);
+			uaRepo.save(uactivity);
+			
 			LocalDateTime now = LocalDateTime.now();
 			Duration duration = Duration.between(now, uactivity.getCreatedAt());
 			long diff = Math.abs(duration.toHours());
+			//what if the user watches the other half of the movie after 24 hourse, does that count as another watch??
 			if (diff < 24) {
 				uactivity.setWatched(false);
 				uactivity.setWatching(true);
@@ -61,14 +73,15 @@ public class UserActivityService {
 				uactivity.setUpdatedAt(LocalDateTime.now());
 				uaRepo.save(uactivity);
 			} else {
-				utilAddUserActivity(userId, movieId);
+				//if the user resumes playing after 24 hours then his checkpoint should be maintained, even if a new user activity is created.
+				utilAddUserActivity(userId, movieId,newCheckPoint);
 			}
 
 		} else {
-			utilAddUserActivity(userId, movieId);
+			utilAddUserActivity(userId, movieId,0);
 		}
 	}
-	public void utilAddUserActivity(int userId, int movieId) {
+	public void utilAddUserActivity(int userId, int movieId, long checkpoint) {
 		User optuser = uRepo.findById(userId);
 		User user = (User) optuser;
 		user.setNoOfPlays(user.getNoOfPlays()+1);
@@ -90,13 +103,20 @@ public class UserActivityService {
 		now.set(Calendar.MINUTE,0);
 		now.set(Calendar.SECOND,0);
 */
-		ua.setCheckpoint(LocalTime.MIN);
+		//ua.setCheckpoint(LocalTime.MIN);
+		ua.setCheckpoint(checkpoint);
 		ua.setWatching(true);
 		ua.setWatched(false);
 
 		uaRepo.save(ua);
 	}
-
+	
+	//updating user activity if user finished watching the movie
+	public void updateUserActivity(int user_id, int movie_id, long checkpoint) {
+		UserActivity activity = uaRepo.findLatestByUserIdAndMovieId(user_id, movie_id);
+		activity.setCheckpoint(checkpoint);
+		
+	}
 
 	public int getNumberOfPlaysForMovie(int movieId, int type) {
 		int count = 0;
@@ -195,4 +215,8 @@ public class UserActivityService {
 	public List<UserActivity> getUserActivityList(int userId, int movieId){
 		return uaRepo.findByUserIdAndMovieId(userId,movieId);
 	}
+
+	
+
+	
 }

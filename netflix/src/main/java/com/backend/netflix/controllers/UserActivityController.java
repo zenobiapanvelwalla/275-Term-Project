@@ -30,14 +30,14 @@ public class UserActivityController {
 	public List<UserActivity> getUserActivityInReverseOrder(@PathVariable int user_id) {
 		return userActivityService.getUserActivityByUserIdOrderByUpdatedAt(user_id);
 	}
-
-	@RequestMapping(value = "/user-activities/store/{user_id}/{movie_id}",method = RequestMethod.GET)
-	public ResponseEntity<?> addUserActivity(@PathVariable int user_id, @PathVariable int movie_id) throws Exception {
+	//added checkpoint to updated the checkpoint of an already existing user activity
+	@RequestMapping(value = "/user-activities/store/{user_id}/{movie_id}/{checkpoint}",method = RequestMethod.GET)
+	public ResponseEntity<?> addUserActivity(@PathVariable int user_id, @PathVariable int movie_id,@PathVariable long checkpoint) throws Exception {
 
 		HashMap<String, Object> response = new HashMap<>();
 
 		//Saving user activity
-		userActivityService.addUserActivity(user_id,movie_id);
+		userActivityService.addUserActivity(user_id,movie_id,checkpoint);
 
 		response.put("success", true);
 		response.put("message", "Activity Added Successfully");
@@ -45,7 +45,26 @@ public class UserActivityController {
 
 		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
-	
+	// rough code in progress...
+//	@RequestMapping(value="/user-activities/update/{user_id}/{movie_id}",method=RequestMethod.GET)
+//	public ResponseEntity<?> addOrUpdateUserActivity(@PathVariable int user_id,@PathVariable int movie_id) throws Exception{
+//		HashMap<String,Object> response = new HashMap<String, Object>();
+//		userActivityService.addOrUpdateUserActivity(user_id,movie_id);
+//		return new ResponseEntity(response,HttpStatus.OK);
+//	}
+	@RequestMapping(value="/user-activities-update/{user_id}/{movie_id}")
+	public ResponseEntity<?> updateUserActivity(@PathVariable int user_id, @PathVariable int movie_id,@PathVariable long checkpoint){
+		HashMap<String, Object> response = new HashMap<>();
+
+		//Saving user activity
+		userActivityService.updateUserActivity(user_id,movie_id,checkpoint);
+
+		response.put("success", true);
+		response.put("message", "Activity Added Successfully");
+		response.put("statusCode", 200);
+
+		return new ResponseEntity(response, HttpStatus.ACCEPTED);
+	}
 	@GetMapping("/movies/play-count/{movieId}/{type}")
 	public ResponseEntity<?> getNumberOfPlaysForMovie(@PathVariable int movieId,@PathVariable int type){
 		HashMap<String, Object> response = new HashMap<String, Object>();

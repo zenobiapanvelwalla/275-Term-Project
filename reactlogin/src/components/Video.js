@@ -68,6 +68,7 @@ class Video extends Component {
 
 
         return (
+        
           <div>
               <button className="btn btn-warning" onClick={this.endVideo}>Stop</button>
               <YouTube

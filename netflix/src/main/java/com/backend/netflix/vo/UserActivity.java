@@ -37,7 +37,8 @@ public class UserActivity{
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
-	private LocalTime checkpoint;
+	//private LocalTime checkpoint;
+	private long checkpoint;
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -88,10 +89,17 @@ public class UserActivity{
 	public void setWatching(boolean watching) {
 		this.watching = watching;
 	}
-	public LocalTime getCheckpoint() {
+//	public LocalTime getCheckpoint() {
+//		return checkpoint;
+//	}
+//	public void setCheckpoint(LocalTime checkpoint) {
+//		this.checkpoint = checkpoint;
+//	}
+	
+	public long getCheckpoint() {
 		return checkpoint;
 	}
-	public void setCheckpoint(LocalTime checkpoint) {
+	public void setCheckpoint(long checkpoint) {
 		this.checkpoint = checkpoint;
 	}
 	

@@ -124,8 +124,10 @@ public class MovieController {
                 else
                     canUserWatch = true;
                 //if user activity checkpoint time is greater than 00:00 than he can review
-                LocalTime checkpoint = userActivity.getCheckpoint();
-                if(checkpoint.compareTo(LocalTime.MIN)==0) {
+                //LocalTime checkpoint = userActivity.getCheckpoint();
+                long checkpoint = userActivity.getCheckpoint();
+                //if(checkpoint.compareTo(LocalTime.MIN)==0) {
+                if(checkpoint==0) {
                 	canUserReview= false;
                 } else {
                 	canUserReview= true;
