@@ -33,12 +33,12 @@ class BillingPage extends Component {
                 
               
                 <div className="row">
-                    <div className="col-75">
+                    <div className="col-75B col-75">
                         
                             <form action="/billing">
 
-                                <div className="row">
-                                    {/* <div className="col-50">
+                                <div className="row rowB">
+                                    {/* <div className="col-50B col-50">
                                         <h3>Billing Address</h3>
                                         <label htmlFor="fname"><i className="fa fa-user"></i> Full Name</label>
                                         <input type="text" id="fname" name="firstname" placeholder="John M. Doe"/>
@@ -50,53 +50,53 @@ class BillingPage extends Component {
                                         <input type="text" id="city" name="city" placeholder="New York"/>
 
                                         <div className="row">
-                                            <div className="col-50">
+                                            <div className="col-50B col-50">
                                                 <label htmlFor="state">State</label>
                                                 <input type="text" id="state" name="state" placeholder="NY"/>
                                             </div>
-                                            <div className="col-50">
+                                            <div className="col-50B col-50">
                                                 <label htmlFor="zip">Zip</label>
                                                 <input type="text" id="zip" name="zip" placeholder="10001"/>
                                             </div>
                                         </div>
                                     </div> */}
 
-                                 <div className="col-75">
+                                 <div className="col-75B col-75">
                                         <h3>Payment</h3>
-                                        <label htmlFor="fname">Accepted Cards</label>
+                                        <label className="labelB" htmlFor="fname">Accepted Cards</label>
                                         <div className="icon-container">
                                         <i className="fa fa-cc-visa visa"></i>
                                         <i className="fa fa-cc-amex amex"></i>
                                         <i className="fa fa-cc-mastercard mastercard"></i>
                                         <i className="fa fa-cc-discover discover"></i>
                                         </div>
-                                        <label htmlFor="cname">Name on Card</label>
-                                        <input type="text" id="cname" name="cardname" placeholder="John More Doe"/>
-                                        <label htmlFor="ccnum">Credit card number</label>
-                                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"/>
-                                        <label htmlFor="expmonth">Exp Month</label>
-                                        <input type="text" id="expmonth" name="expmonth" placeholder="September"/>
+                                        <label className="labelB" htmlFor="cname">Name on Card</label>
+                                        <input className="inputB" type="text" id="cname" name="cardname" placeholder="John More Doe"/>
+                                        <label className="labelB" htmlFor="ccnum">Credit card number</label>
+                                        <input className="inputB" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"/>
+                                        <label className="labelB" htmlFor="expmonth">Exp Month</label>
+                                        <input className="inputB" type="text" id="expmonth" name="expmonth" placeholder="September"/>
 
                                         <div className="row">
-                                        <div className="col-50">
-                                            <label htmlFor="expyear">Exp Year</label>
-                                            <input type="text" id="expyear" name="expyear" placeholder="2018"/>
+                                        <div className="col-50B col-50">
+                                            <label className="labelB" htmlFor="expyear">Exp Year</label>
+                                            <input className="inputB" type="text" id="expyear" name="expyear" placeholder="2018"/>
                                         </div>
-                                        <div className="col-50">
-                                            <label htmlFor="cvv">CVV</label>
-                                            <input type="text" id="cvv" name="cvv" placeholder="352"/>
+                                        <div className="col-50B col-50">
+                                            <label className="labelB" htmlFor="cvv">CVV</label>
+                                            <input className="inputB" type="text" id="cvv" name="cvv" placeholder="352"/>
                                         </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 
-                                <input type="submit" value="Continue to checkout" className="btn"/>
+                                <input type="submit" value="Continue to checkout" className="btn btnB"/>
                             </form>
                         
                     </div>
 
-                    <div className="col-25">
+                    <div className="col-25B col-25">
                         <div className="billing-container">
                             <h4>Cart 
                                 <span className="price">

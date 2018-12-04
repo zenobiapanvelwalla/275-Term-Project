@@ -149,7 +149,8 @@ class CustomerDashboard extends Component {
                     <div className = "col-sm-4   ml-0 mr-0 border card-deck">
                     <div className="card">
                     <img onClick={() =>{
-                        localStorage.setItem('movie_id' , movie.movieId)
+                        let path = "/moviedetail/" +  movie.movieId;
+                        this.props.history.push(path);
                     }} class="card-img-top center" src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"} alt="Card image cap"></img>
                         {/* <img src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"}/> */}
                         <div className="">

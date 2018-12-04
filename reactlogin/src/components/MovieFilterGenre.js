@@ -31,9 +31,6 @@ class MovieFilterGenre extends Component {
         this.setState({ allMovies: nextProps.movies });  
       }
 
-    componentDidMount(){
-    }
-
     handleOnChangeGenre(value) {
         console.log("Val", value);
         this.setState({ arrayValue: value }, () => {

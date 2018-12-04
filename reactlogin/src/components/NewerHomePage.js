@@ -40,7 +40,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/verifyuser" component={VerifyUser}/>
                     <Route path = "/billing" component={BillingPage}/>
                     <Route path="/user-profile" component={UserProfile}/>
-                    <Route exact path="/moviedetail" component={MovieDetail}/> 
+                    <Route exact path="/moviedetail/:movieId" component={MovieDetail}/> 
                     <Route exact path="/video" component={Video}/> 
                     <Route exact path="/searchmovies" component={SearchMovies}/> 
                     <Route exact path="/moviefilter" component={MovieFilter}/> 

@@ -1,4 +1,4 @@
- 
+
 package com.backend.netflix.vo;
 
 import com.backend.netflix.vo.User;
@@ -14,39 +14,38 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="movies")
-public class Movie{
+@Table(name = "movies")
+public class Movie {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-    private String title;
+	private String title;
 
-    private String genre;
+	private String genre;
 
-    private String year;
-    private String studio;
-    private String synopsis;
-    private String imageUrl;
-    private String movieUrl;
-    private String actors;
-    @Nullable
-    private String director;
-    private String country;
-    private String rating;
+	private String year;
+	private String studio;
+	private String synopsis;
+	private String imageUrl;
+	private String movieUrl;
+	private String actors;
+	@Nullable
+	private String director;
+	private String country;
+	private String rating;
 
-    private String availability;
-    @Nullable
-    private double price;
-    private boolean isDeleted;
-    private float avgStarRating = 0;
-    private int noOfPlays = 0;
+	private String availability;
+	@Nullable
+	private double price;
+	private boolean isDeleted;
+	private float avgStarRating = 0;
+	private int noOfPlays = 0;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="movieId")
-    private List<Review> reviews;
-
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "movieId")
+	private List<Review> reviews;
 
 	public int getNoOfPlays() {
 		return noOfPlays;
@@ -55,147 +54,141 @@ public class Movie{
 	public void setNoOfPlays(int noOfPlays) {
 		this.noOfPlays = noOfPlays;
 	}
-	
-    public int getMovieId() {
-        return id;
-    }
 
-    public void setMovieId(int id) {
-        this.id = id;
-    }
+	public int getMovieId() {
+		return id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setMovieId(int id) {
+		this.id = id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getGenre() {
-        return genre;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
+	public String getGenre() {
+		return genre;
+	}
 
-    public String getYear() {
-        return year;
-    }
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
 
-    public void setYear(String year) {
-        this.year = year;
-    }
+	public String getYear() {
+		return year;
+	}
 
-    public String getStudio() {
-        return studio;
-    }
+	public void setYear(String year) {
+		this.year = year;
+	}
 
-    public void setStudio(String studio) {
-        this.studio = studio;
-    }
+	public String getStudio() {
+		return studio;
+	}
 
-    public String getSynopsis() {
-        return synopsis;
-    }
+	public void setStudio(String studio) {
+		this.studio = studio;
+	}
 
-    public void setSynopsis(String synopsis) {
-        this.synopsis = synopsis;
-    }
+	public String getSynopsis() {
+		return synopsis;
+	}
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
+	}
 
-    public void setImageUrl(String image) {
-        this.imageUrl = image;
-    }
+	public String getImageUrl() {
+		return imageUrl;
+	}
 
-    public String getMovieUrl() {
-        return movieUrl;
-    }
+	public void setImageUrl(String image) {
+		this.imageUrl = image;
+	}
 
-    public void setMovieUrl(String movie) {
-        this.movieUrl = movie;
-    }
+	public String getMovieUrl() {
+		return movieUrl;
+	}
 
-    public String getActors() {
-        return actors;
-    }
+	public void setMovieUrl(String movie) {
+		this.movieUrl = movie;
+	}
 
-    public void setActors(String actors) {
-        this.actors = actors;
-    }
+	public String getActors() {
+		return actors;
+	}
 
-    public String getDirector() {
-        return director;
-    }
+	public void setActors(String actors) {
+		this.actors = actors;
+	}
 
-    public void setDirector(String director) {
-        this.director = director;
-    }
+	public String getDirector() {
+		return director;
+	}
 
-    public String getCountry() {
-        return country;
-    }
+	public void setDirector(String director) {
+		this.director = director;
+	}
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
+	public String getCountry() {
+		return country;
+	}
 
-    public String getRating() {
-        return rating;
-    }
+	public void setCountry(String country) {
+		this.country = country;
+	}
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
+	public String getRating() {
+		return rating;
+	}
 
-    public String getAvailability() {
-        return availability;
-    }
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
 
-    public void setAvailability(String availability) {
-        this.availability = availability;
-    }
+	public String getAvailability() {
+		return availability;
+	}
 
-    public double getPrice() {
-        return price;
-    }
+	public void setAvailability(String availability) {
+		this.availability = availability;
+	}
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	public double getPrice() {
+		return price;
+	}
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
+	public void setPrice(double price) {
+		this.price = price;
+	}
 
-    public boolean getIsDeleted() {
-        return isDeleted;
-    }
+	public void setIsDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
+	public boolean getIsDeleted() {
+		return isDeleted;
+	}
 
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
+	public List<Review> getReviews() {
+		return reviews;
+	}
 
-    public float getAvgStarRating() {
-        return avgStarRating;
-    }
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
 
-    public void setAvgStarRating(float avgStarRating) {
-        this.avgStarRating = avgStarRating;
-    }
+	public float getAvgStarRating() {
+		return avgStarRating;
+	}
 
-
-
+	public void setAvgStarRating(float avgStarRating) {
+		this.avgStarRating = avgStarRating;
+	}
 
 }
-
-
-

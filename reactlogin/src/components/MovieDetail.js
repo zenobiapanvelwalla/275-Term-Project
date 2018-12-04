@@ -10,6 +10,7 @@ import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
 import details from '../custom_css/movie_detail.css';
+import ReactStars  from 'react-stars';
 // import YouTube from 'react-youtube';
 // import Video from "../components/Video";
 
@@ -18,14 +19,16 @@ class MovieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movie_details:''
+            movie_details:'',
+            giveReview: false,
+            rating:''
         }
     }
 
     componentDidMount(){
         console.log("Inside movie detail fetching")
         let self = this;
-        let path = "/movies/" + '1';
+        let path = "/movies/" + this.props.match.params.movieId;
         axios.get(config.API_URL+path)
         .then(function (response) {
           console.log("Message " + JSON.stringify(response));
@@ -43,54 +46,103 @@ class MovieDetail extends Component {
     render(){
         return (
             <div className="moviedetail_body">
-            <NavBar></NavBar>
-            <div>
-            <div className="card">
-                <div className="container-fliud">
-                    <div className="wrapper row">
-                        <div className="preview col-md-6">
-                            <div className="preview-pic tab-content">
-                              <div className="tab-pane active" id="pic-1"><img src={this.state.movie_details.imageUrl} /></div>
-                            </div>
-                        </div>  
-                        <div className="details col-md-6">
-                            <h3 className="product-title">{this.state.movie_details.title}</h3>
-                            <div className="rating">
-                                <div className="stars">
-                                    <span className="fa fa-star checked"></span>
-                                    <span className="fa fa-star checked"></span>
-                                    <span className="fa fa-star checked"></span>
-                                    <span className="fa fa-star"></span>
-                                    <span className="fa fa-star"></span>
-                                </div>
-                                <span className="review-no">41 reviews</span>
-                            </div>
-                            <p className="product-description">{this.state.movie_details.synopsis}</p>
-                            <h4 className="price">current price: <span>$180</span></h4>
-                            <p className="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-                            <h5 className="sizes">sizes:
-                                <span className="size" data-toggle="tooltip" title="small">s</span>
-                                <span className="size" data-toggle="tooltip" title="medium">m</span>
-                                <span className="size" data-toggle="tooltip" title="large">l</span>
-                                <span className="size" data-toggle="tooltip" title="xtra large">xl</span>
-                            </h5>
-                            <h5 className="colors">colors:
-                                <span className="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-                                <span className="color green"></span>
-                                <span className="color blue"></span>
-                            </h5>
-                            <div className="action">
-                            
-                            <button className="add-to-cart btn btn-default" type="button" onClick={(event) => {
-                                this.handlePlay(event)
-                            }}><span className="fa fa-play">Play</span></button>
-                            </div>
+                <NavBar></NavBar>
+                <div className = "row">
+                    <div className = "col-md-6 sectionM" id="pic-1"><img className="imageSection" src={this.state.movie_details.imageUrl } /></div>
+                    <div className = "col-md-6 sectionM">
+
+                        {/* title */}
+                        <div className="row">
+                            <h3 className="text-left">{this.state.movie_details.title + "(" +  this.state.movie_details.year + ")"}</h3>
                         </div>
+
+                        <div className="row">
+                            <ReactStars
+                                    value = {this.state.movie_details.avgStarRating}
+                                    count={5}
+                                    size={20}
+                                    color2={'#ffd700'}
+                                    edit = {false} 
+                            />
+                        </div>
+
+                        <div className="row">
+                            {/* Add Review */}
+                            {localStorage.getItem('role') == 'ADMIN' ? null : 
+                            <div>
+                            <button type="button" onClick={(event) => {this.setState({giveReview:true})}} className="btn btn-link btn-sm ml-0 pl-0 "><p className = "btnLink"><u>Add Review</u></p></button>
+                            <button type="button" onClick={(event) => {this.setState({giveReview:true})}} className="btn btn-link btn-sm ml-0 pl-0 ml-0 pl-0 "><p className = "btnLink"><u>See Reviews</u></p></button>
+                            </div>}
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6">
+                            {/* if customer and started watching reviews */}
+                            { !this.state.giveReview ? null : 
+                            <div className="border reviewSection text-left pt-2 pl-2 pr-2 pb-2">   
+                                <b>Add Rating</b>
+                                <ReactStars
+                                value = {this.state.rating}
+                                count={5}
+                                onChange={(event)=>{
+                                    this.setState({rating : event})
+                                    console.log("Rating : " + event);
+                                }}
+                                size={24}
+                                color2={'#ffd700'} />
+                                <textarea placeholder="Add Review" ref="reviewText" className="form-control"  rows="3"></textarea>  
+                                <button className="btn btn-outline-primary btn-sm mt-1" onClick={(event) => {
+                                    if(this.state.rating <= 0)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        var payload = {
+                                            userId : localStorage.getItem('user_id'),
+                                            userName : localStorage.getItem('user_details').displayName,
+                                            movieId : this.props.match.params.movieId ,
+                                            starRating : this.state.rating,
+                                            reviewText : this.refs.reviewText.value
+                                        }
+                                        console.log("Review : " + JSON.stringify(payload));
+                                        let self = this;
+                                        axios.post(config.API_URL+'/movies/add-review',payload)
+                                        .then(function (response) {
+                                        console.log("Attributes " + JSON.stringify(response.data));
+                                        self.setState({actor:response.data});
+                                        })
+                                        .catch(function (error) {
+                                        console.log(error);
+                                        });
+                                    }
+                                }}>Submit</button>
+                                <button className="btn btn-outline-primary btn-sm mt-1" onClick={(event) => {this.setState({giveReview:false})}}>Cancel</button>
+                            </div>}
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <p className="small text-left detailText">{this.state.movie_details.synopsis}</p>
+                    </div>
+                    <div className="row detailText">
+                                <b>Director: </b><p>{this.state.movie_details.director}</p>
+                    </div>
+                    <div className="row detailText">
+                                <b>Cast: </b><p>{this.state.movie_details.actors}</p>
+                    </div>
+                    <div className="row">
+                        <button type="button" className="btn btn-danger">Watch Now</button>
+                    </div>
+
+                    <div className="row">
+                        <button type="button" className="btn btn-danger">Watch Now</button>
+                    </div>
+
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
+
         )
     }
 

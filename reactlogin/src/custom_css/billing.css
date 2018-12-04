@@ -21,7 +21,7 @@
     margin: 12px;
 }
 
-.row {
+.rowB {
     display: -ms-flexbox; /* IE10 */
     display: flex;
     -ms-flex-wrap: wrap; /* IE10 */
@@ -29,24 +29,24 @@
     margin: 0 -16px;
   }
   
-  .col-25 {
+  .col-25B {
     -ms-flex: 25%; /* IE10 */
     flex: 25%;
   }
   
-  .col-50 {
+  .col-50B {
     -ms-flex: 50%; /* IE10 */
     flex: 50%;
   }
   
-  .col-75 {
+  .col-75B {
     -ms-flex: 75%; /* IE10 */
     flex: 75%;
   }
   
-  .col-25,
-  .col-50,
-  .col-75 {
+  .col-25B,
+  .col-50B,
+  .col-75B {
     padding: 0 16px;
   }
   
@@ -59,7 +59,7 @@
     
   }
   
-  input[type=text] {
+  .inputB[type=text] {
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
@@ -67,7 +67,7 @@
     border-radius: 3px;
   }
   
-  label {
+  .labelB {
     margin-bottom: 10px;
     display: block;
   }
@@ -78,7 +78,7 @@
     font-size: 24px;
   }
   
-  .btn {
+  .btnB {
     background-color: #4CAF50;
     color: white;
     padding: 12px;
@@ -90,7 +90,7 @@
     font-size: 17px;
   }
   
-  .btn:hover {
+  .btnB:hover {
     background-color: #45a049;
   }
   
@@ -101,10 +101,10 @@
   
   /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
   @media (max-width: 800px) {
-    .row {
+    .rowB {
       flex-direction: column-reverse;
     }
-    .col-25 {
+    .col-25B {
       margin-bottom: 20px;
     }
   }
