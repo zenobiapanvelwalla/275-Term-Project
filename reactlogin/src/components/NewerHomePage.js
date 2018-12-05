@@ -51,7 +51,6 @@ class NewerHomePage extends Component {
                     <Route exact path="/moviefiltergenre" component={MovieFilterGenre}/>
                     <Route exact path="/moviefilterrating" component={MovieFilterRating}/>
                     <Route exact path="/givereviews" component={GiveReviews}/>
-                    
                 </Switch>
             </Router>
 

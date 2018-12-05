@@ -34,19 +34,11 @@ class UserProfile extends Component {
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
-        var data = {months:this.refs.months, amountPaid:this.state.amountPaid}
-        // axios.post(config.API_URL+'/subscribe',data)
-        //             .then(function (response) {
-        //               console.log(response);
-        //               if(response.data.success)
-        //               {
-                        
-        //                 self.props.history.push('/pay');
-        //               }
-        //             })
-        //             .catch(function (error) {
-        //               console.log(error);
-        //             });
+        localStorage.setItem("subscriptionMonths",this.ref.months.value);
+        let amount = this.ref.months.value*10;
+        localStorage.setItem("page","subscription");
+        localStorage.setItem("amount",amount);
+        this.props.history.push('/billing');
         
 
     }
