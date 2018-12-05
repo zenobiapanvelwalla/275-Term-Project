@@ -9,11 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.backend.netflix.services.UserActivityService;
+import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.UserActivity;
 import com.backend.netflix.beans.TopMovie;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
 public class UserActivityController {
 	@Autowired	
 	private UserActivityService userActivityService;
@@ -94,5 +95,16 @@ public class UserActivityController {
 //		response.put("statusCode", 200);
 //		return new ResponseEntity(response, HttpStatus.OK);
 //	}
+	
+	@GetMapping("/user-activities/get-movies-in-progress/{userId}")
+	public ResponseEntity<?> getMoviesInProgress(@PathVariable int userId){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		List<Movie> movies = userActivityService.getMoviesInProgress(userId);
+		
+		response.put("success", true);
+		response.put("statusCode",200);
+		response.put("movies",movies);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
 
 }

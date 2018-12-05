@@ -33,7 +33,7 @@ class MovieDetail extends Component {
         axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
           console.log("Message " + JSON.stringify(response));
-          self.setState({movie_details:response.data.message});
+          self.setState({movie_details:response.data});
         })
         .catch(function (error) {
           console.log(error);

@@ -73,6 +73,10 @@ public class UserActivityService {
 				uactivity.setUpdatedAt(LocalDateTime.now());
 				uaRepo.save(uactivity);
 			} else {
+				uactivity.setWatched(true);
+				uactivity.setWatching(false);
+				//uactivity.setUpdatedAt(LocalDateTime.now());  //not touching updated_at
+				uaRepo.save(uactivity);
 				//if the user resumes playing after 24 hours then his checkpoint should be maintained, even if a new user activity is created.
 				utilAddUserActivity(userId, movieId,newCheckPoint);
 			}
@@ -218,6 +222,10 @@ public class UserActivityService {
 
 	public List<UserActivity> getUserActivityList(int userId, int movieId){
 		return uaRepo.findByUserIdAndMovieId(userId,movieId);
+	}
+
+	public List<Movie> getMoviesInProgress(int userId) {
+		return uaRepo.getMoviesInProgress(userId);
 	}
 
 	

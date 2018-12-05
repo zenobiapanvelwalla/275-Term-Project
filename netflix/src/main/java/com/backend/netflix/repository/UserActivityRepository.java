@@ -116,6 +116,10 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    		"   ORDER BY year(updated_at) DESC, month(updated_at) DESC",nativeQuery=true)
    List<Integer> getMonthsWatchedMovedPerMonth();
    
+   @Transactional
+   @Query(value="SELECT * FROM movies WHERE id IN (SELECT DISTINCT movie_id FROM users_activities WHERE user_id=? AND isWatching=true AND isWatched=false",nativeQuery=true)
+   List<Movie> getMoviesInProgress(int userId);
+   
    
    
 }

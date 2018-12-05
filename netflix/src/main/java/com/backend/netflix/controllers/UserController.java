@@ -17,9 +17,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.Cookie;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-
 import com.backend.netflix.services.BillingService;
 import com.backend.netflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,9 +205,6 @@ public class UserController {
 					List<Integer> moviesPaidForList =  billingService.getListOfMoviesUserHasPaidFor(user.getId());
 					session.setAttribute("userId",userList.get(0).getId());
 					session.setAttribute("role",user.getRole());
-					Cookie cookie = new Cookie("JSESSIONID", session.getId() );
-
-	    			response.put("Cookie", cookie);
 					response.put("userId",userList.get(0).getId());
 					response.put("role", user.getRole());
 					response.put("verified",true);
@@ -324,7 +320,9 @@ public class UserController {
 	        System.out.println(session.getAttribute("userId"));
 	        session.removeAttribute("role");
 	        session.removeAttribute("userId");
-	      
+	        ServletContext context = session.getServletContext();
+	        context.removeAttribute("role");
+	        context.removeAttribute("userId");       
 	        session.invalidate();
 
 	        HashMap<String,Object> response =new HashMap<>();
