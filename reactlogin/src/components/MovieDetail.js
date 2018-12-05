@@ -30,7 +30,7 @@ class MovieDetail extends Component {
         let self = this;
         let path = "/movies/" + this.props.match.params.movieId;
         console.log(config.API_URL+path);
-        axios.get(config.API_URL+path)
+        axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
           console.log("Message " + JSON.stringify(response));
           self.setState({movie_details:response.data.message});

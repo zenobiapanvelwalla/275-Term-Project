@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
 
 //@ComponentScan(basePackages = "com.backend.netflix.beans,com.backend.netflix.services,com.backend.netflix.vo" ) ;
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
 public class FinancialReportController {
 
 	@Autowired

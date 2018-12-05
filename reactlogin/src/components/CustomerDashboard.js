@@ -42,7 +42,7 @@ class CustomerDashboard extends Component {
     }
     componentDidMount(){
         let self = this;
-        axios.get(config.API_URL+'/movies')
+        axios.get(config.API_URL+'/movies',{withCredentials: true})
         .then(function (response) {
         //   console.log("Message " + JSON.stringify(response.data.message));
         //   this.setState({movies:response.data.message[0]});

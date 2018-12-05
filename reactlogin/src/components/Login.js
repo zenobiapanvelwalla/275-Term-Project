@@ -36,7 +36,7 @@ class Login extends Component {
                     }
                 let self = this;
                 console.log("User Data:" + JSON.stringify(data))
-                axios.post(config.API_URL+'/login',data)
+                axios.post(config.API_URL+'/login',data,{withCredentials: true})
                 .then(function (response) {
                   console.log(response);
                   if(response.data.success)
