@@ -11,7 +11,8 @@ class UserProfile extends Component {
     state={
         billingStatus:true,
         subscribe:false,
-        amountPaid:0
+        amountPaid:0,
+        months:0
     }
 
     constructor(props){
@@ -23,20 +24,24 @@ class UserProfile extends Component {
     componentDidMount(){
       //get the logged in user's subscription details
     }
-    updateAmount(e){
+    updateNumberOfMonths(e){
         e.preventDefault();
-        var amount = this.ref.months * 10;
+        var amount = this.ref.months.value * 10;
         this.setState({
-            amountPaid: amount
+            amountPaid: amount,
+            months: this.ref.months.value
+
         });
         console.log("Amount to be paid:", this.state.amountPaid);
     }
+
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
-        var data = {months:this.refs.months, amountPaid:this.state.amountPaid}
-
-        
+        localStorage.setItem("subscriptionMonths",this.state.months);
+        localStorage.setItem("page","subscription");
+        localStorage.setItem("amount",this.state.amountPaid);
+        this.props.history.push('/billing');
 
     }
 
@@ -127,7 +132,7 @@ class UserProfile extends Component {
                                   <div className="form-group row">
                                     <label htmlFor="select" className="col-4 col-form-label">Months</label> 
                                     <div className="col-8">
-                                      <select ref="months" id="select" name="select" className="custom-select">
+                                      <select ref="months" onChange={this.updateAmount} id="select" name="select" className="custom-select">
                                         <option value="" disabled="true">Select Period</option>
                                             {monthsList}
                                       </select>

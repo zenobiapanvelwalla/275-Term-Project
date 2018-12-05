@@ -63,6 +63,7 @@ public class ReviewService {
     }
 
     public Movie addReview(Review review) {
+    	reviewRepository.save(review);
         Movie movie = mRepo.findById(review.getMovieId());
         reviewRepository.save(review);
         List<Review> reviews = reviewRepository.findByMovieId(movie.getMovieId());

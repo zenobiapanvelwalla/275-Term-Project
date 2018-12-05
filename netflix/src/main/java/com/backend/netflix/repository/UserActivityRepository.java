@@ -65,7 +65,7 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
 
 
    @Transactional
-   @Query(value = "SELECT * FROM users_activities WHERE user_id=? ORDER BY updated_at DESC", nativeQuery = true)
+   @Query(value = "SELECT * FROM users_activities WHERE user_id=? AND checkpoint>0 ORDER BY updated_at DESC", nativeQuery = true)
    List<UserActivity> findByUserIdOrderByUpdatedAt(int userId);
 
    /*------TOP 10 Users----------*/

@@ -75,6 +75,7 @@ public class UserController {
 		
 	}
 	
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/users/{userId}")
 	public ResponseEntity<?> getUser(@PathVariable int userId, HttpSession session) {

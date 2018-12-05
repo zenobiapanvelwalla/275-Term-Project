@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {withRouter} from 'react-router-dom';
+import config from '../config.js';
+import axios from 'axios';
 import AdminNavBar from './AdminNavBar';
 import customer from "../custom_css/browse_customers.css";
 
@@ -8,15 +10,82 @@ class BrowseCustomers extends Component{
         list:true,
         movieHistory:false,
         topTen:false,
-        topTenList:[],
-        data:{ 
-            topTenByLast24Hours:[],
-            top10ByLastWeek:[],
-            top10ByLastMonth:[]
-        }
+        topTenList:[],  //topTenList will be populated depending on what is selected from the dropdown
+        topTenByLast24Hours:[],
+        top10ByLastWeek:[],
+        top10ByLastMonth:[],
+        users:[],
+        moviePlayingHistory:[]
     }
     constructor(props){
         super(props);
+    }
+    componentWillMount(){
+        console.log("Inside browse customers page")
+        let self = this;
+        let path = "/users";
+        //console.log(config.API_URL+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data);
+          self.setState({users:response.data.users});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //get top ten users in last 24 hours
+        axios.get(config.API_URL+"/users/top-ten/24",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data);
+          self.setState({ topTenByLast24Hours:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //get top ten users in last 7 days (week)
+        axios.get(config.API_URL+"/users/top-ten/7",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data);
+          self.setState({ top10ByLastWeek:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //get top ten users in last 30 days (month)
+        axios.get(config.API_URL+"/users/top-ten/30",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data);
+          self.setState({ top10ByLastMonth:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+
+    }
+
+    getMoviePlayingHistory(userid){
+
+        console.log("USER ID"+ userid);
+        let self = this;
+        let path = "/user-activities/movie-playing-history/"+userid;
+        console.log("path: "+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data.history);
+          self.setState({moviePlayingHistory:response.data.history});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
     render(){
     return (
@@ -34,7 +103,7 @@ class BrowseCustomers extends Component{
                 </div> 
 		    </div>
             {this.state.list==true?
-            <div className="card-default cardBC">
+            <div className="card-default cardBC" id="users">
                 <div className="card-header"><b>Customers List</b></div>
                 <div className="table-responsive">
                 <table className="table table-bordered table-hover">
@@ -45,25 +114,27 @@ class BrowseCustomers extends Component{
                             <th>isVerified</th>
                             <th>Registration Date</th>
                             <th>
-                            
+                                Action
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Zenobia Panvelwala</td>
-                            <td>ZenobiaRockSTAR</td>
-                            <td>If true show some icon</td>
-                            <td>12-02-2018 11:59:00</td>
-                            <td><a href="#">View Movie Playing 'History'</a></td>
-                            <td className="text-center">
-                            <div className="radial-bar radial-bar-25 radial-bar-xs" data-label="25%"></div>
-                            </td>
+                    {this.state.users.map(user =>
+                        <tr key={user.id}> 
+                            <td>{user.email}</td>
+                            <td>{user.displayName}</td>
+                            <td>{user.isVerified}</td>
+                            <td>{user.registeredAt}</td>
+                            <td><a href="#history" onClick={this.getMoviePlayingHistory.bind(this,user.id)}> Movie Playing History</a></td>
+                            
                         </tr>
+                    )}
                     </tbody>
                 </table>
                 </div>
-                <div className="card-footer">
+                <div className="card-footer" id="history">
+                <a href="#users" className="pull-right">Go To Top</a>
+                {this.state.moviePlayingHistory.length>0?
                 <div className="d-flex">
                     {/* A particular customer movie watching history in reverse chronological order */}
                     <table className="table table-bordered table-hover">
@@ -71,18 +142,23 @@ class BrowseCustomers extends Component{
                         <tr>
                             <th>Movie Title</th>
                             <th>Watched Date</th>
-                            <th>Number of times watched</th>
+                            <th>Movie Availability</th>
+                            <th>Genre</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Spider Man</td>
-                            <td>12-02-2000</td>
-                            <td>4</td>
+                        {this.state.moviePlayingHistory.map((history)=>
+                        <tr key={history.id}>
+                            <td>{history.movie.title}</td>
+                            <td>{history.updatedAt}</td>
+                            <td>{history.movie.availability}</td>
+                            <td>{history.movie.genre}</td>
                         </tr>
+                        )}
                     </tbody>
                 </table>
                 </div>
+                : null}
                 </div>
             </div>
             :""}
@@ -95,14 +171,26 @@ class BrowseCustomers extends Component{
                 <select onChange={(event)=>{
                     console.log(event.target.value);
                     switch(event.target.value){
-                        case 'last 24 hours':this.state.topTenList = this.state.data.topTen.topTenByLast24Hours;
+                        case 'last 24 hours':
+                            this.setState({
+                                topTenList: this.state.topTenByLast24Hours
+                            });
                         break;
-                        case 'last week':this.state.topTenList = this.state.data.topTen.top10ByLastWeek;
+
+                        case 'last week':
+                            this.setState({
+                                topTenList :this.state.top10ByLastWeek
+                            });
                         break;
-                        case 'last month':this.state.topTenList = this.state.data.topTen.top10ByLastMonth;
+
+                        case 'last month':
+                            this.setState({
+                                topTenList:this.state.top10ByLastMonth
+                            });
                         break;
                     }
                 }}>
+                    <option value="" selected disabled>Choose Period</option>
                     <option value="last 24 hours">Last 24 Hours</option>
                     <option value="last week">Last Week</option>
                     <option value="last month">Last Month</option>
@@ -113,25 +201,20 @@ class BrowseCustomers extends Component{
                     <tr>
                         <th>Email</th>
                         <th>Display Name</th>
-                        <th>isVerified</th>
-                        <th>Registration Date</th>
-                        <th>
-                        
-                        </th>
+                        <th>Play Count</th>
                     </tr>
                 </thead>
+                {this.state.topTenList.length>0?
                 <tbody>
-                    <tr>
-                        <td>Zenobia Panvelwala</td>
-                        <td>ZenobiaRockSTAR</td>
-                        <td>If true show some icon</td>
-                        <td>12-02-2018 11:59:00</td>
-                        <td><a href="#">View Movie Playing 'History'</a></td>
-                        <td className="text-center">
-                        <div className="radial-bar radial-bar-25 radial-bar-xs" data-label="25%"></div>
-                        </td>
+                    {this.state.topTenList.map((user)=>
+                    <tr key={user.id}>
+                        <td>{user.email}</td>
+                        <td>{user.displayName}</td>
+                        <td>{user.playCount}</td>
                     </tr>
+                    )}
                 </tbody>
+                :null}
             </table>
             </div>
             

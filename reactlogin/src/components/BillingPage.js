@@ -1,13 +1,20 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import NavBar from './NavBar';
+import config from '../config.js';
+import axios from 'axios';
 import billing from "../custom_css/billing.css";
 
 //https://www.w3schools.com/howto/howto_css_checkout_form.asp
 class BillingPage extends Component {
 
     state={
-        
+        //the following three details are for subsription
+        amount: localStorage.getItem("amount"),
+        page:localStorage.getItem("page"),
+        months: localStorage.getItem("months")?localStorage.getItem("months"):""
+        //end
+
     }
 
     constructor(props){
@@ -19,6 +26,28 @@ class BillingPage extends Component {
         e.preventDefault();
         console.log("Post Request To Billing Page");
         //movie id, movie type (eg. pay per view or  paid) and amount to be paid, to be sent in the request body
+
+        //if request has come from subscription page
+        if(localStorage.getItem("page").toString()=="subscription"){
+            
+              let noOfMonths = parseInt(localStorage.getItem("subscriptionMonths"));
+              let path = "/subscribe/" + noOfMonths;
+              let self = this;
+              axios.post(config.API_URL+path,{withCredentials:true})
+                .then(function (response) {
+                  console.log(response);
+                  if(response.data.success)
+                  {
+                    alert("Your subscription for "+ noOfMonths+" months was successful!");
+                    self.props.history.push('/user-profile');
+                  }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+              
+              
+        }
 
         
     }
@@ -107,9 +136,13 @@ class BillingPage extends Component {
                             {/* <p><a href="#">Product 1</a> <span className="price">$15</span></p>
                             <p><a href="#">Product 2</a> <span className="price">$5</span></p>
                             <p><a href="#">Product 3</a> <span className="price">$8</span></p> */}
-                            <p><a href="#">Billing detail, based on pay per view or subscripttion</a></p>
+                            <p>
+                                {this.state.page=="subscription"?
+                                    "Your are about to be subscribed for {this.state.months} month(s)"
+                                :"Your bill for one movie"}
+                            </p>
                             <hr/>
-                            <p>Total <span className="price"><b>$Total amount (whatever it is)</b></span></p>
+                            <p>Total <span className="price"><b>${this.state.amount}</b></span></p>
                         </div>
                     </div>
                     </div>
