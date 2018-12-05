@@ -27,7 +27,7 @@ class MovieFilterActors extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("Inside component will receive props");
+        // console.log("Inside component will receive props");
         this.setState({ allMovies: nextProps.movies });  
       }
 
@@ -48,24 +48,6 @@ class MovieFilterActors extends Component {
         console.log("Val", value);
         this.setState({ arrayValue: value }, () => {
             this.props.filterMovie(this.state.arrayValue);
-            // if(this.props.movies)
-            // {
-            // console.log("Selected Dir Values :  " + this.state.arrayValue);
-            // console.log("Movies from parent " + this.state.allMovies);
-            // let showMovies = [];
-            // this.state.allMovies.map((movie) => {
-            //     if(this.state.arrayValue.includes(movie.director))
-            //     {
-            //         console.log("inside if");
-            //         showMovies.push(movie);
-            //     }
-            // })
-            // this.setState({
-            //     movies: showMovies
-            //   }, () => {
-                
-            //   });
-        // }
         }); 
 
     }

@@ -41,7 +41,7 @@ import com.backend.netflix.vo.UserSubscription;
 import com.backend.netflix.vo.Encryption;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
 public class UserController {
 	
 	@Autowired
