@@ -28,10 +28,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Transactional
 	@Query(value="UPDATE users SET verified=true WHERE id=?1",nativeQuery=true)
 	public void setVerifiedToTrue(int id);
-	
-	
-	
-	
 	 
 	 @Transactional
 		@Query(value="SELECT count(distinct display_name) FROM users WHERE\r\n" + 

@@ -19,7 +19,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-
 import com.backend.netflix.services.BillingService;
 import com.backend.netflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -315,6 +314,9 @@ public class UserController {
 		@RequestMapping(value = "/logout")
 	    @ResponseStatus(HttpStatus.NO_CONTENT)
 	    public ResponseEntity logout(HttpSession session) {
+
+			System.out.println("------------------LOGOUT:"+ session.getAttribute("userId"));
+			System.out.println("------------------LOGOUT:"+ session.getAttribute("role"));
 	        System.out.println(session.getAttribute("userId"));
 	        session.removeAttribute("role");
 	        session.removeAttribute("userId");
@@ -322,6 +324,7 @@ public class UserController {
 	        context.removeAttribute("role");
 	        context.removeAttribute("userId");       
 	        session.invalidate();
+
 	        HashMap<String,Object> response =new HashMap<>();
 	        response.put("success", true);
 	        return  new ResponseEntity(response,HttpStatus.OK);

@@ -128,7 +128,6 @@ public class ReportService {
 
 
 	public userRegistered getMonthlyRegisteredUsers() {
-		// TODO Auto-generated method stub
 		List<BigInteger> userList= null;
 		List<Integer> monthList= null ;
 		monthList =UserRepository.getMonthuserRegisteredMonthly();
@@ -141,17 +140,5 @@ public class ReportService {
 		return userRegistered;
 
 	}
-	
-	
-
-
-
-
-
-
-
-
-
-
 
 }
