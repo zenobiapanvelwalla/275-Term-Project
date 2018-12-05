@@ -19,7 +19,8 @@ class MovieFilterGenre extends Component {
                 'Romantic',
                 'Horror',
                 'Action',
-                'Drama'
+                'Drama',
+                'Animation'
               ]
 
         };

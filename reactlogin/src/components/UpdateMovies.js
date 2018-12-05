@@ -10,7 +10,7 @@ import AdminNavBar from './AdminNavBar.js';
 import config from '../config.js';
 import axios from 'axios';
 
-class AddMovies extends Component {
+class UpdateMovies extends Component {
 
     constructor(props) {
         super(props);
@@ -26,7 +26,8 @@ class AddMovies extends Component {
             shareholders: [{ name: '' }],
             priceEnable:false,
             messageEnable : false,
-            msgResult:true
+            msgResult:true,
+            movie_details:[]
 
             // isProjectName:true,
             // isProjectDescription:true,
@@ -152,18 +153,14 @@ class AddMovies extends Component {
     // }
 
     componentDidMount(){
-        // var payload ={id:'admin@gmail.com'};
-        // API.fetchskills(payload)
-        //     .then(
-        //         (response) =>{
-        //             console.log(response);
-        //             console.log("-----------------------");
-        //             this.setState({
-        //                 skills : response.skill
-        //             });
-        //             console.log(this.state.skills)
-        //         }
-        //     );
+        let self = this;
+        let path = "/movies/" + this.props.match.params.movieId;
+        console.log(config.API_URL+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          console.log("movie_details " + JSON.stringify(response.data.message));
+          self.setState({movie_details:response.data.message})
+        })
     }
 
     componentDidUpdate() {
@@ -174,8 +171,6 @@ class AddMovies extends Component {
         // if (nextProps.isProjectAdded === true) {
         //     nextProps.history.push('/dashboard');
         // }
-
-
     }
 
     handleSubmit(e){
@@ -201,7 +196,7 @@ class AddMovies extends Component {
             "director":this.refs.director.value,
             "country":this.refs.country.value,
             "rating":this.refs.rating.key,
-            "availability":this.refs.availability.value,
+            "availability":this.refs.availability.key,
             "price":this.refs.price.value
             }
         let self = this;
@@ -275,40 +270,66 @@ class AddMovies extends Component {
             }}>
 
                 <div className="form-row align-items-center ">
-                <h3 className=""> Add Movies </h3>
+                <h3 className=""> Edit Movie </h3>
                 </div>
                 { this.state.msgResult ? null : <div className="text-left text-small small alert alert-warning">Movie Added Successfully.</div>}
-                
 
-                <div className="form-row align-items-center pt-2">
-                    <div className="col-sm-6"><input ref="title" type="text" className="form-control" id="movie_title"  placeholder="Enter title"/></div>
-                    <div className="col-sm-6"><input ref="genre" type="text" className="form-control" id="movie_genre"  placeholder="Enter Genre"/></div>
+
+                <div className="form-row text-left align-items-center pt-2">
+                    <div className="col-sm-6">Title</div>
+                    <div className="col-sm-6">Genre</div>
                 </div>
 
-                <div className="form-row align-items-center pt-3">
-                    <div className="col-sm-3"><select className="form-control" ref="year" className="form-control" id="exampleSelect1" placeholder="Release Year">
+                <div className="form-row align-items-center">
+                    <div className="col-sm-6"><input ref="title" type="text" className="form-control" id="movie_title" value={this.state.movie_details.title}  placeholder="Enter title"/></div>
+                    <div className="col-sm-6"><input ref="genre" type="text" className="form-control" id="movie_genre" value={this.state.movie_details.genre}   placeholder="Enter Genre"/></div>
+                </div>
+
+                 <div className="form-row text-left align-items-center pt-3">
+                    <div className="col-sm-3">Release Year</div> 
+                    <div className="col-sm-9">Studio</div> 
+                </div>
+
+                <div className="form-row align-items-center">
+                    <div className="col-sm-3"><select className="form-control" ref="year" value={this.state.movie_details.year} className="form-control" id="exampleSelect1" placeholder="Release Year">
                             <option value="" disabled selected>Release Year</option>
                             {yearList}
                     </select></div> 
-                    <div className="col-sm-9"><input ref="studio" type="text" className="form-control" id="movie_studio"  placeholder="studio"/></div> 
+                    <div className="col-sm-9"><input ref="studio" value={this.state.movie_details.studio} type="text" className="form-control" id="movie_studio"  placeholder="studio"/></div> 
                 </div>
 
-                <div className="form-row align-items-center pt-3">
-                    <div className="col-sm-8"><input ref="synopsis" type="text" className="form-control" id="movie_synopsis"  placeholder="Synopsis"/></div> 
-                    <div className="col-sm-4"><input ref="country" type="text" className="form-control" id="movie_country"  placeholder="Country"/></div> 
+                <div className="form-row text-left align-items-center pt-3">
+                    <div className="col-sm-8">synopsis</div> 
+                    <div className="col-sm-4">country</div> 
+                </div> 
+
+                <div className="form-row align-items-center small">
+                    <div className="col-sm-8"><input ref="synopsis" value={this.state.movie_details.synopsis} type="text" className="form-control" id="movie_synopsis"  placeholder="Synopsis"/></div> 
+                    <div className="col-sm-4"><input ref="country" value={this.state.movie_details.country} type="text" className="form-control" id="movie_country"  placeholder="Country"/></div> 
                 </div>
 
-                <div className="form-row align-items-center pt-3">
-                    <div className="col-sm-12"><input ref="image" type="text" className="form-control" id="movie_image"  placeholder="image"/></div> 
+                <div className="form-row text-left align-items-center pt-3">
+                    <div className="col-sm-12">Image</div> 
+                </div>
+                <div className="form-row align-items-center">
+                    <div className="col-sm-12"><input ref="image" value={this.state.movie_details.imageUrl} type="text" className="form-control" id="movie_image"  placeholder="image"/></div> 
                 </div>
 
-                <div className="form-row align-items-center pt-3">
-                    <div className="col-sm-12"><input ref="movieurl" type="text" className="form-control" id="movie_movieurl"  placeholder="Add Movie Video"/></div> 
+                <div className="form-row text-left align-items-center pt-3">
+                    <div className="col-sm-12">Movie Video</div> 
+                </div>
+                <div className="form-row align-items-center">
+                    <div className="col-sm-12"><input ref="movieurl" value={this.state.movie_details.movieUrl} type="text" className="form-control" id="movie_movieurl"  placeholder="Add Movie Video"/></div> 
                 </div>
 
-                <div className="form-row align-items-center pt-3">
+                <div className="form-row text-left align-items-center pt-3">
+                    <div className="col-sm-6">Rating</div>
+                    <div className="col-sm-6">Director</div>
+                </div>
+
+                <div className="form-row align-items-center">
                     <div className="col-sm-6">
-                        <select className="form-control" ref="rating" id="rating">
+                        <select className="form-control" value={this.state.movie_details.rating} ref="rating" id="rating">
                         <option key="PG">PG - Parental Guidance Suggested</option>
                         <option key="G">G - General Audiences</option>
                         <option key="PG-13">PG-13 - Parents Strongly Cautioned</option>
@@ -317,7 +338,7 @@ class AddMovies extends Component {
                         <option key="UR">UR - Unrated</option>
                         </select>
                     </div>
-                    <div className="col-sm-6"><input ref="director" type="text" className="form-control" id="movie_director"  placeholder="Add Director (Optional)" /></div> 
+                    <div className="col-sm-6"><input ref="director" value={this.state.movie_details.director} type="text" className="form-control" id="movie_director"  placeholder="Add Director (Optional)" /></div> 
                 </div>
 
                 <div className="form-row align-items-center pt-3">
@@ -358,4 +379,4 @@ class AddMovies extends Component {
     }
 }
 
-export default withRouter(AddMovies);
+export default withRouter(UpdateMovies);

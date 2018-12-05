@@ -35,18 +35,7 @@ class UserProfile extends Component {
         e.preventDefault();
         console.log("Post Request To Billing Page");
         var data = {months:this.refs.months, amountPaid:this.state.amountPaid}
-        // axios.post(config.API_URL+'/subscribe',data)
-        //             .then(function (response) {
-        //               console.log(response);
-        //               if(response.data.success)
-        //               {
-                        
-        //                 self.props.history.push('/pay');
-        //               }
-        //             })
-        //             .catch(function (error) {
-        //               console.log(error);
-        //             });
+
         
 
     }

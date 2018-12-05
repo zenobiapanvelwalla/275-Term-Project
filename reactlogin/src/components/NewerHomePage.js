@@ -22,6 +22,7 @@ import MovieFilterActors from './MovieFilterActors';
 import MovieFilterGenre from './MovieFilterGenre';
 import MovieFilterRating from './MovieFilterRating';
 import GiveReviews from './GiveReviews';
+import UpdateMovies from './UpdateMovies';
 
 
 class NewerHomePage extends Component {
@@ -51,6 +52,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/moviefiltergenre" component={MovieFilterGenre}/>
                     <Route exact path="/moviefilterrating" component={MovieFilterRating}/>
                     <Route exact path="/givereviews" component={GiveReviews}/>
+                    <Route exact path="/updatemovies/:movieId" component={UpdateMovies}/>
                     
                 </Switch>
             </Router>

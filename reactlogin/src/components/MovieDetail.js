@@ -20,9 +20,15 @@ class MovieDetail extends Component {
         this.state = {
             movie_details:'',
             giveReview: false,
-            rating:''
+            rating:'',
+            canUserWatchMovie : false,
+            watchButtonMessage : '',
+            canUserWatch : '',
+            reviews:[]
         }
         this.watchMovie = this.watchMovie.bind(this);
+        this.getReviews = this.getReviews.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentWillMount(){
@@ -32,12 +38,91 @@ class MovieDetail extends Component {
         console.log(config.API_URL+path);
         axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
-          console.log("Message " + JSON.stringify(response));
-          self.setState({movie_details:response.data});
+          console.log("Message " + JSON.stringify(response.data.message.reviews));
+          self.setState({movie_details:response.data.message,reviews:response.data.message.reviews },() => {
+            //check user can watch movie or not
+            let availability = self.state.movie_details.availability;
+            let isSubscribed = localStorage.getItem('isSubscribed');
+            let moviesPaidForList = JSON.parse(localStorage.getItem('moviesPaidForList'));
+            self.setState({canUserWatch:response.data.canUserWatch},() => {
+                if(self.state.canUserWatch == true)
+                {
+                    if(localStorage.getItem('role') == 'ADMIN')
+                    {
+                        self.setState({canUserWatchMovie:true});
+                    }
+                    if(isSubscribed == true && availability == 'SubscriptionOnly')
+                    {
+                        self.setState({canUserWatchMovie:true});
+                    }
+                    if(isSubscribed == true && availability == "Paid")
+                    {
+                        self.setState({canUserWatchMovie:true});
+                    }
+                    if(availability == 'Free')
+                    {
+                        self.setState({canUserWatchMovie:true});
+                    }
+                    if(moviesPaidForList.includes(this.props.match.params.movieId))
+                    {
+                        self.setState({canUserWatchMovie:true});
+                    }
+                    //when and who will pay
+                    else{
+                        let amount = 0;
+                        if(isSubscribed == true && availability == "PayPerViewOnly")
+                        {
+                            amount = amount + (self.state.movie_details.price * .5);
+                            localStorage.setItem("amount",amount.toString());
+                            localStorage.setItem("page","moviedetail");
+                            localStorage.setItem("movie_id",this.props.match.params.movieId)
+                        }
+                        if(isSubscribed == false && availability == "PayPerViewOnly")
+                        {
+                            amount = amount + self.state.movie_details.price;
+                            localStorage.setItem("amount",amount.toString());
+                            localStorage.setItem("page",amount.toString());
+                            localStorage.setItem("movie_id",this.props.match.params.movieId)
+                        }
+                        if(isSubscribed == false && availability == "Paid")
+                        {
+                            amount = amount + self.state.movie_details.price;
+                            localStorage.setItem("amount",amount.toString());
+                            localStorage.setItem("page",amount.toString());
+                            localStorage.setItem("movie_id",this.props.match.params.movieId)
+                        }
+                    }
+                    
+                }
+            });
+          });
         })
         .catch(function (error) {
           console.log(error);
         });
+    }
+
+    handleDelete(){
+        console.log("Inside handle delete");
+        console.log(this.props.match.params.movieId);
+        let self = this;
+        let path = '/movies/delete/' + this.props.match.params.movieId.toString();
+        axios.delete(config.API_URL+path)
+        .then(function (response) {
+          console.log("Message " + JSON.stringify(response.data.message));
+        //   this.setState({movies:response.data.message[0]});
+            if(response.data.success)
+            {
+                this.props.history.push('/customerdashboard');
+            }
+            else{
+                alert("Some Error Occured");
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     }
 
     handleVideoDetails = (details) => {
@@ -45,18 +130,46 @@ class MovieDetail extends Component {
     }
 
     watchMovie(event){
-        let watchingDetails = {
-            userId : localStorage.getItem('user_id'),
-            movieId : this.props.match.params.movieId,
-            url : this.state.movie_details.movieUrl,
-            checkpoint : 0
+        // if(this.state.canUserWatchMovie){
+            let watchingDetails = {
+                userId : localStorage.getItem('user_id'),
+                movieId : this.props.match.params.movieId,
+                url : this.state.movie_details.movieUrl,
+                checkpoint : 0
+            }
+            localStorage.setItem('watchingDetails',JSON.stringify(watchingDetails));
+            console.log("************************" + JSON.stringify(watchingDetails));
+            this.props.history.push('/video');
         }
-        localStorage.setItem('watchingDetails',JSON.stringify(watchingDetails));
-        console.log("************************" + JSON.stringify(watchingDetails));
-        this.props.history.push('/video');
+
+    getReviews(){
+        const item = this.state.reviews.map((review,index) =>{
+
+            return(
+                    <div className = "">
+                    <hr size="30"></hr>
+                    <b>{review.userName}</b>
+                    <ReactStars
+                        count={5}
+                        value={review.starRating}
+                        size={17}
+                        color2={'#ffd700'} 
+                        edit = {false}/>
+                    <p>{review.reviewText}</p>
+                          
+                    </div>
+
+            )
+        });
+        return(
+            <div>{item}</div>
+        )
+
+        
     }
 
     render(){
+        
         return (
             <div className="moviedetail_body">
                 <NavBar></NavBar>
@@ -67,6 +180,16 @@ class MovieDetail extends Component {
                         {/* title */}
                         <div className="row">
                             <h3 className="text-left">{this.state.movie_details.title + "(" +  this.state.movie_details.year + ")"}</h3>
+                            {/* add update delete button if the user is admin */}
+                            {localStorage.getItem('role')=='ADMIN' ? 
+                                <div>
+                                    <button className="btn btn-outline-warning btn-sm mt-1" onClick={this.handleDelete}>Delete</button>
+                                    <button className="btn btn-outline-warning btn-sm mt-1" onClick={(e) => {
+                                        this.props.history.push('/updatemovie')
+                                    }
+                                    }>Update</button>
+                                </div> : null
+                            }
                         </div>
 
                         <div className="row">
@@ -113,21 +236,46 @@ class MovieDetail extends Component {
                                     {
                                         var payload = {
                                             userId : localStorage.getItem('user_id'),
-                                            userName : localStorage.getItem('user_details').displayName,
+                                            userName : JSON.parse(localStorage.getItem('user_details')).displayName,
                                             movieId : this.props.match.params.movieId ,
                                             starRating : this.state.rating,
                                             reviewText : this.refs.reviewText.value
                                         }
-                                        console.log("Review : " + JSON.stringify(payload));
-                                        let self = this;
-                                        axios.post(config.API_URL+'/movies/add-review',payload)
-                                        .then(function (response) {
-                                        console.log("Attributes " + JSON.stringify(response.data));
-                                        self.setState({actor:response.data});
+                                        var alreadyReviewed = false;
+                                        this.state.reviews.map((review) => {
+                                            if(review.userId == payload.userId)
+                                            {
+                                                alreadyReviewed = true;
+                                            }
                                         })
-                                        .catch(function (error) {
-                                        console.log(error);
-                                        });
+                                        
+                                        if(alreadyReviewed == true)
+                                        {
+                                            alert("You have already reviewed.")
+                                            this.setState({giveReview:false})
+                                        }
+                                        else{
+                                            console.log("Review : " + JSON.stringify(payload));
+                                            let self = this;
+                                            axios.post(config.API_URL+'/movies/add-review',payload)
+                                            .then(function (response) {
+                                            console.log("Attributes " + JSON.stringify(response.data));
+                                            if(response.data.success){
+                                                self.setState({movie_details:response.data.updatedMovie, reviews:response.data.updatedMovie});
+
+                                                this.setState({giveReview:false})
+                                            }
+                                            else
+                                            {
+                                                alert("you can not give reviews without watching movies");
+                                                this.setState({giveReview:false})
+                                            }
+                                            })
+                                            .catch(function (error) {
+                                            console.log(error);
+                                            });
+                                        }
+                                        
                                     }
                                 }}>Submit</button>
                                 <button className="btn btn-outline-primary btn-sm mt-1" onClick={(event) => {this.setState({giveReview:false})}}>Cancel</button>
@@ -156,7 +304,13 @@ class MovieDetail extends Component {
                 </div>
 
                 {/* //reviews section */}
-                <div className="row"></div>
+                <div className="row">
+                <div class="col-md-12">
+		            <h5 className="ml-5">Reviews</h5>
+		        </div>
+                    {this.getReviews()}
+                </div> 
+                
             </div>
 
         )

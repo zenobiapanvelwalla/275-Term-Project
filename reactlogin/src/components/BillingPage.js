@@ -71,27 +71,27 @@ class BillingPage extends Component {
                                         <i className="fa fa-cc-discover discover"></i>
                                         </div>
                                         <label className="labelB" htmlFor="cname">Name on Card</label>
-                                        <input className="inputB" type="text" id="cname" name="cardname" placeholder="John More Doe"/>
+                                        <input className="inputB" type="text" id="cname" name="cardname" placeholder="John More Doe" required/>
                                         <label className="labelB" htmlFor="ccnum">Credit card number</label>
-                                        <input className="inputB" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"/>
+                                        <input className="inputB" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required/>
                                         <label className="labelB" htmlFor="expmonth">Exp Month</label>
-                                        <input className="inputB" type="text" id="expmonth" name="expmonth" placeholder="September"/>
+                                        <input className="inputB" type="text" id="expmonth" name="expmonth" placeholder="September" required/>
 
                                         <div className="row">
                                         <div className="col-50B col-50">
                                             <label className="labelB" htmlFor="expyear">Exp Year</label>
-                                            <input className="inputB" type="text" id="expyear" name="expyear" placeholder="2018"/>
+                                            <input className="inputB" type="text" id="expyear" name="expyear" placeholder="2018" required/>
                                         </div>
                                         <div className="col-50B col-50">
                                             <label className="labelB" htmlFor="cvv">CVV</label>
-                                            <input className="inputB" type="text" id="cvv" name="cvv" placeholder="352"/>
+                                            <input className="inputB" type="text" id="cvv" name="cvv" placeholder="352" required/>
                                         </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 
-                                <input type="submit" value="Continue to checkout" className="btn btnB"/>
+                                <button value="Continue to checkout" className="btn btnB"/>
                             </form>
                         
                     </div>

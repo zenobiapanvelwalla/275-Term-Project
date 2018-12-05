@@ -15,25 +15,19 @@ class AdminNavBar extends Component
                     <div className="collapse navbar-collapse" id="navigation">
                         <ul className="nav navbar-nav">
                             <li className="nav-item active">
-                                <a href="#" className="nav-link">Dashboard</a>
+                                <a className="nav-link" onClick={() => {this.props.history.push('/customerdashboard');}}>Home</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Movies</a>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" data-toggle="dropdown" id="preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Movies</a>
-                                <div className="dropdown-menu" >
-                                    <a className="dropdown-item" href="#">Add</a>
-                                    <a className="dropdown-item" href="#">Update</a>
-                                    <a className="dropdown-item" href="#">All Movies</a>
-                                    
-                                </div>
+                                <a onClick={() => {this.props.history.push('/addmovies')}} className="nav-link">Add Movie</a>
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link">Manage Users</a>
                             </li>
-                            <li className="nav-item">
-                                <a href="#" className="nav-link">Logout</a>
+                            <li className="nav-item float-right">
+                                <a className="nav-link" onClick={() => {
+                                    localStorage.clear();
+                                    this.props.history.push('/')}
+                                }>Logout</a>
                             </li>
                         </ul>
                     </div>
