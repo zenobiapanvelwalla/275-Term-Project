@@ -103,23 +103,24 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    List<Integer> getUniqueActiveusers();
    
    
-  
+  //next two functions for -- total unique active users (those who played at least one movie in the month)
    @Transactional
-   @Query(value="SELECT user_id FROM users_activities WHERE\r\n" + 
-   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 GROUP BY month(updated_at),year(updated_at)\r\n" + 
+   @Query(value="SELECT COUNT(DISTINCT user_id) FROM users_activities WHERE\r\n" + 
+   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 AND checkpoint>0 GROUP BY month(updated_at),year(updated_at)\r\n" + 
    		"   ORDER BY year(updated_at) DESC, month(updated_at) DESC",nativeQuery=true)
-   List<Integer> getUsersWatchedMovedPerMonth();
+   List<BigInteger> getUsersWatchedMovedPerMonth();
    
    @Transactional
    @Query(value="SELECT month(updated_at) FROM users_activities WHERE\r\n" + 
-   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 GROUP BY month(updated_at),year(updated_at)\r\n" + 
+   		"   TIMESTAMPDIFF(MONTH,updated_at, now())<=12 AND checkpoint>0 GROUP BY month(updated_at),year(updated_at)\r\n" + 
    		"   ORDER BY year(updated_at) DESC, month(updated_at) DESC",nativeQuery=true)
    List<Integer> getMonthsWatchedMovedPerMonth();
    
+   //Zenobia
    @Transactional
    @Query(value="SELECT * FROM movies WHERE id IN (SELECT DISTINCT movie_id FROM users_activities WHERE user_id=? AND isWatching=true AND isWatched=false",nativeQuery=true)
    List<Movie> getMoviesInProgress(int userId);
-   
+   //End - Zenobia
    
    
 }

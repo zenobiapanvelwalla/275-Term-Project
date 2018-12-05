@@ -58,9 +58,9 @@ public class UserActivityService {
 			
 			//if user activity exists then we need to update the checkpoint. If the user plays and the previous checkpoint value is 
 			//> 0 then the new checkpoint is old + new
-			long newCheckPoint = uactivity.getCheckpoint() + checkpoint;
-			uactivity.setCheckpoint(newCheckPoint);
-			uaRepo.save(uactivity);
+//			long newCheckPoint = uactivity.getCheckpoint() + checkpoint;
+//			uactivity.setCheckpoint(newCheckPoint);
+//			uaRepo.save(uactivity);
 			
 			LocalDateTime now = LocalDateTime.now();
 			Duration duration = Duration.between(now, uactivity.getCreatedAt());
@@ -69,6 +69,7 @@ public class UserActivityService {
 			if (diff < 24) {
 				uactivity.setWatched(false);
 				uactivity.setWatching(true);
+				uactivity.setCheckpoint(checkpoint);
 				//java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
 				uactivity.setUpdatedAt(LocalDateTime.now());
 				uaRepo.save(uactivity);
@@ -78,11 +79,11 @@ public class UserActivityService {
 				//uactivity.setUpdatedAt(LocalDateTime.now());  //not touching updated_at
 				uaRepo.save(uactivity);
 				//if the user resumes playing after 24 hours then his checkpoint should be maintained, even if a new user activity is created.
-				utilAddUserActivity(userId, movieId,newCheckPoint);
+				utilAddUserActivity(userId, movieId,checkpoint);
 			}
 
 		} else {
-			utilAddUserActivity(userId, movieId,0);
+			utilAddUserActivity(userId, movieId,checkpoint);
 		}
 	}
 	public void utilAddUserActivity(int userId, int movieId, long checkpoint) {

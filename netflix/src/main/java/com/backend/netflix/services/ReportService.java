@@ -94,34 +94,19 @@ public class ReportService {
 
 	
 	
-	
-	public MonthlyDetails getUsersBasedOnSubsription(String ptype) {
-		// TODO Auto-generated method stub
-		List<Integer> userList= null;
-		List<Integer> monthList= null ;
-		userList = billingRepository.getUserMontlyUserbasedOnSubscriptionMonthly(ptype);
-		monthList = billingRepository.getMonthMontlyUserbasedOnSubscriptionMonthly(ptype);
-		List<String> monthListStr = convertIntToMonths(monthList);
-
-		MonthlyDetails MonthlyDetails = new MonthlyDetails();
-		MonthlyDetails.setMonth(monthList);
-		MonthlyDetails.setUserId(userList);
-		return MonthlyDetails;
-
-	}
 
 	
 	public MonthlyDetails getUniqueActiveUserWatchedOnemovieperMonth() {
-		// TODO Auto-generated method stub
-		List<Integer> userList= null;
+		
+		List<BigInteger> userList= null;
 		List<Integer> monthList= null ;
 		userList =UserActivityRepository.getUsersWatchedMovedPerMonth();
 		monthList = UserActivityRepository.getMonthsWatchedMovedPerMonth();
 		List<String> monthListStr = convertIntToMonths(monthList);
 
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
-		MonthlyDetails.setMonth(monthList);
-		MonthlyDetails.setUserId(userList);
+		MonthlyDetails.setMonth(monthListStr);
+		MonthlyDetails.setUserCount(userList);
 		return MonthlyDetails;
 
 	}
@@ -139,6 +124,20 @@ public class ReportService {
 		userRegistered.setUserId(userList);
 		return userRegistered;
 
+	}
+
+
+	public MonthlyDetails getCountOfUniquePayPerViewUsers() {
+		List<BigInteger> userCountList= null;
+		List<Integer> monthList= null ;
+		monthList =billingRepository.getCountOfUniquePayPerViewUsers_Months();
+		userCountList = billingRepository.getCountOfUniquePayPerViewUsers_UserCount();
+		List<String> monthListStr = convertIntToMonths(monthList);
+		
+		MonthlyDetails MonthlyDetails = new MonthlyDetails();
+		MonthlyDetails.setMonth(monthListStr);
+		MonthlyDetails.setUserCount(userCountList);
+		return MonthlyDetails;
 	}
 
 }

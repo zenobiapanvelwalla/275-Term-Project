@@ -68,13 +68,13 @@ public class FinancialReportController {
 
 	
 	
-//	"http://localhost:8080/uniqueSubscriptionUsersMonthly/subscription"
-//	"http://localhost:8080/uniqueSubscriptionUsersMonthly/payPerView"
-	@RequestMapping(value = "/uniqueSubscriptionUsersMonthly/{ptype}",method = RequestMethod.GET)
-	public ResponseEntity<?> getCountOfUniqueSubscriptonUsers(@PathVariable String  ptype){
+
+	
+	@RequestMapping(value = "/count-unique-pay-per-view-users",method = RequestMethod.GET)
+	public ResponseEntity<?> getCountOfUniquePayPerViewUsers(){
 
 		HashMap<String, Object> response = new HashMap<String, Object>();
-		MonthlyDetails MonthlyDetails = reportservice.getUsersBasedOnSubsription(ptype);
+		MonthlyDetails MonthlyDetails = reportservice.getCountOfUniquePayPerViewUsers();
 
 		response.put("success", true);
 		response.put("message", MonthlyDetails);
