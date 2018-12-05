@@ -63,6 +63,7 @@ public class ReviewService {
     }
 
     public Movie addReview(Review review) {
+    	reviewRepository.save(review);
         Movie movie = mRepo.findById(review.getMovieId());
         List<Review> reviews = reviewRepository.findByMovieId(movie.getMovieId());
         if(reviews.size()>0){
@@ -72,7 +73,7 @@ public class ReviewService {
         else
             movie.setAvgStarRating(review.getStarRating());
        Movie m =  mRepo.save(movie);
-        reviewRepository.save(review);
+        
         return m;
     }
 }
