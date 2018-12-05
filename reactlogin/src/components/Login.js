@@ -45,9 +45,9 @@ class Login extends Component {
                         localStorage.setItem('role',response.data.role);
                         if(response.data.verified)
                         {
-                            localStorage.setItem('user_details',response.data.message);
+                            localStorage.setItem('user_details',JSON.stringify(response.data.message));
                             localStorage.setItem('isSubscribed',response.data.isSubscribed);
-                            localStorage.setItem('moviesPaidForList', response.data.moviesPaidForList);
+                            localStorage.setItem('moviesPaidForList',JSON.stringify(response.data.moviesPaidForList));
 
                             self.props.history.push('/customerdashboard');
                         }

@@ -9,7 +9,12 @@ import billing from "../custom_css/billing.css";
 class BillingPage extends Component {
 
     state={
-        amount: localStorage.getItem("amount")
+        //the following three details are for subsription
+        amount: localStorage.getItem("amount"),
+        page:localStorage.getItem("page"),
+        months: localStorage.getItem("months")?localStorage.getItem("months"):""
+        //end
+
     }
 
     constructor(props){
@@ -95,27 +100,27 @@ class BillingPage extends Component {
                                         <i className="fa fa-cc-discover discover"></i>
                                         </div>
                                         <label className="labelB" htmlFor="cname">Name on Card</label>
-                                        <input className="inputB" type="text" id="cname" name="cardname" placeholder="John More Doe"/>
+                                        <input className="inputB" type="text" id="cname" name="cardname" placeholder="John More Doe" required/>
                                         <label className="labelB" htmlFor="ccnum">Credit card number</label>
-                                        <input className="inputB" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444"/>
+                                        <input className="inputB" type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required/>
                                         <label className="labelB" htmlFor="expmonth">Exp Month</label>
-                                        <input className="inputB" type="text" id="expmonth" name="expmonth" placeholder="September"/>
+                                        <input className="inputB" type="text" id="expmonth" name="expmonth" placeholder="September" required/>
 
                                         <div className="row">
                                         <div className="col-50B col-50">
                                             <label className="labelB" htmlFor="expyear">Exp Year</label>
-                                            <input className="inputB" type="text" id="expyear" name="expyear" placeholder="2018"/>
+                                            <input className="inputB" type="text" id="expyear" name="expyear" placeholder="2018" required/>
                                         </div>
                                         <div className="col-50B col-50">
                                             <label className="labelB" htmlFor="cvv">CVV</label>
-                                            <input className="inputB" type="text" id="cvv" name="cvv" placeholder="352"/>
+                                            <input className="inputB" type="text" id="cvv" name="cvv" placeholder="352" required/>
                                         </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 
-                                <input type="submit" value="Continue to checkout" className="btn btnB"/>
+                                <button value="Continue to checkout" className="btn btnB"/>
                             </form>
                         
                     </div>
@@ -131,7 +136,11 @@ class BillingPage extends Component {
                             {/* <p><a href="#">Product 1</a> <span className="price">$15</span></p>
                             <p><a href="#">Product 2</a> <span className="price">$5</span></p>
                             <p><a href="#">Product 3</a> <span className="price">$8</span></p> */}
-                            <p><a href="#">Billing detail, based on pay per view or subscripttion</a></p>
+                            <p>
+                                {this.state.page=="subscription"?
+                                    "Your are about to be subscribed for {this.state.months} month(s)"
+                                :"Your bill for one movie"}
+                            </p>
                             <hr/>
                             <p>Total <span className="price"><b>${this.state.amount}</b></span></p>
                         </div>

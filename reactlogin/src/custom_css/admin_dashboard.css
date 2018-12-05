@@ -4,6 +4,7 @@
     padding: 8px;
     color: #212529;
     width:60%;
+    height: 100%;
     background-color: whitesmoke;
     position: absolute;
     align-content: center;
@@ -14,6 +15,7 @@
 
 .adminvmBackgound{
     background-image: url('../images/mainbackground.png');
+    height: 100%;
     height:-webkit-fill-available;
     opacity: 0.9;
     color: #212529;
@@ -101,6 +103,3 @@
 }
 
 
-.imagecard{
-    margin: 10px !important; 
-}

@@ -63,11 +63,7 @@ class MovieFilter extends Component {
             this.props.filterMovie(this.state.movies);
           });
     }
-
-
-    render() {
-        
-       
+    render() { 
 
         return (
             <div className="h">
