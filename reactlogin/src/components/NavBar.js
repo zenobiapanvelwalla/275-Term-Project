@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import navbar from '../custom_css/navbar.css';
+import config from '../config.js';
+import axios from 'axios';
 
 
 class NavBar extends Component
@@ -15,26 +17,29 @@ class NavBar extends Component
                     </button>
                     <div className="collapse navbar-collapse" id="navigation">
                         <ul className="nav navbar-nav">
-                            <li className="nav-item active">
-                                <a href="#" className="nav-link">Home</a>
+                        <li className="nav-item active">
+                                <a className="nav-link" onClick={() => {this.props.history.push('/customerdashboard');}}>Home</a>
                             </li>
                             <li className="nav-item">
-                                <a href="#" className="nav-link">Feature</a>
+                                <a onClick={() => {this.props.history.push('/customerdashboard');}} className="nav-link">user-profile</a>
                             </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" data-toggle="dropdown" id="preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">Products</a>
-                                <div className="dropdown-menu" >
-                                    <a className="dropdown-item" href="#">Product1</a>
-                                    <a className="dropdown-item" href="#">Product2</a>
-                                    <a className="dropdown-item" href="#">Product3</a>
-                                    <a className="dropdown-item" href="#">Product4</a>
-                                </div>
+                            <li className="nav-item">
+                                <a onClick={() => {this.props.history.push('/user-profile')}} className="nav-link">User Profile</a>
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link">Service</a>
                             </li>
-                            <li className="nav-item">
-                                <a href="#" className="nav-link">Contact Us</a>
+                            <li className="nav-item float-right">
+                                <a className="nav-link" onClick={() => {
+                                    localStorage.clear();
+                                    let self = this;
+                                    axios.get(config.API_URL+'/logout',{withCredentials: true})
+                                    .then(function (response) {
+                                        self.props.history.push('/')})
+                                    .catch(function (error) {
+                                    console.log(error);
+                                    });
+                                }}>Logout</a>
                             </li>
                         </ul>
                     </div>
