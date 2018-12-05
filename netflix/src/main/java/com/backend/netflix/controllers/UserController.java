@@ -324,6 +324,7 @@ public class UserController {
 	        System.out.println(session.getAttribute("userId"));
 	        session.removeAttribute("role");
 	        session.removeAttribute("userId");
+	      
 	        session.invalidate();
 
 	        HashMap<String,Object> response =new HashMap<>();

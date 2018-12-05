@@ -100,7 +100,6 @@ public class MovieController {
     	HashMap<String, Object> response = new HashMap<>();
     	boolean canUserWatch = false;
     	boolean canUserReview = false;
-
         System.out.println("------------------Get Movies UserId:"+ session.getAttribute("userId"));
         System.out.println("------------------Get MOvies role:"+ session.getAttribute("role"));
     	//
