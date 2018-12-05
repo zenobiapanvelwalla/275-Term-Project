@@ -31,101 +31,100 @@ class Video extends Component {
     constructor(props) {
         super(props);
 
-        let watchingDetails = {
-            userId : 1,
-            movieId : 1,
-            url : "EXeTwQWrcwY?start=20s",
-            checkpoint : '0.0',
-            player : ''
-        }
-
+        
         this.state = {
             modalIsOpen: false,
-            watchingDetails : watchingDetails
+            watchingDetails : ''
           };
         
         //   this.ref = this.ref.bind(this);
           this.endVideo = this.endVideo.bind(this); 
           this.handlePause = this.handlePause.bind(this); 
-          
+          this.onPlay = this.onPlay.bind(this); 
+
+          console.log("Inside Video" + this.state.watchingDetails)
     }
 
-    handlePlay(e){
-            
+    componentDidMount(){
+
+        console.log("Inside" + JSON.stringify(localStorage.getItem('watchingDetails')))
+
+        let abc = JSON.parse(localStorage.getItem('watchingDetails'));
+
+        this.setState({watchingDetails:abc})
+
+        console.log("Watching details" + JSON.stringify(abc));
+    }
+
+
+    onPlay(e){
+        let self = this;
+        console.log(JSON.stringify(this.state.watchingDetails))
+        let path = "/user-activities/store/" + self.state.watchingDetails.userId + "/" + self.state.watchingDetails.movieId + "/" + 1 ;
+        console.log("Path of play store" + path)
+        console.log(config.API_URL+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          console.log("Message " + JSON.stringify(response));
+          self.setState({movie_details:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
 
     handlePause(e){
-            
+        let self = this;
+        console.log(JSON.stringify(this.state.watchingDetails))
+        let path = "/user-activities/store/" + self.state.watchingDetails.userId + "/" + self.state.watchingDetails.movieId + "/" + 1 ;
+        console.log("Path of play store" + path)
+        console.log(config.API_URL+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          console.log("Message " + JSON.stringify(response));
+          self.setState({movie_details:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
 
     endVideo(e){
-       
+        let self = this;
+        console.log(JSON.stringify(this.state.watchingDetails))
+        let path = "/user-activities/store/" + self.state.watchingDetails.userId + "/" + self.state.watchingDetails.movieId + "/" + 2 ;
+        console.log("Path of play store" + path)
+        console.log(config.API_URL+path);
+        axios.get(config.API_URL+path,{withCredentials: true})
+        .then(function (response) {
+          console.log("Message " + JSON.stringify(response));
+          self.setState({movie_details:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
 
-        ref = player => {
-        this.player=player 
-        }
-
       render() {
-        const opts = {
-            height: '390',
-            width: '640',
-            playerVars: { // https://developers.google.com/youtube/player_parameters
-              autoplay: 1
-            },
-          };
 
 
         return (
         
           <div>
-              {/* <button class Name="btn btn-warning" onClick={this.endVideo}>Stop</button> */}
               <ReactPlayer
                 ref={this.ref}
                 playing
                 controls
-                width='1024px'
-                height='768px'
+                width='100%'
+                height='100%'
                 onReady={(event) => {
                     screenfull.request(ReactDOM.findDOMNode(this.player))
                 }}
-                url='https://www.youtube.com/watch?v=Mh5LY4Mz15o?start=20s'
-                youtubeConfig={{ playerVars: { end: 40 }}}
+                url={this.state.watchingDetails.url}
                 onPlay={this.onPlay}
                 onPause = {this.handlePause}
                 onEnded = {this.onEnded}
                 />
-              {/* <YouTube
-                ref={this.ref}
-                youtubeConfig={{
-                    playerVars: {
-                      start: 33
-                    }
-                  }}
-                videoId={this.state.watchingDetails.url}  // defaults -> null
-                // id={string}                       // defaults -> null
-                // className={string}                // defaults -> null
-                // containerClassName={string}       // defaults -> ''
-                opts={opts}                        // defaults -> {}
-                onReady={(event) => {
-                    event.target.start = 10.0;
-                }}                    // defaults -> noop
-                onPlay={(event) => {
-                    event.target.start = 10.0;
-                }}                     // defaults -> noop
-                onPause={(event) => {
-                    
-                    console.log("Pause at: " + event.target.getCurrentTime())
-                }}                    // defaults -> noop
-                onEnd={(event) => {
-                    console.log("End at: " + event.target.getCurrentTime())
-                }} 
-                                   // defaults -> noop
-                // onError={}                    // defaults -> noop
-                // onStateChange={func}              // defaults -> noop
-                // onPlaybackRateChange={func}       // defaults -> noop
-                // onPlaybackQualityChange={func}    // defaults -> noop
-                /> */}
           </div>
         );
       }

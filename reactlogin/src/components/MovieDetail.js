@@ -51,7 +51,8 @@ class MovieDetail extends Component {
             url : this.state.movie_details.movieUrl,
             checkpoint : 0
         }
-        localStorage.setItem('watchingDetails',watchingDetails);
+        localStorage.setItem('watchingDetails',JSON.stringify(watchingDetails));
+        console.log("************************" + JSON.stringify(watchingDetails));
         this.props.history.push('/video');
     }
 
