@@ -25,6 +25,8 @@ class MovieFilterRating extends Component {
         this.handleOnChangeRating2 = this.handleOnChangeRating2.bind(this);
         this.handleOnChangeRating3 = this.handleOnChangeRating3.bind(this);
         this.handleOnChangeRating4 = this.handleOnChangeRating4.bind(this);
+        this.handleOnChangeRating0 = this.handleOnChangeRating0.bind(this);
+
         // console.log("Inside Constructor : " + this.props.movies);
     }
 
@@ -33,6 +35,9 @@ class MovieFilterRating extends Component {
     //     this.setState({ allMovies: nextProps.movies });  
     //   }
 
+    handleOnChangeRating0() {
+        this.props.filterMovie(0);
+    }
     handleOnChangeRating1() {
         this.props.filterMovie(1);
     }
@@ -45,22 +50,23 @@ class MovieFilterRating extends Component {
     handleOnChangeRating4() {
         this.props.filterMovie(4);
     }
+    
     render() {
     
         return (
             <div>
-                <div><a onClick={this.handleOnChangeRating4}> <ReactStars
+                <div className="mt-0"><a onClick={this.handleOnChangeRating4}> <ReactStars
                         count={5}
                         value={4}
-                        size={20}
+                        size={17}
                         color2={'#ffd700'} 
                         edit = {false}/>
                     </a> 
                 </div> 
-                <div><a onClick={this.handleOnChangeRating3}> <ReactStars
+                <div className="mt-0"><a onClick={this.handleOnChangeRating3}> <ReactStars
                         count={5}
                         value={3}
-                        size={20}
+                        size={17}
                         color2={'#ffd700'} 
                         edit = {false}/>
                     </a> 
@@ -68,14 +74,22 @@ class MovieFilterRating extends Component {
                 <div onClick={this.handleOnChangeRating2}> <ReactStars
                         count={5}
                         value={2}
-                        size={20}
+                        size={17}
                         color2={'#ffd700'} 
                         edit = {false}/> 
                 </div> 
                 <div><a onClick={this.handleOnChangeRating1}> <ReactStars
                         count={5}
                         value={1}
-                        size={20}
+                        size={17}
+                        color2={'#ffd700'} 
+                        edit = {false}/>
+                    </a> 
+                </div> 
+                <div><a onClick={this.handleOnChangeRating0}> <ReactStars
+                        count={5}
+                        value={0}
+                        size={17}
                         color2={'#ffd700'} 
                         edit = {false}/>
                     </a> 

@@ -27,7 +27,7 @@ class MovieFilterGenre extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("Inside component will receive props");
+        // console.log("Inside component will receive props");
         this.setState({ allMovies: nextProps.movies });  
       }
 

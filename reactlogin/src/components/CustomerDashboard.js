@@ -10,9 +10,14 @@ import config from '../config.js';
 import axios from 'axios';
 import MovieFilter from './MovieFilter'
 import css from '../custom_css/movieList.css';
+import style from '../custom_css/admin_dashboard.css';
 import MovieFilterActors from './MovieFilterActors';
 import MovieFilterRating from './MovieFilterRating';
 import MovieFilterGenre from './MovieFilterGenre';
+
+var imagecard = {
+    margin: "20px !important" 
+}
 
 class CustomerDashboard extends Component {
 
@@ -26,7 +31,8 @@ class CustomerDashboard extends Component {
             beforefilterMovies:[],
             selectedDirectors:[],
             selectedActors:[],
-            selectedGenre:[]
+            selectedGenre:[],
+            selectedRating:0,
         };
     this.handleMovieChange = this.handleMovieChange.bind(this);
     this.handleActorChange = this.handleActorChange.bind(this);
@@ -36,12 +42,11 @@ class CustomerDashboard extends Component {
     }
     componentDidMount(){
         let self = this;
-        console.log(config.API_URL+'/movies');
         axios.get(config.API_URL+'/movies')
         .then(function (response) {
-          console.log("Message " + JSON.stringify(response.data));
+        //   console.log("Message " + JSON.stringify(response.data.message));
         //   this.setState({movies:response.data.message[0]});
-          self.setState({movies:response.data, allmovies:response.data});
+          self.setState({movies:response.data, allmovies:response.data, beforefilterMovies:response.data});
         })
         .catch(function (error) {
           console.log(error);
@@ -53,12 +58,11 @@ class CustomerDashboard extends Component {
         this.setState({movies : this.state.beforefilterMovies}, () => {
         //director filter start
         if(this.state.movies.length != 0){
-            if(this.state.selectedDirectors.length == 0){ }
-            else{
+            let showMovies = [];
+            if(this.state.selectedDirectors.length != 0){
                 console.log("Inside Director Filter");
-                console.log("Selected Dir Values :  " + this.state.selectedDirectors);
-                console.log("Movies from parent " + this.state.beforefilterMovies);
-                let showMovies = [];
+                // console.log("Selected Dir Values :  " + this.state.selectedDirectors);
+                // console.log("Movies from parent " + this.state.beforefilterMovies);
                 this.state.movies.map((movie) => {
                     if(this.state.selectedDirectors.includes(movie.director))
                     {
@@ -66,46 +70,69 @@ class CustomerDashboard extends Component {
                         showMovies.push(movie);
                     }
                 })
-                this.setState({
-                    movies: showMovies
-                    }, () => {
-                            console.log("Movies after director filter");
-                            console.log("****************After dir filter " + this.state.movies)
-
-                        })}}
-
-        //actor filter start
-        if(this.state.movies.length != 0){
-            if(this.state.selectedActors.length == 0){ }
+             }
             else{
-                console.log("Inside Actor Filter");
-                console.log("Selected Dir Values :  " + this.state.selectedActors);
-                console.log("Movies from parent " + this.state.movies);
-                let showMovies = [];
                 this.state.movies.map((movie) => {
-                    this.state.selectedActors.map((actor) => {
-                          if(movie.actors.toLowerCase().includes(actor.toLowerCase())){
-                            console.log("inside if");
-                            if(!showMovies.includes(movie))
-                            {
-                                showMovies.push(movie);
-                            }
-                        }
-                    } )
-                })
-                this.setState({
-                    movies: showMovies
-                }, () => {
-                console.log("Movies after actor filter");
-                });
+                        showMovies.push(movie);
+                    })
             }
-        }
-        //Actor End
-               
-        
-        //director End
 
-                })}
+            // console.log("Filter after director : " + showMovies);
+
+            //actors search
+            if(this.state.selectedActors.length != 0){
+                console.log("Inside Actor Filter");
+                // console.log("Selected Dir Values :  " + this.state.selectedActors);
+                // console.log("Movies from parent " + this.state.movies);
+                var moviesActor = [];
+                showMovies.map((movie) => {
+                    var count = this.state.selectedActors.length;
+                    this.state.selectedActors.map((actor) => {
+                        if(movie.actors.toLowerCase().includes(actor.toLowerCase())){
+                            if(!moviesActor.includes(movie))
+                                {moviesActor.push(movie);}
+                        }
+                    })
+                })
+                showMovies = moviesActor;
+            }
+
+            //Rating search
+            if(this.state.selectedRating >= 0){
+                console.log("Inside Actor Filter");
+                // console.log("Selected Dir Values :  " + this.state.selectedActors);
+                // console.log("Movies from parent " + this.state.movies);
+                var moviesRating = [];
+                showMovies.map((movie) => {
+                    if(this.state.selectedRating <= movie.avgStarRating)
+                    {
+                        moviesRating.push(movie);
+                    }
+                })
+                showMovies = moviesRating;
+            }
+
+            console.log("Before Genre Search")
+
+            //Genre search
+            if(this.state.selectedGenre.length != 0){
+                console.log("Inside Genre Filter");
+                // console.log("Selected Dir Values :  " + this.state.selectedActors);
+                // console.log("Movies from parent " + this.state.movies);
+                var moviesGenre = [];
+                showMovies.map((movie) => {
+                    if(this.state.selectedGenre.includes(movie.genre))
+                    {
+                        moviesGenre.push(movie);
+                    }
+                })
+                showMovies = moviesGenre;
+            }
+            this.setState({movies:showMovies})
+        }
+        
+
+    })}
 
     handleMovieChange(data){
         console.log("E : " + data);
@@ -129,6 +156,7 @@ class CustomerDashboard extends Component {
         console.log("E : " + data);
         console.log("It is called from Rating child");
         this.setState({ selectedRating: data},() => {
+            this.filterMovies();
             console.log("Selected Rating " + this.state.selectedRating);
         });
     }
@@ -137,8 +165,8 @@ class CustomerDashboard extends Component {
         console.log("E : " + data);
         console.log("It is called from Rating child");
         this.setState({ selectedGenre: data},() => {
-            console.log("Selected Genre " + this.state.selectedGenre);
             this.filterMovies();
+            console.log("Selected Genre " + this.state.selectedGenre);
         });
     }
 
@@ -149,12 +177,12 @@ class CustomerDashboard extends Component {
 
             return(
                 
-                    <div className = "col-sm-4   ml-0 mr-0 border card-deck">
-                    <div className="card">
+                    <div className = "col-sm-4 ml-0 mr-0 card-deck">
+                    <div className="pr-3 pt-2 view overlay zoom">
                     <img onClick={() =>{
                         let path = "/moviedetail/" +  movie.movieId;
                         this.props.history.push(path);
-                    }} class="card-img-top center" src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"} alt="Card image cap"></img>
+                    }} className="card-img-top center mt-2 img-fluid" style={imagecard} src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"} alt="Card image cap"></img>
                         {/* <img src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"}/> */}
                         <div className="">
                             <h5 className="" >{movie.title}</h5>
@@ -171,18 +199,19 @@ class CustomerDashboard extends Component {
                 <div className="text-left text-small small pl-1"><b>Directors</b></div>
                 <div><MovieFilter filterMovie = {this.handleMovieChange}/></div>
                 <br/>
-                <div  className="text-left text-small small pl-1">Actors</div>
+                <div  className="text-left text-small small pl-1"><b>Actors</b></div>
                 <div><MovieFilterActors filterMovie = {this.handleActorChange}/></div>
                 <br/>
-                <div  className="text-left text-small small pl-1">Rating</div>
+                <div  className="text-left text-small small pl-1"><b>Rating</b></div>
                 <div><MovieFilterRating filterMovie = {this.handleRatingChange}/></div>
                 <br/>
-                <div  className="text-left text-small small pl-1">Genre</div>
+                <div  className="text-left text-small small pl-1"><b>Genre</b></div>
                 <div><MovieFilterGenre filterMovie = {this.handleGenreChange}/></div>
                 
                 </div>
                 <div className="col-sm-10">
-                <div className="row"><input type="text" className="form-control rounded"
+                <div className="row col-sm-12">
+                                        <input type="text" className="mt-3  form-control"
                                        label="search"
                                        placeholder = "Titles,peoples,genres"
                                        // value={this.state.bid_period}
