@@ -2,11 +2,14 @@ package com.backend.netflix.services;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import com.backend.netflix.beans.MonthlyDetails;
 import com.backend.netflix.beans.MonthlyIncome;
 import com.backend.netflix.beans.userRegistered;
+import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.vo.PaymentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,9 @@ public class ReportService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserSubscriptionRepository subscriptionRepository;
 
 	public Billing findByUserId(int userId) {
 		return billingRepository.findByUserId(userId);
@@ -87,58 +93,79 @@ public class ReportService {
 
 	}
 
-//	public BigInteger getCountOfUniqueSubscriptionUsers() {
-//
-//		return billingRepository.getCountOfUniqueSubscriptionUsers();
-//	}
-
-	
-	
-	
-	public MonthlyDetails getUsersBasedOnSubsription(String ptype) {
-		// TODO Auto-generated method stub
-		List<Integer> userList= null;
-		List<Integer> monthList= null ;
-		userList = billingRepository.getUserMontlyUserbasedOnSubscriptionMonthly(ptype);
-		monthList = billingRepository.getMonthMontlyUserbasedOnSubscriptionMonthly(ptype);
-		List<String> monthListStr = convertIntToMonths(monthList);
-
-		MonthlyDetails MonthlyDetails = new MonthlyDetails();
-		MonthlyDetails.setMonth(monthList);
-		MonthlyDetails.setUserId(userList);
-		return MonthlyDetails;
-
-	}
-
-	
 	public MonthlyDetails getUniqueActiveUserWatchedOnemovieperMonth() {
-		// TODO Auto-generated method stub
-		List<Integer> userList= null;
-		List<Integer> monthList= null ;
+		
+		List<BigInteger> userList= new ArrayList<>();
+		List<Integer> monthList= new ArrayList<>() ;
 		userList =UserActivityRepository.getUsersWatchedMovedPerMonth();
 		monthList = UserActivityRepository.getMonthsWatchedMovedPerMonth();
 		List<String> monthListStr = convertIntToMonths(monthList);
 
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
-		MonthlyDetails.setMonth(monthList);
-		MonthlyDetails.setUserId(userList);
+		MonthlyDetails.setMonth(monthListStr);
+		MonthlyDetails.setUserCount(userList);
 		return MonthlyDetails;
 
 	}
 
-
-	public userRegistered getMonthlyRegisteredUsers() {
-		List<BigInteger> userList= null;
+	public MonthlyDetails getMonthlyRegisteredUsers() {
+		List<BigInteger> userCountList= null;
 		List<Integer> monthList= null ;
 		monthList =UserRepository.getMonthuserRegisteredMonthly();
-		userList = UserRepository.getUserRegisteredMonthly();
+		userCountList = UserRepository.getUserRegisteredMonthly();
 		List<String> monthListStr = convertIntToMonths(monthList);
 
-		userRegistered userRegistered = new userRegistered();
-		userRegistered.setMonth(monthList);
-		userRegistered.setUserId(userList);
-		return userRegistered;
+		MonthlyDetails monthlyUserRegistered = new MonthlyDetails();
+		monthlyUserRegistered.setMonth(monthListStr);
+		monthlyUserRegistered.setUserCount(userCountList);
+		return monthlyUserRegistered;
+	}
 
+
+	public MonthlyDetails getCountOfUniquePayPerViewUsers() {
+		List<BigInteger> userCountList= null;
+		List<Integer> monthList= null ;
+		monthList =billingRepository.getCountOfUniquePayPerViewUsers_Months();
+		userCountList = billingRepository.getCountOfUniquePayPerViewUsers_UserCount();
+		List<String> monthListStr = convertIntToMonths(monthList);
+		
+		MonthlyDetails MonthlyDetails = new MonthlyDetails();
+		MonthlyDetails.setMonth(monthListStr);
+		MonthlyDetails.setUserCount(userCountList);
+		return MonthlyDetails;
+	}
+
+	public MonthlyDetails getCountOfUniqueSubscriptionUsers(){
+
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime ref_date, ref_date_start;
+		BigInteger count;
+		int month;
+
+		List<BigInteger> userCountList = new ArrayList<BigInteger>();
+		List<Integer> monthList = new ArrayList<Integer>();
+		for(int i = 0; i <= 12; i++) {
+			count = BigInteger.valueOf(0);
+			ref_date = now.minusMonths(i);
+			ref_date = ref_date.withDayOfMonth(1);
+			ref_date= ref_date.with(LocalTime.MIN);
+			ref_date_start = ref_date.plusMonths(1);
+			month = ref_date.getMonthValue();
+			System.out.println("-------------------ref_date: "+ ref_date);
+
+			count = subscriptionRepository.getCountOfUniqueSubscriptionUsers(ref_date,ref_date_start);
+
+			System.out.println("-------------------month: "+ month);
+			System.out.println("-------------------count: "+ count);
+
+			userCountList.add(count);
+			monthList.add(month);
+		}
+		List<String> monthListStr = convertIntToMonths(monthList);
+		MonthlyDetails monthlyDetails = new MonthlyDetails();
+		monthlyDetails.setMonth(monthListStr);
+		monthlyDetails.setUserCount(userCountList);
+		return monthlyDetails;
 	}
 
 }

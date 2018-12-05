@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.backend.netflix.vo.UserSubscription;
 
 
+import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,8 +25,8 @@ public interface UserSubscriptionRepository extends CrudRepository<UserSubscript
 	List<UserSubscription> findLatestSubscriptionByUserId(int userId);
 
 	@Transactional
-	@Query(value="SELECT COUNT(DISTINCT user_id) FROM user_subscriptions WHERE end_date >= NOW();",nativeQuery=true)
-	int getCountOfUniqueSubscriptionUsers();
+	@Query(value="SELECT COUNT(DISTINCT user_id) FROM user_subscriptions WHERE end_date >= ? AND start_date <= ?;",nativeQuery=true)
+	BigInteger getCountOfUniqueSubscriptionUsers(LocalDateTime ref_date, LocalDateTime ref_date_start);
 
 
 }

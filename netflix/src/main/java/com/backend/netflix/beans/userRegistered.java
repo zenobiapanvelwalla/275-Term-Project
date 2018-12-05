@@ -9,6 +9,7 @@ public class userRegistered {
     public List<BigInteger> getUserId() {
 		return userId;
 	}
+
 	public void setUserId(List<BigInteger> userId) {
 		this.userId = userId;
 	}

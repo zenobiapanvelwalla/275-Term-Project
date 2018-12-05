@@ -1,24 +1,25 @@
 package com.backend.netflix.beans;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 public class MonthlyDetails {
 	
-	private List<Integer> userId;
-    private List<Integer> month;
+	private List<BigInteger> userCount;
+    private List<String> months;
     
-	public List<Integer> getUserId() {
-		return userId;
+	public List<BigInteger> getUserCount() {
+		return userCount;
 	}
-	public void setUserId(List<Integer> userId) {
-		this.userId = userId;
+	public void setUserCount(List<BigInteger> userCount) {
+		this.userCount = userCount;
 	}
-	public List<Integer> getMonth() {
-		return month;
+	public List<String> getMonth() {
+		return months;
 	}
-	public void setMonth(List<Integer> month) {
-		this.month = month;
+	public void setMonth(List<String> months) {
+		this.months = months;
 	}
 	
 	
