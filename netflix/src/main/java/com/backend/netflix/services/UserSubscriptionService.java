@@ -31,11 +31,12 @@ public class UserSubscriptionService {
 		return userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
 	}
 
-	public void addSubscription(int userId, int months) {
+	public UserSubscription addSubscription(int userId, int months) {
 		List<UserSubscription> subscriptionList = userSubscriptionRepository.findLatestSubscriptionByUserId(userId);
+		UserSubscription subscription = null;
 		if(subscriptionList.size()>0) {
 
-			UserSubscription subscription = null;
+			//UserSubscription subscription = null;
 			subscription = subscriptionList.get(0);
 			LocalDateTime endDate = subscription.getEndDate();
 
@@ -52,15 +53,20 @@ public class UserSubscriptionService {
 				userSubscriptionRepository.save(subscription);
 
 				addBillingDetails(userId,months,now,PaymentType.SubscriptionOnly);
+
+				return subscription;
+
 			} else {
-				utilAddNewSubscription(userId, months);
+				return utilAddNewSubscription(userId, months);
 			}
 		}
 		else
-			utilAddNewSubscription(userId,months);
+			return utilAddNewSubscription(userId,months);
+
+		//return subscription;
 	}
 
-	public void utilAddNewSubscription(int userId,int months){
+	public UserSubscription utilAddNewSubscription(int userId,int months){
 		UserSubscription newSubscription = new UserSubscription();
 		newSubscription.setUserId(userId);
 		newSubscription.setMonths(months);
@@ -73,6 +79,7 @@ public class UserSubscriptionService {
 
 		addBillingDetails(userId,months,startDate,PaymentType.SubscriptionOnly);
 		userSubscriptionRepository.save(newSubscription);
+		return newSubscription;
 	}
 
 	public void addBillingDetails(int userId,int months,LocalDateTime billDate,PaymentType paymentType) {
