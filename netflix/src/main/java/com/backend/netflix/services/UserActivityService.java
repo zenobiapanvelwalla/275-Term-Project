@@ -58,19 +58,18 @@ public class UserActivityService {
 			
 			//if user activity exists then we need to update the checkpoint. If the user plays and the previous checkpoint value is 
 			//> 0 then the new checkpoint is old + new
-//			long newCheckPoint = uactivity.getCheckpoint() + checkpoint;
-//			uactivity.setCheckpoint(newCheckPoint);
-//			uaRepo.save(uactivity);
+			//long newCheckPoint = uactivity.getCheckpoint() + checkpoint;
+			//uactivity.setCheckpoint(newCheckPoint);
+			//uaRepo.save(uactivity);
 			
 			LocalDateTime now = LocalDateTime.now();
 			Duration duration = Duration.between(now, uactivity.getCreatedAt());
 			long diff = Math.abs(duration.toHours());
-			//what if the user watches the other half of the movie after 24 hourse, does that count as another watch??
+			//what if the user watches the other half of the movie after 24 hours, does that count as another watch??
 			if (diff < 24) {
 				uactivity.setWatched(false);
 				uactivity.setWatching(true);
 				uactivity.setCheckpoint(checkpoint);
-				//java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
 				uactivity.setUpdatedAt(LocalDateTime.now());
 				uaRepo.save(uactivity);
 			} else {
@@ -99,15 +98,9 @@ public class UserActivityService {
 		UserActivity ua = new UserActivity();
 		ua.setUserId(userId);
 		ua.setMovie(movie);
-		//java.sql.Date sqlDate = new java.sql.Date(new LocalDateTime.now());
+
 		ua.setCreatedAt(LocalDateTime.now());
 		ua.setUpdatedAt(LocalDateTime.now());
-		//SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		/*Calendar now = Calendar.getInstance();
-		now.set(Calendar.HOUR,0);
-		now.set(Calendar.MINUTE,0);
-		now.set(Calendar.SECOND,0);
-*/
 		//ua.setCheckpoint(LocalTime.MIN);
 		ua.setCheckpoint(checkpoint);
 		ua.setWatching(true);
@@ -229,7 +222,4 @@ public class UserActivityService {
 		return uaRepo.getMoviesInProgress(userId);
 	}
 
-	
-
-	
 }

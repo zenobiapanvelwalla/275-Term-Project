@@ -60,71 +60,16 @@ public class SubscriptionController {
 		int userId =(int)session.getAttribute("userId");
 
 		//check if user has SubscriptionOnly already
-		userSubscriptionService.addSubscription(userId, noOfMonths);
+		UserSubscription subscription= userSubscriptionService.addSubscription(userId, noOfMonths);
 
 		response.put("success", true);
 		response.put("message", "Subscription Added Successfully");
+		response.put("Subscription", subscription);
 		response.put("isSubscribed", true);
 		response.put("statusCode", 200);
 
 		return new ResponseEntity(response, HttpStatus.CREATED);
 	}
-
-	//    user comes and check his SubscriptionOnly " subscribe:method" , if not then bills the new plan by selecting the dates
-	//    no months and then pushes it to the "subscribeForParticularPlan " 
-
-	//    check the subscribed or not
-	/*
-	@RequestMapping("/subscribe")
-	public String subscribe(HttpSession session) throws Exception { 
-
-		uid =(int)session.getAttribute("userId");
-		String role=(String)session.getAttribute("role");
-		UserSubscription userSubsription=userSubscriptionService.subscribedDetails(uid);
-		Date endDate=userSubsription.getEndDate();
-		//converting java.sql.Date to java.util.Date 
-		java.util.Date enddate = new java.util.Date(endDate.getTime());
-		//creating instances of java.util.Date which represents today's date and time
-		java.util.Date now = new java.util.Date();
-		if(enddate.compareTo(now) >0) {
-			System.out.println("Already subscribed");
-		}else {
-			//        	proceeding to the billing page
-
-		}
-		return "plan selection";
-	}
-
-	@PostMapping("/subscribe/plan")
-	public String subscribeForParticularPlan(@RequestBody Plan plan ) throws Exception { 
-		
-		//creating instances of java.util.Date which represents today's date and time
-		java.util.Date now = new java.util.Date();
-		Date startDate = plan.getStrtDate()==null?now:plan.getStrtDate();
-		Date endDate = plan.getEndDate();
-		int moneyPaid = plan.getMoneyPaid();
-		String movieid= plan.getMovieid();
-//		for permovie handling
-		if(moneyPaid<10) {
-			return userSubscriptionService.subscribeUserPerMovie(uid,startDate,endDate,moneyPaid,movieid);
-		}
-		return userSubscriptionService.subscribeUser(uid,startDate,endDate,moneyPaid);
-	}
-	
-
-	@GetMapping("/unique-SubscriptionOnly-users")
-	public int getCountOfUniqueSubscriptionUsers(HttpSession session) {
-
-		return userSubscriptionService.getCountOfUniqueSubscriptionUsers();
-	}
-	*/
-
-//	@GetMapping("/unique-pay-per-view-users")
-//	public int getCountOfUniquePayPerViewUsers(HttpSession session) {
-//
-//		return billingService.getCountOfUniquePayPerViewUsers();
-//	}
-
 
 
 }
