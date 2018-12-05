@@ -10,9 +10,9 @@ class BillingPage extends Component {
 
     state={
         //the following three details are for subsription
-        amount: localStorage.getItem("amount"),
+        amount: JSON.parse(localStorage.getItem("amount")),
         page:localStorage.getItem("page"),
-        months: localStorage.getItem("months")?localStorage.getItem("months"):""
+        months: localStorage.getItem("months")?JSON.parse(localStorage.getItem("months")):null
         //end
 
     }
@@ -56,6 +56,7 @@ class BillingPage extends Component {
     
 
     render() {
+        let months = this.state.months;
         return (
             <div className="billing-container">
                 <NavBar/>
@@ -138,7 +139,7 @@ class BillingPage extends Component {
                             <p><a href="#">Product 3</a> <span className="price">$8</span></p> */}
                             <p>
                                 {this.state.page=="subscription"?
-                                    "Your are about to be subscribed for {this.state.months} month(s)"
+                                    "Your are about to be subscribed for "+ {months}+" month(s)"
                                 :"Your bill for one movie"}
                             </p>
                             <hr/>

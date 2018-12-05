@@ -12,35 +12,48 @@ class UserProfile extends Component {
         billingStatus:true,
         subscribe:false,
         amountPaid:0,
-        months:0
+        months:0,
+        subscription:null,
+        user:null
     }
 
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateAmount = this.updateAmount.bind(this);
+        this.updateAmount = this.updateNumberOfMonths.bind(this);
         
     }
     componentDidMount(){
       //get the logged in user's subscription details
+      let self = this;
+      axios.get(config.API_URL+"/users/profile",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data.subscription);
+          self.setState({subscription:JSON.stringify(response.data.subscription),user:JSON.stringify(response.data.user)});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
     updateNumberOfMonths(e){
-        e.preventDefault();
-        var amount = this.ref.months.value * 10;
+        
+        var amount = this.refs.months.value * 10;
+        var months = this.refs.months.value;
         this.setState({
             amountPaid: amount,
-            months: this.ref.months.value
+            months: months
 
-        });
-        console.log("Amount to be paid:", this.state.amountPaid);
+        },()=>{console.log("Amount to be paid:", this.state.amountPaid);});
+        
     }
 
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
-        localStorage.setItem("subscriptionMonths",this.state.months);
+        localStorage.setItem("subscriptionMonths",JSON.stringify(this.state.months));
         localStorage.setItem("page","subscription");
-        localStorage.setItem("amount",this.state.amountPaid);
+        localStorage.setItem("amount",JSON.stringify(this.state.amountPaid));
         this.props.history.push('/billing');
 
     }
@@ -54,7 +67,7 @@ class UserProfile extends Component {
                     months.push(x)
                 }
 
-        const monthsList = months.map((x) => {return(<option key={x}>{x}</option>)});
+        const monthsList = months.map((x) => {return(<option key={x} value={x}>{x}</option>)});
         return (
             <div className="profile-container">
                 <NavBar/>
@@ -93,13 +106,17 @@ class UserProfile extends Component {
                               <th>To</th>
                               </tr>
                             </thead>
+                            {this.state.subscription!=null?
                             <tbody>
+                                {this.state.subscription.map(sub=>
                               <tr>
-                              <td>4</td>
-                              <td>2kdsfj</td>
-                              <td>sdfs</td>
+                              <td>{sub.months}</td>
+                              <td>{sub.startDate}</td>
+                              <td>{sub.endDate}</td>
                               </tr>
+                                )   }
                             </tbody>
+                            :<tr> <td className="center" colSpan="3">No Subscription Yet</td></tr>}
                         </table>
                         
 		                </div>
@@ -132,7 +149,7 @@ class UserProfile extends Component {
                                   <div className="form-group row">
                                     <label htmlFor="select" className="col-4 col-form-label">Months</label> 
                                     <div className="col-8">
-                                      <select ref="months" onChange={this.updateAmount} id="select" name="select" className="custom-select">
+                                      <select ref="months" onChange={this.updateNumberOfMonths} id="select" name="select" className="custom-select">
                                         <option value="" disabled="true">Select Period</option>
                                             {monthsList}
                                       </select>

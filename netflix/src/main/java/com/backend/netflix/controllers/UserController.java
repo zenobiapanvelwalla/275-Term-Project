@@ -338,14 +338,16 @@ public class UserController {
 			//session.setAttribute("userId", 2);
 			HashMap<String,Object> response = new HashMap<>();
 			int userId = (int)session.getAttribute("userId");
-
+			UserSubscription subscription = null;
 			List<UserSubscription> subscriptionList = usService.findLatestSubscriptionByUserId(userId);
-			UserSubscription subscription = subscriptionList.get(0);
+			if(subscriptionList.size()>0) {
+			    subscription = subscriptionList.get(0);
+			} 
 
 			User user = userService.getUser(userId);
 			if(user!=null) {
 				response.put("user", user);
-				response.put("SubscriptionOnly",subscriptionList);
+				response.put("subscription",subscription);
 				response.put("success", true);
 				response.put("statusCode",200);
 			} else {
