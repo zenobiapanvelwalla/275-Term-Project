@@ -12,6 +12,7 @@ import com.backend.netflix.services.UserActivityService;
 import com.backend.netflix.vo.Movie;
 import com.backend.netflix.vo.UserActivity;
 import com.backend.netflix.beans.TopMovie;
+import com.backend.netflix.beans.TopUser;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
@@ -27,10 +28,18 @@ public class UserActivityController {
 	}
 	*/
 
-	@RequestMapping("/user-activities/{user_id}")
-	public List<UserActivity> getUserActivityInReverseOrder(@PathVariable int user_id) {
-		return userActivityService.getUserActivityByUserIdOrderByUpdatedAt(user_id);
+	//Get movie playing history in reverse chronological order of given customer
+	@RequestMapping(value="/user-activities/movie-playing-history/{userId}",method=RequestMethod.GET)
+	public ResponseEntity<?> getMoviePlayingHistory(@PathVariable int userId){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		List<UserActivity> history = userActivityService.getUserActivityByUserIdOrderByUpdatedAt(userId);
+		response.put("success", true);
+		response.put("history",history);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
+	
+	
 	//added checkpoint to updated the checkpoint of an already existing user activity
 	@RequestMapping(value = "/user-activities/store/{user_id}/{movie_id}/{checkpoint}",method = RequestMethod.GET)
 	public ResponseEntity<?> addUserActivity(@PathVariable int user_id, @PathVariable int movie_id,@PathVariable long checkpoint) throws Exception {
@@ -86,15 +95,15 @@ public class UserActivityController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
-//	@GetMapping("/users/top-ten/{type}")
-//	public ResponseEntity<?> getTopTenUsers(@PathVariable int type){
-//		HashMap<String, Object> response = new HashMap<String, Object>();
-//		List<TopUser> topTenUsers = userActivityService.getTopTenUsers(type);
-//		response.put("success", true);
-//		response.put("message", topTenUsers);
-//		response.put("statusCode", 200);
-//		return new ResponseEntity(response, HttpStatus.OK);
-//	}
+	@GetMapping("/users/top-ten/{type}")
+	public ResponseEntity<?> getTopTenUsers(@PathVariable int type){
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		List<TopUser> topTenUsers = userActivityService.getTopTenUsers(type);
+		response.put("success", true);
+		response.put("message", topTenUsers);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
 	
 	@GetMapping("/user-activities/get-movies-in-progress/{userId}")
 	public ResponseEntity<?> getMoviesInProgress(@PathVariable int userId){
