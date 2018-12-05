@@ -26,40 +26,40 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
    @Query(value = "SELECT * FROM users_activities WHERE user_id=? and movie_id = ? ORDER BY created_at DESC", nativeQuery = true)
    public List<UserActivity> findByUserIdAndMovieId(int userId,int MovieId);
 
-   @Query(value = "select count(*) from users_activities where movie_id=? and TIMESTAMPDIFF(HOUR,updated_at, now())<=24;",nativeQuery = true)
+   @Query(value = "select count(*) from users_activities where movie_id=? and checkpoint > 0 and TIMESTAMPDIFF(HOUR,updated_at, now())<=24;",nativeQuery = true)
    public int getNumberOfPlaysForMovieInTwentyFourHours(int movieId);
    
-   @Query(value = "select count(*) from users_activities where movie_id=? and DATEDIFF(now(),updated_at)<=7;",nativeQuery= true)
+   @Query(value = "select count(*) from users_activities where movie_id=? and checkpoint > 0 and DATEDIFF(now(),updated_at)<=7;",nativeQuery= true)
    public int getNumberOfPlaysForMovieInAWeek(int movieId);
    
-   @Query(value = "select count(*) from users_activities where movie_id=? and DATEDIFF(now(),updated_at)<=30;",nativeQuery= true)
+   @Query(value = "select count(*) from users_activities where movie_id=? and checkpoint > 0 and DATEDIFF(now(),updated_at)<=30;",nativeQuery= true)
    public int getNumberOfPlaysForMovieInAMonth(int movieId);
 
    /*------TOP 10 Movies----------*/
    @Transactional
-   @Query(value="select movie_id from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY movie_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select movie_id from users_activities where checkpoint > 0 and TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY movie_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
    public List<Integer> getTopTenMoviesInTwentyFourHours();
    
    @Transactional
-   @Query(value="select COUNT(*) from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY movie_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select COUNT(*) from users_activities where checkpoint > 0 and TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY movie_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
    public List<BigInteger> getTopTenMoviesPlayCountsInTwentyFourHours();
    
    @Transactional
-   @Query(value="select movie_id from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY movie_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true) 
+   @Query(value="select movie_id from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=7 GROUP BY movie_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
    public List<Integer> getTopTenMoviesInWeek();
    
    @Transactional
-   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY movie_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true) 
+   @Query(value="select count(*) as playCount from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=7 GROUP BY movie_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
    public List<BigInteger> getTopTenMoviesPlayCountsInAWeek();
    
    
 
    @Transactional
-   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY movie_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true) 
+   @Query(value="select count(*) as playCount from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=30 GROUP BY movie_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
    public List<BigInteger> getTopTenMoviesPlayCountsInAMonth();
    
    @Transactional
-   @Query(value="select movie_id from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY movie_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select movie_id from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=30 GROUP BY movie_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
    public List<Integer> getTopTenMoviesInAMonth();
 
 
@@ -70,37 +70,37 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
 
    /*------TOP 10 Users----------*/
    @Transactional
-   @Query(value="select user_id from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select user_id from users_activities where checkpoint > 0 and TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
    List<Integer> getTopTenUsersInTwentyFourHours();
 
 
    @Transactional
-   @Query(value="select COUNT(*) from users_activities where TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select COUNT(*) from users_activities where checkpoint > 0 and TIMESTAMPDIFF(HOUR,updated_at, now())<=24 GROUP BY user_id order by count(*) DESC LIMIT 10;",nativeQuery=true)
    List<BigInteger> getTopTenUsersPlayCountsInTwentyFourHours();
 
 
    @Transactional
-   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select count(*) as playCount from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
    List<BigInteger> getTopTenUsersPlayCountsInAWeek();
 
    @Transactional
-   @Query(value="select user_id from users_activities where DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select user_id from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=7 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
    List<Integer> getTopTenUsersInWeek();
 
    @Transactional
-   @Query(value="select count(*) as playCount from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select count(*) as playCount from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY playCount DESC LIMIT 10;",nativeQuery=true)
    List<BigInteger> getTopTenUsersPlayCountsInAMonth();
 
    @Transactional
-   @Query(value="select user_id from users_activities where DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
+   @Query(value="select user_id from users_activities where checkpoint > 0 and DATEDIFF(now(),updated_at)<=30 GROUP BY user_id ORDER BY count(*) DESC LIMIT 10;",nativeQuery=true)
    List<Integer> getTopTenUsersInAMonth();
    
    @Query(value="SELECT * FROM users_activities WHERE user_id=? AND movie_id=? ORDER BY updated_at DESC LIMIT 1",nativeQuery=true)
    UserActivity findLatestByUserIdAndMovieId(int userId, int movieId);
    
-   @Transactional
-   @Query(value="select user_id from users_activities",nativeQuery=true)
-   List<Integer> getUniqueActiveusers();
+//   @Transactional
+//   @Query(value="select user_id from users_activities",nativeQuery=true)
+//   List<Integer> getUniqueActiveusers();
    
    
   //next two functions for -- total unique active users (those who played at least one movie in the month)

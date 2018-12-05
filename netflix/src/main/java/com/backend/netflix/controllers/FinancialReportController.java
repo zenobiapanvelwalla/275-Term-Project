@@ -93,7 +93,7 @@ public class FinancialReportController {
 	}
 
 	// total unique active users (those who played at least one movie in the month for last 12 months
-	@RequestMapping(value = "/count-total-unique-active-Users",method = RequestMethod.GET)
+	@RequestMapping(value = "/count-total-unique-active-users",method = RequestMethod.GET)
 	public ResponseEntity<?> getUniqueActiveUserWatchedOnemovieperMonth(){
 
 		HashMap<String, Object> response = new HashMap<String, Object>();
