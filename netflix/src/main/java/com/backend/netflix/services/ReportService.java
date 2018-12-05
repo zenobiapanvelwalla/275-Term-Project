@@ -93,19 +93,10 @@ public class ReportService {
 
 	}
 
-//	public BigInteger getCountOfUniqueSubscriptionUsers() {
-//
-//		return billingRepository.getCountOfUniqueSubscriptionUsers();
-//	}
-
-	
-	
-
-	
 	public MonthlyDetails getUniqueActiveUserWatchedOnemovieperMonth() {
 		
-		List<BigInteger> userList= null;
-		List<Integer> monthList= null ;
+		List<BigInteger> userList= new ArrayList<>();
+		List<Integer> monthList= new ArrayList<>() ;
 		userList =UserActivityRepository.getUsersWatchedMovedPerMonth();
 		monthList = UserActivityRepository.getMonthsWatchedMovedPerMonth();
 		List<String> monthListStr = convertIntToMonths(monthList);
@@ -117,19 +108,17 @@ public class ReportService {
 
 	}
 
-
-	public userRegistered getMonthlyRegisteredUsers() {
-		List<BigInteger> userList= null;
+	public MonthlyDetails getMonthlyRegisteredUsers() {
+		List<BigInteger> userCountList= null;
 		List<Integer> monthList= null ;
 		monthList =UserRepository.getMonthuserRegisteredMonthly();
-		userList = UserRepository.getUserRegisteredMonthly();
+		userCountList = UserRepository.getUserRegisteredMonthly();
 		List<String> monthListStr = convertIntToMonths(monthList);
 
-		userRegistered userRegistered = new userRegistered();
-		userRegistered.setMonth(monthList);
-		userRegistered.setUserId(userList);
-		return userRegistered;
-
+		MonthlyDetails monthlyUserRegistered = new MonthlyDetails();
+		monthlyUserRegistered.setMonth(monthListStr);
+		monthlyUserRegistered.setUserCount(userCountList);
+		return monthlyUserRegistered;
 	}
 
 
@@ -177,10 +166,6 @@ public class ReportService {
 		monthlyDetails.setMonth(monthListStr);
 		monthlyDetails.setUserCount(userCountList);
 		return monthlyDetails;
-		//Calendar cal=Calendar.getInstance();
-		//SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-		//String month_name = month_date.format(cal.getTime());
-
 	}
 
 }

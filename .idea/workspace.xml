@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e0c7323-3924-4e34-a7e5-10442af11cc4" name="Default" comment="Merging changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java" />
       <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" />
-      <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java" />
       <change beforePath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" afterPath="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,23 +22,23 @@
       <file leaf-file-name="ReportService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="162" column="50" lean-forward="false" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
+            <state relative-caret-position="297">
+              <caret line="119" column="29" lean-forward="false" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="29" />
               <folding>
                 <element signature="e#1230#1231#0" expanded="true" />
                 <element signature="e#1282#1283#0" expanded="true" />
-                <element signature="e#4548#4560#0" expanded="true" />
-                <element signature="e#4605#4614#0" expanded="true" />
+                <element signature="e#4480#4492#0" expanded="true" />
+                <element signature="e#4537#4546#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinancialReportController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FinancialReportController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="103" column="0" lean-forward="true" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+            <state relative-caret-position="273">
+              <caret line="108" column="29" lean-forward="true" selection-start-line="108" selection-start-column="29" selection-end-line="108" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -48,14 +47,14 @@
       <file leaf-file-name="userRegistered.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state relative-caret-position="150">
+              <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -231,9 +230,10 @@
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/BillingController.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/MovieController.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/UserController.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" />
-        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" />
         <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java" />
+        <option value="$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java" />
       </list>
     </option>
   </component>
@@ -1189,6 +1189,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="27" column="112" lean-forward="false" selection-start-line="27" selection-start-column="112" selection-end-line="27" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/MonthlyDetails.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1200,47 +1224,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserSubscriptionRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="27" column="112" lean-forward="false" selection-start-line="27" selection-start-column="112" selection-end-line="27" selection-end-column="112" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/services/ReportService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="162" column="50" lean-forward="false" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
+        <state relative-caret-position="297">
+          <caret line="119" column="29" lean-forward="false" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="29" />
           <folding>
             <element signature="e#1230#1231#0" expanded="true" />
             <element signature="e#1282#1283#0" expanded="true" />
-            <element signature="e#4548#4560#0" expanded="true" />
-            <element signature="e#4605#4614#0" expanded="true" />
+            <element signature="e#4480#4492#0" expanded="true" />
+            <element signature="e#4537#4546#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/controllers/FinancialReportController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="103" column="0" lean-forward="true" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/beans/userRegistered.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/netflix/src/main/java/com/backend/netflix/repository/UserRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="273">
+          <caret line="108" column="29" lean-forward="true" selection-start-line="108" selection-start-column="29" selection-end-line="108" selection-end-column="59" />
           <folding />
         </state>
       </provider>
