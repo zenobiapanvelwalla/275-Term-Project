@@ -14,6 +14,7 @@ import style from '../custom_css/admin_dashboard.css';
 import MovieFilterActors from './MovieFilterActors';
 import MovieFilterRating from './MovieFilterRating';
 import MovieFilterGenre from './MovieFilterGenre';
+import NavBar from './NavBar';
 
 var imagecard = {
     margin: "20px !important" 
@@ -259,7 +260,7 @@ class CustomerDashboard extends Component {
     render(){
         return(
             <div> 
-                <AdminNavBar></AdminNavBar>
+                {localStorage.getItem('role') == 'ADMIN' ? <AdminNavBar/> : <NavBar></NavBar>}
                 <div>
                     {this.display_movies()}
                 </div>

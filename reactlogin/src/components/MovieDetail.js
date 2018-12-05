@@ -39,7 +39,11 @@ class MovieDetail extends Component {
         axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
           console.log("Message " + JSON.stringify(response.data.message.reviews));
-          self.setState({movie_details:response.data.message,reviews:response.data.message.reviews },() => {
+          if(!response.data.message.reviews)
+          {
+              self.setState({reviews:response.data.message.reviews})
+          }
+          self.setState({movie_details:response.data.message },() => {
             //check user can watch movie or not
             let availability = self.state.movie_details.availability;
             let isSubscribed = localStorage.getItem('isSubscribed');
@@ -63,7 +67,7 @@ class MovieDetail extends Component {
                     {
                         self.setState({canUserWatchMovie:true});
                     }
-                    if(moviesPaidForList.includes(this.props.match.params.movieId))
+                    if(moviesPaidForList.includes(self.props.match.params.movieId))
                     {
                         self.setState({canUserWatchMovie:true});
                     }
@@ -172,7 +176,7 @@ class MovieDetail extends Component {
         
         return (
             <div className="moviedetail_body">
-                <NavBar></NavBar>
+                {localStorage.getItem('role') == 'ADMIN' ? <AdminNavBar/> : <NavBar></NavBar>}
                 <div className = "row">
                     <div className = "col-md-6 sectionM" id="pic-1"><img className="imageSection" src={this.state.movie_details.imageUrl } /></div>
                     <div className = "col-md-6 sectionM">
