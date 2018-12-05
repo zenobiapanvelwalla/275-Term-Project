@@ -15,7 +15,7 @@ import com.backend.netflix.beans.TopMovie;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserActivityController {
-	@Autowired
+	@Autowired	
 	private UserActivityService userActivityService;
 	/*
 	@RequestMapping("/user-activities/{user_id}")

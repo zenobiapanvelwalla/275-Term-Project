@@ -13,6 +13,7 @@ import details from '../custom_css/movie_detail.css';
 import YouTube from 'react-youtube';
 import Modal from 'react-modal';
 import ReactPlayer from 'react-player';
+import screenfull from 'screenfull';
 
 const customStyles = {
     content : {
@@ -44,17 +45,24 @@ class Video extends Component {
           };
         
         //   this.ref = this.ref.bind(this);
-          this.endVideo = this.endVideo.bind(this);  
+          this.endVideo = this.endVideo.bind(this); 
+          this.handlePause = this.handlePause.bind(this); 
           
     }
 
-    endVideo(){
-        // console.log("Player " + JSON.stringify(this.state.player));
-        // console.log("TTTTTIME : " + this.state.player.getCurrentTime())
-        this.props.history.push('/customerdashboard');
+    handlePlay(e){
+            
     }
 
-    ref = player => {
+    handlePause(e){
+            
+    }
+
+    endVideo(e){
+       
+    }
+
+        ref = player => {
         this.player=player 
         }
 
@@ -71,22 +79,23 @@ class Video extends Component {
         return (
         
           <div>
-              <button className="btn btn-warning" onClick={this.endVideo}>Stop</button>
+              {/* <button class Name="btn btn-warning" onClick={this.endVideo}>Stop</button> */}
               <ReactPlayer
-              ref={this.ref}
+                ref={this.ref}
                 playing
                 controls
+                width='1024px'
+                height='768px'
+                onReady={(event) => {
+                    screenfull.request(ReactDOM.findDOMNode(this.player))
+                }}
                 url='https://www.youtube.com/watch?v=Mh5LY4Mz15o?start=20s'
                 youtubeConfig={{ playerVars: { end: 40 }}}
-                onPause = {(event) => {
-                    // console.log("Current Time " + this.state.player.getCurrentTime());
-                    console.log("Current Time " + this.player.getCurrentTime());
-                    // console.log("Current Time " + ref.getCurrentTime());
-                    // this.player.seekTo(parseFloat(event.target.value))
-                    console.log(event);
-                }}
+                onPlay={this.onPlay}
+                onPause = {this.handlePause}
+                onEnded = {this.onEnded}
                 />
-              <YouTube
+              {/* <YouTube
                 ref={this.ref}
                 youtubeConfig={{
                     playerVars: {
@@ -116,7 +125,7 @@ class Video extends Component {
                 // onStateChange={func}              // defaults -> noop
                 // onPlaybackRateChange={func}       // defaults -> noop
                 // onPlaybackQualityChange={func}    // defaults -> noop
-                />
+                /> */}
           </div>
         );
       }

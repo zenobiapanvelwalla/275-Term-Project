@@ -36,11 +36,12 @@ class CustomerDashboard extends Component {
     }
     componentDidMount(){
         let self = this;
+        console.log(config.API_URL+'/movies');
         axios.get(config.API_URL+'/movies')
         .then(function (response) {
-        //   console.log("Message " + JSON.stringify(response.data.message));
+          console.log("Message " + JSON.stringify(response.data));
         //   this.setState({movies:response.data.message[0]});
-          self.setState({movies:response.data.message, allmovies:response.data.message});
+          self.setState({movies:response.data, allmovies:response.data});
         })
         .catch(function (error) {
           console.log(error);
@@ -71,6 +72,8 @@ class CustomerDashboard extends Component {
                             console.log("Movies after director filter");
                             console.log("****************After dir filter " + this.state.movies)
 
+                        })}}
+
         //actor filter start
         if(this.state.movies.length != 0){
             if(this.state.selectedActors.length == 0){ }
@@ -99,7 +102,7 @@ class CustomerDashboard extends Component {
         }
         //Actor End
                
-        })}}
+        
         //director End
 
                 })}

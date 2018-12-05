@@ -25,7 +25,7 @@
     "react-stars": "^2.2.5",
     "react-stepper-horizontal": "^1.0.11",
     "react-youtube": "^7.8.0",
-    "styled-components": "^4.1.2"
+    "screenfull": "^3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,7 +33,5 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "devDependencies": {
-    "babel-plugin-styled-components": "^1.9.2"
-  }
+  "devDependencies": {}
 }
