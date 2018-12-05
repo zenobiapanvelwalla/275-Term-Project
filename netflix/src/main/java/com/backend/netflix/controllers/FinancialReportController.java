@@ -66,15 +66,23 @@ public class FinancialReportController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
-	
-	
-
-	
 	@RequestMapping(value = "/count-unique-pay-per-view-users",method = RequestMethod.GET)
 	public ResponseEntity<?> getCountOfUniquePayPerViewUsers(){
 
 		HashMap<String, Object> response = new HashMap<String, Object>();
 		MonthlyDetails MonthlyDetails = reportservice.getCountOfUniquePayPerViewUsers();
+
+		response.put("success", true);
+		response.put("message", MonthlyDetails);
+		response.put("statusCode", 200);
+		return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/count-unique-subscription-users",method = RequestMethod.GET)
+	public ResponseEntity<?> getCountOfUniqueSubscriptonUsers(){
+
+		HashMap<String, Object> response = new HashMap<String, Object>();
+		MonthlyDetails MonthlyDetails = reportservice.getCountOfUniqueSubscriptionUsers();
 
 		response.put("success", true);
 		response.put("message", MonthlyDetails);

@@ -2,11 +2,14 @@ package com.backend.netflix.services;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import com.backend.netflix.beans.MonthlyDetails;
 import com.backend.netflix.beans.MonthlyIncome;
 import com.backend.netflix.beans.userRegistered;
+import com.backend.netflix.repository.UserSubscriptionRepository;
 import com.backend.netflix.vo.PaymentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,9 @@ public class ReportService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserSubscriptionRepository subscriptionRepository;
 
 	public Billing findByUserId(int userId) {
 		return billingRepository.findByUserId(userId);
@@ -138,6 +144,43 @@ public class ReportService {
 		MonthlyDetails.setMonth(monthListStr);
 		MonthlyDetails.setUserCount(userCountList);
 		return MonthlyDetails;
+	}
+
+	public MonthlyDetails getCountOfUniqueSubscriptionUsers(){
+
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime ref_date, ref_date_start;
+		BigInteger count;
+		int month;
+
+		List<BigInteger> userCountList = new ArrayList<BigInteger>();
+		List<Integer> monthList = new ArrayList<Integer>();
+		for(int i = 0; i <= 12; i++) {
+			count = BigInteger.valueOf(0);
+			ref_date = now.minusMonths(i);
+			ref_date = ref_date.withDayOfMonth(1);
+			ref_date= ref_date.with(LocalTime.MIN);
+			ref_date_start = ref_date.plusMonths(1);
+			month = ref_date.getMonthValue();
+			System.out.println("-------------------ref_date: "+ ref_date);
+
+			count = subscriptionRepository.getCountOfUniqueSubscriptionUsers(ref_date,ref_date_start);
+
+			System.out.println("-------------------month: "+ month);
+			System.out.println("-------------------count: "+ count);
+
+			userCountList.add(count);
+			monthList.add(month);
+		}
+		List<String> monthListStr = convertIntToMonths(monthList);
+		MonthlyDetails monthlyDetails = new MonthlyDetails();
+		monthlyDetails.setMonth(monthListStr);
+		monthlyDetails.setUserCount(userCountList);
+		return monthlyDetails;
+		//Calendar cal=Calendar.getInstance();
+		//SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+		//String month_name = month_date.format(cal.getTime());
+
 	}
 
 }
