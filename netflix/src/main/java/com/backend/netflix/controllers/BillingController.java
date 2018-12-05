@@ -36,6 +36,7 @@ public class BillingController {
 
 		HashMap<String, Object> response = new HashMap<>();
 		int userId =(int)session.getAttribute("userId");
+		System.out.println("------------------Add BILIING UserId:"+ userId);
 
 		int movieId = Integer.parseInt(data.get("movieId"));
 		int moneyPaid = Integer.parseInt(data.get("moneyPaid"));
