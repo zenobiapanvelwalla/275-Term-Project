@@ -87,7 +87,7 @@ class MovieDetail extends Component {
                         {
                             amount = amount + self.state.movie_details.price;
                             localStorage.setItem("amount",amount.toString());
-                            localStorage.setItem("page",amount.toString());
+                            localStorage.setItem("page","moviedetail");
                             localStorage.setItem("movie_id",this.props.match.params.movieId)
                             localStorage.setItem("paymentType",availability)
                         }
@@ -95,7 +95,7 @@ class MovieDetail extends Component {
                         {
                             amount = amount + self.state.movie_details.price;
                             localStorage.setItem("amount",amount.toString());
-                            localStorage.setItem("page",amount.toString());
+                            localStorage.setItem("page","moviedetail");
                             localStorage.setItem("movie_id",this.props.match.params.movieId)
                             localStorage.setItem("paymentType",availability)
                         }
@@ -316,7 +316,7 @@ class MovieDetail extends Component {
                     <div className="row">
                         <button type="button" onClick={() => {
                             this.props.history.push('/billing');
-                        }} className="btn btn-info">Pay for movie</button>     
+                        }} className="btn btn-info">Pay for this movie</button>     
                         <button type="button" onClick={() => {
                             this.props.history.push('/user-profile');
                         }} className="ml-2 btn btn-info">Subscribe</button>     

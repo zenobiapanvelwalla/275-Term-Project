@@ -48,6 +48,32 @@ class BillingPage extends Component {
               
               
         }
+        if(localStorage.getItem("page").toString()=="moviedetail"){
+            
+            let payload = {
+            moneyPaid : localStorage.getItem("amount"),
+            movieId : localStorage.getItem("movie_id"),
+            paymentType : localStorage.getItem("paymentType")
+            }
+            console.log("Payload : " + payload);
+            let path = "/pay" 
+            let self = this;
+            axios.post(config.API_URL+path,{withCredentials:true})
+              .then(function (response) {
+                console.log(response);
+                if(response.data.success)
+                {
+                    alert("Your payment is successful, you can now watch the movie");
+                    let patha = "/moviedetail/" +  payload.movieId
+                    self.props.history.push(patha);
+                }
+              })
+              .catch(function (error) {
+                  console.log(error);
+              });
+            
+            
+      }
 
         
     }
