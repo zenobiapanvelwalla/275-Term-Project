@@ -30,30 +30,31 @@ class UserProfile extends Component {
         .then(function (response) {
           //console.log("Message " + JSON.stringify(response));
           console.log(response.data.subscription);
-          self.setState({subscription:JSON.stringify(response.data.subscription),user:JSON.stringify(response.data.user)});
+          self.setState({subscription:response.data.subscription,user:response.data.user});
         })
         .catch(function (error) {
           console.log(error);
         });
     }
     updateNumberOfMonths(e){
-        
+        console.log("INSIDE UPDATE");
         var amount = this.refs.months.value * 10;
         var months = this.refs.months.value;
         this.setState({
             amountPaid: amount,
             months: months
 
-        },()=>{console.log("Amount to be paid:", this.state.amountPaid);});
+        },()=>{console.log("Amount to be paid:", amount);});
         
     }
 
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
-        localStorage.setItem("subscriptionMonths",JSON.stringify(this.state.months));
+        localStorage.setItem("subscriptionMonths",this.refs.months.value);
         localStorage.setItem("page","subscription");
-        localStorage.setItem("amount",JSON.stringify(this.state.amountPaid));
+        let amount = this.refs.months.value*10;
+        localStorage.setItem("amount",JSON.stringify(amount));
         this.props.history.push('/billing');
 
     }
@@ -85,7 +86,7 @@ class UserProfile extends Component {
                     </div> 
 		        </div>
                 {/* Billing Status Section */}
-                {this.state.billingStatus == true?
+                {this.state.billingStatus === true?
 		        <div className="col-md-9">
 		        <div className="cardU">
 		        <div className="card-body">
@@ -101,22 +102,25 @@ class UserProfile extends Component {
                         <table className="table table-hover table-sm">
                             <thead>
                               <tr>
-                              <th>Months</th>
-                              <th>From</th>
-                              <th>To</th>
+                                <th>Months</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                               </tr>
                             </thead>
-                            {this.state.subscription!=null?
+                            
                             <tbody>
-                                {this.state.subscription.map(sub=>
+                            {this.state.subscription!=null?
                               <tr>
-                              <td>{sub.months}</td>
-                              <td>{sub.startDate}</td>
-                              <td>{sub.endDate}</td>
+                              <td>{this.state.subscription.months}</td>
+                              <td>{this.state.subscription.startDate}</td>
+                              <td>{this.state.subscription.endDate}</td>
                               </tr>
-                                )   }
+                               : 
+                               <tr> 
+                                   <td className="center" colSpan="3">No Subscription Yet</td>
+                                </tr>
+                            }
                             </tbody>
-                            :<tr> <td className="center" colSpan="3">No Subscription Yet</td></tr>}
                         </table>
                         
 		                </div>
@@ -129,7 +133,7 @@ class UserProfile extends Component {
 
                 {/* Subscribe Section */}
                 
-                {this.state.subscribe == true?
+                {this.state.subscribe === true?
                 <div className="col-md-9">
                 <div className="cardU">
                     <div className="card-body">
@@ -149,8 +153,8 @@ class UserProfile extends Component {
                                   <div className="form-group row">
                                     <label htmlFor="select" className="col-4 col-form-label">Months</label> 
                                     <div className="col-8">
-                                      <select ref="months" onChange={this.updateNumberOfMonths} id="select" name="select" className="custom-select">
-                                        <option value="" disabled="true">Select Period</option>
+                                      <select ref="months" id="select" name="select" className="custom-select">
+                                        <option value="" disabled="true" selected>Select Period</option>
                                             {monthsList}
                                       </select>
                                     </div>

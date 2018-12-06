@@ -12,7 +12,7 @@ class BillingPage extends Component {
         //the following three details are for subsription
         amount: JSON.parse(localStorage.getItem("amount")),
         page:localStorage.getItem("page"),
-        months: localStorage.getItem("months")?JSON.parse(localStorage.getItem("months")):null
+        months: localStorage.getItem("subscriptionMonths")
         //end
 
     }
@@ -30,10 +30,10 @@ class BillingPage extends Component {
         //if request has come from subscription page
         if(localStorage.getItem("page").toString()=="subscription"){
             
-              let noOfMonths = parseInt(localStorage.getItem("subscriptionMonths"));
-              let path = "/subscribe/" + noOfMonths;
+              let noOfMonths = JSON.parse(localStorage.getItem("subscriptionMonths"));
+              let path = "/subscribe/" + parseInt(noOfMonths);
               let self = this;
-              axios.post(config.API_URL+path,{withCredentials:true})
+              axios.get(config.API_URL+path,{withCredentials:true})
                 .then(function (response) {
                   console.log(response);
                   if(response.data.success)
@@ -57,6 +57,7 @@ class BillingPage extends Component {
 
     render() {
         let months = this.state.months;
+        
         return (
             <div className="billing-container">
                 <NavBar/>
@@ -65,7 +66,7 @@ class BillingPage extends Component {
                 <div className="row">
                     <div className="col-75B col-75">
                         
-                            <form action="/billing">
+                            <form  onSubmit={this.handleSubmit}>
 
                                 <div className="row rowB">
                                     {/* <div className="col-50B col-50">
@@ -121,7 +122,7 @@ class BillingPage extends Component {
 
                                 </div>
                                 
-                                <button value="Continue to checkout" className="btn btnB"/>
+                                <button type="submit" value="Continue to checkout" className="btn btnB">Proceed To Checkout</button>
                             </form>
                         
                     </div>
@@ -137,11 +138,13 @@ class BillingPage extends Component {
                             {/* <p><a href="#">Product 1</a> <span className="price">$15</span></p>
                             <p><a href="#">Product 2</a> <span className="price">$5</span></p>
                             <p><a href="#">Product 3</a> <span className="price">$8</span></p> */}
-                            <p>
+                            {/* <p>
                                 {this.state.page=="subscription"?
-                                    "Your are about to be subscribed for "+ {months}+" month(s)"
+                                    "Your are about to be subscribed for "+ {months}.toString()+" month(s)"
                                 :"Your bill for one movie"}
-                            </p>
+                                
+                            </p> */}
+                            <h5>Your Invoice Is Ready</h5>
                             <hr/>
                             <p>Total <span className="price"><b>${this.state.amount}</b></span></p>
                         </div>
