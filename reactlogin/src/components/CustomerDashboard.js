@@ -182,6 +182,8 @@ class CustomerDashboard extends Component {
                     <div className="pr-3 pt-2 view overlay zoom">
                     <img onClick={() =>{
                         let path = "/moviedetail/" +  movie.movieId;
+                        localStorage.setItem("movie_id",movie.movieId)
+                        localStorage.setItem("paymentType",movie.availability)
                         this.props.history.push(path);
                     }} className="card-img-top center mt-2 img-fluid" style={imagecard} src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"} alt="Card image cap"></img>
                         {/* <img src={movie.imageUrl || "http://www.kickoff.com/chops/images/resized/large/no-image-found.jpg"}/> */}

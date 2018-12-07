@@ -47,7 +47,7 @@ class Login extends Component {
                         {
                             localStorage.setItem('user_details',JSON.stringify(response.data.message));
                             localStorage.setItem('isSubscribed',response.data.isSubscribed);
-                            localStorage.setItem('moviesPaidForList',JSON.stringify(response.data.moviesPaidForList));
+                            localStorage.setItem('moviesPaidForList',response.data.moviesPaidForList);
 
                             self.props.history.push('/customerdashboard');
                         }

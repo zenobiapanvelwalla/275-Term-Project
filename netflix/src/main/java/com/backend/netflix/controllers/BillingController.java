@@ -35,7 +35,8 @@ public class BillingController {
 		//session.setAttribute("userId",1);
 
 		HashMap<String, Object> response = new HashMap<>();
-		int userId =(int)session.getAttribute("userId");
+//		int userId =(int)session.getAttribute("userId");
+		int userId = Integer.parseInt(data.get("userId"));
 		System.out.println("------------------Add BILIING UserId:"+ userId);
 
 		int movieId = Integer.parseInt(data.get("movieId"));

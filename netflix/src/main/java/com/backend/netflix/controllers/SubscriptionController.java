@@ -64,7 +64,7 @@ public class SubscriptionController {
 
 		response.put("success", true);
 		response.put("message", "Subscription Added Successfully");
-		response.put("Subscription", subscription);
+		response.put("subscription", subscription);
 		response.put("isSubscribed", true);
 		response.put("statusCode", 200);
 

@@ -18,6 +18,7 @@ class MovieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            movie_id:'',
             movie_details:'',
             giveReview: false,
             rating:'',
@@ -35,6 +36,8 @@ class MovieDetail extends Component {
     componentWillMount(){
         console.log("Inside movie detail fetching")
         let self = this;
+        let a = this.props.match.params.movieId;
+        this.setState({movie_id:a})
         let path = "/movies/" + this.props.match.params.movieId;
         console.log(config.API_URL+path);
         axios.get(config.API_URL+path,{withCredentials: true})
@@ -48,7 +51,7 @@ class MovieDetail extends Component {
             //check user can watch movie or not
             let availability = self.state.movie_details.availability;
             let isSubscribed = localStorage.getItem('isSubscribed');
-            let moviesPaidForList = JSON.parse(localStorage.getItem('moviesPaidForList'));
+            let moviesPaidForList = localStorage.getItem('moviesPaidForList');
             self.setState({canUserWatch:response.data.canUserWatch},() => {
                 if(self.state.canUserWatch == true)
                 {
@@ -56,11 +59,11 @@ class MovieDetail extends Component {
                     {
                         self.setState({canUserWatchMovie:true});
                     }
-                    if(isSubscribed == true && availability == 'SubscriptionOnly')
+                    if(isSubscribed == "true" && availability == 'SubscriptionOnly')
                     {
                         self.setState({canUserWatchMovie:true});
                     }
-                    if(isSubscribed == true && availability == "Paid")
+                    if(isSubscribed == "true" && availability == "Paid")
                     {
                         self.setState({canUserWatchMovie:true});
                     }
@@ -68,35 +71,35 @@ class MovieDetail extends Component {
                     {
                         self.setState({canUserWatchMovie:true});
                     }
-                    if(moviesPaidForList.includes(self.props.match.params.movieId))
+                    if(localStorage.getItem("moviesPaidForList").includes(parseInt(self.props.match.params.movieId)))
                     {
                         self.setState({canUserWatchMovie:true});
                     }
                     //when and who will pay
                     else{
                         let amount = 0;
-                        if(isSubscribed == true && availability == "PayPerViewOnly")
+                        if(isSubscribed == "true" && availability == "PayPerViewOnly")
                         {
                             amount = amount + (self.state.movie_details.price * .5);
                             localStorage.setItem("amount",amount.toString());
                             localStorage.setItem("page","moviedetail");
-                            localStorage.setItem("movieId",this.props.match.params.movieId)
+                            // localStorage.setItem("movieId",this.props.match.params.movieId)
                             localStorage.setItem("paymentType",availability)
                         }
-                        if(isSubscribed == false && availability == "PayPerViewOnly")
+                        if(isSubscribed == "false" && availability == "PayPerViewOnly")
                         {
                             amount = amount + self.state.movie_details.price;
                             localStorage.setItem("amount",amount.toString());
                             localStorage.setItem("page","moviedetail");
-                            localStorage.setItem("movie_id",this.props.match.params.movieId)
+                            // localStorage.setItem("movie_id",this.props.match.params.movieId)
                             localStorage.setItem("paymentType",availability)
                         }
-                        if(isSubscribed == false && availability == "Paid")
+                        if(isSubscribed == "false" && availability == "Paid")
                         {
                             amount = amount + self.state.movie_details.price;
                             localStorage.setItem("amount",amount.toString());
                             localStorage.setItem("page","moviedetail");
-                            localStorage.setItem("movie_id",this.props.match.params.movieId)
+                            // localStorage.setItem("movie_id",this.state.movie_id);
                             localStorage.setItem("paymentType",availability)
                         }
                     }
@@ -124,7 +127,7 @@ class MovieDetail extends Component {
                 this.props.history.push('/customerdashboard');
             }
             else{
-                this.setState({billing_option:true})
+                //this.setState({billing_option:true})
                 alert("Some Error Occured");
             }
         })

@@ -13,7 +13,7 @@ import details from '../custom_css/movie_detail.css';
 import YouTube from 'react-youtube';
 import Modal from 'react-modal';
 import ReactPlayer from 'react-player';
-import screenfull from 'screenfull';
+// import screenfull from 'screenfull';
 
 const customStyles = {
     content : {
@@ -115,11 +115,11 @@ class Video extends Component {
                 ref={this.ref}
                 playing
                 controls
-                width='100%'
-                height='100%'
-                onReady={(event) => {
-                    screenfull.request(ReactDOM.findDOMNode(this.player))
-                }}
+                width='1048px'
+                height='600px'
+                // onReady={(event) => {
+                //     screenfull.request(ReactDOM.findDOMNode(this.player))
+                // }}
                 url={this.state.watchingDetails.url}
                 onPlay={this.onPlay}
                 onPause = {this.handlePause}

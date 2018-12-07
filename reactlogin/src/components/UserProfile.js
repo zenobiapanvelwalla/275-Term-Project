@@ -11,34 +11,51 @@ class UserProfile extends Component {
     state={
         billingStatus:true,
         subscribe:false,
-        amountPaid:0
+        amountPaid:0,
+        months:0,
+        subscription:null,
+        user:null
     }
 
     constructor(props){
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.updateAmount = this.updateAmount.bind(this);
+        this.updateAmount = this.updateNumberOfMonths.bind(this);
         
     }
     componentDidMount(){
       //get the logged in user's subscription details
-    }
-    updateAmount(e){
-        e.preventDefault();
-        var amount = this.ref.months * 10;
-        this.setState({
-            amountPaid: amount
+      let self = this;
+      axios.get(config.API_URL+"/users/profile",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data.subscription);
+          self.setState({subscription:response.data.subscription,user:response.data.user});
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-        // console.log("Amount to be paid:", this.state.amountPaid);
     }
+    updateNumberOfMonths(e){
+        console.log("INSIDE UPDATE");
+        var amount = this.refs.months.value * 10;
+        var months = this.refs.months.value;
+        this.setState({
+            amountPaid: amount,
+            months: months
+
+        },()=>{console.log("Amount to be paid:", amount);});
+        
+    }
+
     handleSubmit(e){
         e.preventDefault();
         console.log("Post Request To Billing Page");
-        localStorage.setItem("page" , "userprofile")
-        var data = {months:this.refs.months, amountPaid:this.state.amountPaid}
-        
-
-        
+        localStorage.setItem("subscriptionMonths",this.refs.months.value);
+        localStorage.setItem("page","subscription");
+        let amount = this.refs.months.value*10;
+        localStorage.setItem("amount",JSON.stringify(amount));
+        this.props.history.push('/billing');
 
     }
 
@@ -51,7 +68,7 @@ class UserProfile extends Component {
                     months.push(x)
                 }
 
-        const monthsList = months.map((x) => {return(<option key={x}>{x}</option>)});
+        const monthsList = months.map((x) => {return(<option key={x} value={x}>{x}</option>)});
         return (
             <div className="profile-container">
                 <NavBar/>
@@ -69,7 +86,7 @@ class UserProfile extends Component {
                     </div> 
 		        </div>
                 {/* Billing Status Section */}
-                {this.state.billingStatus == true?
+                {this.state.billingStatus === true?
 		        <div className="col-md-9">
 		        <div className="cardU">
 		        <div className="card-body">
@@ -85,17 +102,24 @@ class UserProfile extends Component {
                         <table className="table table-hover table-sm">
                             <thead>
                               <tr>
-                              <th>Months</th>
-                              <th>From</th>
-                              <th>To</th>
+                                <th>Months</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                               </tr>
                             </thead>
+                            
                             <tbody>
+                            {this.state.subscription!=null?
                               <tr>
-                              <td>4</td>
-                              <td>2kdsfj</td>
-                              <td>sdfs</td>
+                              <td>{this.state.subscription.months}</td>
+                              <td>{this.state.subscription.startDate}</td>
+                              <td>{this.state.subscription.endDate}</td>
                               </tr>
+                               : 
+                               <tr> 
+                                   <td className="center" colSpan="3">No Subscription Yet</td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
                         
@@ -109,7 +133,7 @@ class UserProfile extends Component {
 
                 {/* Subscribe Section */}
                 
-                {this.state.subscribe == true?
+                {this.state.subscribe === true?
                 <div className="col-md-9">
                 <div className="cardU">
                     <div className="card-body">
@@ -130,7 +154,7 @@ class UserProfile extends Component {
                                     <label htmlFor="select" className="col-4 col-form-label">Months</label> 
                                     <div className="col-8">
                                       <select ref="months" id="select" name="select" className="custom-select">
-                                        <option value="" disabled="true">Select Period</option>
+                                        <option value="" disabled="true" selected>Select Period</option>
                                             {monthsList}
                                       </select>
                                     </div>

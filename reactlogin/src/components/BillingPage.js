@@ -39,6 +39,7 @@ class BillingPage extends Component {
                   if(response.data.success)
                   {
                     alert("Your subscription for "+ noOfMonths+" months was successful!");
+                    localStorage.setItem("isSubscribed",response.data.isSubscribed);
                     self.props.history.push('/user-profile');
                   }
                 })
@@ -53,18 +54,20 @@ class BillingPage extends Component {
             let payload = {
             moneyPaid : localStorage.getItem("amount"),
             movieId : localStorage.getItem("movie_id"),
-            paymentType : localStorage.getItem("paymentType")
+            paymentType : localStorage.getItem("paymentType"),
+            userId : parseInt(localStorage.getItem('user_id'))
             }
-            console.log("Payload : " + payload);
+            console.log("Payload : " + JSON.stringify(payload));
             let path = "/pay" 
             let self = this;
-            axios.post(config.API_URL+path,{withCredentials:true})
+            axios.post(config.API_URL+path,payload,{withCredentials:true})
               .then(function (response) {
                 console.log(response);
                 if(response.data.success)
                 {
                     alert("Your payment is successful, you can now watch the movie");
-                    let patha = "/moviedetail/" +  payload.movieId
+                    localStorage.setItem("moviesPaidForList",response.data.moviesPaidForList);
+                    let patha = "/moviedetail/" +   localStorage.getItem("movie_id");
                     self.props.history.push(patha);
                 }
               })
