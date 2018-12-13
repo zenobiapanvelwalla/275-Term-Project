@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {Pie, Bar} from 'react-chartjs-2';
 import AdminNavBar from './AdminNavBar';
+import config from '../config.js';
+import axios from 'axios';
 import chartcss from '../custom_css/chart.css';
 //https://github.com/jerairrest/react-chartjs-2/blob/master/example/src/components/bar.js
 class FinancialReport extends Component{
@@ -8,8 +10,10 @@ class FinancialReport extends Component{
         super(props);
         //axios call to get the report data
         this.state = {
+            uniquePayPerViewUsersCount:null,
+            uniquePayPerViewUsersMonths:null,
             chartData:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Number Of Unique Subscription Users',
@@ -25,14 +29,11 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData1:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Unique PayPerView Users',
-                        data: [
-                            12,
-                            23,
-                        ],
+                        data: [],
                         backgroundColor: [
                             'rgba(0, 255, 0, 0.3)',
                             'rgba(0, 0, 255, 0.3)'
@@ -41,7 +42,7 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData2:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Total Unique Active Users',
@@ -57,7 +58,7 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData3:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Total Unique Users',
@@ -73,7 +74,7 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData4:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Monthly Subscription Income',
@@ -89,7 +90,7 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData5:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Monthly Pay Per View Income',
@@ -105,7 +106,7 @@ class FinancialReport extends Component{
                 ] 
             },
             chartData6:{
-                labels: ['Jan','Feb'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets:[
                     {
                         label:'Monthly Total Income',
@@ -122,6 +123,33 @@ class FinancialReport extends Component{
             }
         }
     }
+    componentDidMount(){
+        //get the logged in user's subscription details
+        let self = this;
+        axios.get(config.API_URL+"/count-unique-pay-per-view-users",{withCredentials: true})
+          .then(function (response) {
+            //console.log("Message " + JSON.stringify(response));
+            console.log(response.data.message);
+            self.setState({
+                chartData1:{
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                    datasets:[
+                        {
+                            label:'Unique PayPerView Users',
+                            data: response.data.message.userCount,
+                            backgroundColor: [
+                                'rgba(0, 255, 0, 0.3)',
+                                'rgba(0, 0, 255, 0.3)'
+                            ]
+                        }
+                    ] 
+                }
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     render() {
         return(
             <div className="chart">

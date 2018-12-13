@@ -52,10 +52,10 @@ public class UserController {
 
 	@Autowired
 	private MovieService movieService;
-
+	
 	@Autowired
 	private BillingService billingService;
-	
+
 	@RequestMapping("/users")
 	public ResponseEntity<?> getAllUsers(HttpSession session) {
 		
@@ -74,6 +74,7 @@ public class UserController {
 		
 		
 	}
+	
 	
 	
 	@SuppressWarnings("unchecked")

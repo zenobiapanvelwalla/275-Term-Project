@@ -128,13 +128,28 @@ public class ReportService {
 		monthList =billingRepository.getCountOfUniquePayPerViewUsers_Months();
 		userCountList = billingRepository.getCountOfUniquePayPerViewUsers_UserCount();
 		List<String> monthListStr = convertIntToMonths(monthList);
+		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userCountList);
 		
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
 		MonthlyDetails.setMonth(monthListStr);
-		MonthlyDetails.setUserCount(userCountList);
+		MonthlyDetails.setUserCount(refilledUserCountList);
 		return MonthlyDetails;
 	}
 
+	public List<BigInteger> refillUserCountList(List<Integer> monthList, List<BigInteger> userCountList) {
+		List<BigInteger> refilledUserCountList = new ArrayList();
+		for(int i=0;i<12;i++) {
+			refilledUserCountList.add(BigInteger.ZERO);
+			
+		}
+		int index = 0;
+		for( int m: monthList) {
+			
+			refilledUserCountList.set(m-1, userCountList.get(index));
+			index++;
+		}
+		return refilledUserCountList;
+	}
 	public MonthlyDetails getCountOfUniqueSubscriptionUsers(){
 
 		LocalDateTime now = LocalDateTime.now();
