@@ -53,8 +53,7 @@ public class SubscriptionController {
 
 	@RequestMapping(value = "/subscribe/{noOfMonths}", method = RequestMethod.GET)
 	ResponseEntity<?> addSubscription(@PathVariable int noOfMonths, HttpSession session) throws Exception {
-		// *******************For testing ONLY
-		//session.setAttribute("userId",1);
+
 		System.out.println("----------------USerId:"+ session.getAttribute("userId"));
 		HashMap<String, Object> response = new HashMap<>();
 		int userId =(int)session.getAttribute("userId");
