@@ -187,8 +187,8 @@ class AddMovies extends Component {
             if(this.state.shareholders[key].name.toString() != "")
                 actors = actors + "," + this.state.shareholders[key].name.toString();
         }
-        actors = actors.indexOf(0) == '0' ? actors.substring(1) : actors;
-        console.log("string " + actors)
+        actors = actors.indexOf(0) == ',' ? actors.substring(1) : actors;
+        console.log("string Actors" + actors)
         var data = {
             "title": this.refs.title.value,
             "genre":this.refs.genre.value,
@@ -200,7 +200,7 @@ class AddMovies extends Component {
             "actors":actors,
             "director":this.refs.director.value,
             "country":this.refs.country.value,
-            "rating":this.refs.rating.key,
+            "rating":this.refs.rating.value,
             "availability":this.refs.availability.value,
             "price":this.refs.price.value
             }

@@ -100,5 +100,11 @@ public class MovieService {
 		return movieRepository.findByTitle(title);
 	}
 
+	public List<String> getUniqueMPAARatings() {
+		// TODO Auto-generated method stub
+		List<String> mpaa = movieRepository.getUniqueMPAARatings();
+		return mpaa;
+	}
+
 
 }

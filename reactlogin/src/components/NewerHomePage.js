@@ -23,6 +23,9 @@ import MovieFilterGenre from './MovieFilterGenre';
 import MovieFilterRating from './MovieFilterRating';
 import GiveReviews from './GiveReviews';
 import UpdateMovies from './UpdateMovies';
+import MovieFilterMPAA from './MovieFilterMPAA';
+import MovieFilterYear from './MovieFilterYear';
+import HighlyRatedMovies from './HighlyRatedMovies';
 
 
 class NewerHomePage extends Component {
@@ -51,9 +54,12 @@ class NewerHomePage extends Component {
                     <Route path="/financial-report" component={FinancialReport}/>
                     <Route exact path="/moviefiltergenre" component={MovieFilterGenre}/>
                     <Route exact path="/moviefilterrating" component={MovieFilterRating}/>
+                    <Route exact path="/moviefilteryear" component={MovieFilterYear}/>
+                    <Route exact path="/moviefiltermpaa" component={MovieFilterMPAA}/>
                     <Route exact path="/givereviews" component={GiveReviews}/>
                     <Route exact path="/updatemovies/:movieId" component={UpdateMovies}/>
                     <Route path="/financial-report" component={FinancialReport}/>
+                    <Route path="/highlyratedmovies" component={HighlyRatedMovies}/>
                     
                 </Switch>
             </Router>

@@ -245,12 +245,15 @@ public class MovieController {
     	List<String> directors = movieService.getUniqueDirectors();
     	List<String> actors= movieService.getUniqueActors();
     	List<String> genres = movieService.getUniqueGenres();
+    	List<String> mpaa = movieService.getUniqueMPAARatings();
+    	System.out.println("MPPPPPPPPPPPPPPPPPAA " + mpaa);
     	HashMap<String,Object> response = new HashMap<String,Object>();
     	response.put("success", true);
     	response.put("statusCode",200);
     	response.put("directors",directors);
     	response.put("actors",actors);
     	response.put("genres",genres);
+    	response.put("mpaa",mpaa);
     	return   new ResponseEntity(response, HttpStatus.OK);
     }
 }

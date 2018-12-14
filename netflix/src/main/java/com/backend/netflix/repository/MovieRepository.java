@@ -51,6 +51,9 @@ public interface MovieRepository extends CrudRepository<Movie, Integer> {
 	
 	Movie findByTitle(String title);
 	
+	@Query(value="SELECT DISTINCT rating FROM movies",nativeQuery=true)
+	List<String> getUniqueMPAARatings();
+	
 	
 
 //	Set<Movie> findByYearAndNoOfStars(String Year,String Noofstar);

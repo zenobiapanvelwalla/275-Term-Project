@@ -14,6 +14,10 @@ import style from '../custom_css/admin_dashboard.css';
 import MovieFilterActors from './MovieFilterActors';
 import MovieFilterRating from './MovieFilterRating';
 import MovieFilterGenre from './MovieFilterGenre';
+import MovieFilterYear from './MovieFilterYear';
+import MovieFilterMPAA from './MovieFilterMPAA';
+
+
 import NavBar from './NavBar';
 
 var imagecard = {
@@ -29,17 +33,24 @@ class CustomerDashboard extends Component {
             searchtext:[],
             movies:[],
             allmovies:[],
+            currentPage: 1,
+            ItemPerPage: 10,
             beforefilterMovies:[],
             selectedDirectors:[],
             selectedActors:[],
             selectedGenre:[],
+            selectedYear:[],
+            selectedMPAA:[],
             selectedRating:0,
         };
     this.handleMovieChange = this.handleMovieChange.bind(this);
     this.handleActorChange = this.handleActorChange.bind(this);
     this.handleRatingChange = this.handleRatingChange.bind(this);
     this.handleGenreChange = this.handleGenreChange.bind(this);
+    this.handleYearChange = this.handleYearChange.bind(this);
+    this.handleMPAAChange = this.handleMPAAChange.bind(this);
     this.filterMovies = this.filterMovies.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     }
     componentDidMount(){
         let self = this;
@@ -51,6 +62,12 @@ class CustomerDashboard extends Component {
         })
         .catch(function (error) {
           console.log(error);
+        });
+    }
+
+    handleClick(event) {
+        this.setState({
+            currentPage: Number(event.target.id)
         });
     }
 
@@ -129,6 +146,42 @@ class CustomerDashboard extends Component {
                 })
                 showMovies = moviesGenre;
             }
+
+            //Year search
+            if(this.state.selectedYear.length != 0){
+                console.log("Inside Genre Filter");
+                // console.log("Selected Dir Values :  " + this.state.selectedActors);
+                // console.log("Movies from parent " + this.state.movies);
+                var moviesYear = [];
+                console.log("SELECTED YEARS" + this.state.selectedYear);
+                showMovies.map((movie) => {
+                    console.log("YEAR" + (movie.year));
+                    if(this.state.selectedYear.includes(parseInt(movie.year)))
+                    {
+                        moviesYear.push(movie);
+                    }
+                })
+                showMovies = moviesYear;
+            }
+
+            //MPAA search
+            if(this.state.selectedMPAA.length != 0){
+                console.log("Inside Genre Filter");
+                // console.log("Selected Dir Values :  " + this.state.selectedActors);
+                // console.log("Movies from parent " + this.state.movies);
+                var moviesMPAA = [];
+                console.log("SELECTED MPAA" + this.state.selectedMPAA);
+                showMovies.map((movie) => {
+                    console.log("MPAAAAAAAaaaaa" + (movie.rating));
+                    if(this.state.selectedMPAA.includes(movie.rating))
+                    {
+                        moviesMPAA.push(movie);
+                    }
+                })
+                showMovies = moviesMPAA;
+            }
+
+
             this.setState({movies:showMovies})
         }
         
@@ -171,10 +224,33 @@ class CustomerDashboard extends Component {
         });
     }
 
+    handleYearChange(data){
+        console.log("E : " + data);
+        console.log("It is called from Rating child");
+        this.setState({ selectedYear: data},() => {
+            this.filterMovies();
+            console.log("Selected Year " + this.state.selectedYear);
+        });
+    }
+
+    handleMPAAChange(data){
+        console.log("E : " + data);
+        console.log("It is called from Rating child");
+        this.setState({ selectedMPAA: data},() => {
+            this.filterMovies();
+            console.log("Selected MPAA " + this.state.selectedMPAA);
+        });
+    }
   
     display_movies()
     {
-        const item = this.state.movies.map((movie,index) =>{
+
+        const { movies, currentPage, ItemPerPage } = this.state;
+        const indexOfLastTodo = currentPage * ItemPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - ItemPerPage;
+        const currentTodos = movies.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const item = currentTodos.map((movie,index) =>{
 
             return(
                 
@@ -195,6 +271,25 @@ class CustomerDashboard extends Component {
 
             )
         });
+
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(movies.length / ItemPerPage); i++) {
+            pageNumbers.push(i);
+        }
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+                <li
+                    key={number}
+                    id={number}
+                    onClick={this.handleClick}
+                    className=" page-link"
+                >
+                    {number}
+                </li>
+            );
+        });
+
+
         return(
             <div className="row">
                 <div className="col-sm-2 mycontent-left">
@@ -210,6 +305,12 @@ class CustomerDashboard extends Component {
                 <br/>
                 <div  className="text-left text-small small pl-1"><b>Genre</b></div>
                 <div><MovieFilterGenre filterMovie = {this.handleGenreChange}/></div>
+                <br/>
+                <div  className="text-left text-small small pl-1"><b>Year</b></div>
+                <div><MovieFilterYear filterMovie = {this.handleYearChange}/></div>
+                <br/>
+                <div  className="text-left text-small small pl-1"><b>MPAA Rating</b></div>
+                <div><MovieFilterMPAA filterMovie = {this.handleMPAAChange}/></div>
                 
                 </div>
                 <div className="col-sm-10">
@@ -254,6 +355,11 @@ class CustomerDashboard extends Component {
                                     </input></div>
 
                     <div className="row">{item}</div>
+                    <div className="row">
+                        <ul id="page-numbers" className="pagination justify-content-center">
+                            {renderPageNumbers}
+                        </ul>
+                    </div>
                 </div>
             </div>
         )
