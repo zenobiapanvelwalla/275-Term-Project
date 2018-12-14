@@ -15,10 +15,9 @@ class MovieFilterMPAA extends Component {
         this.state = {
               arrayValue: [],
               MPAARating:["PG - Parental Guidance Suggested",
-            "G - General Audiences",
-        "PG-13 - Parents Strongly Cautioned",
-    "R -  Restricted",
-]
+                        "G - General Audiences",
+                            "PG-13 - Parents Strongly Cautioned",
+                            "R -  Restricted","NC-17 - Adults Only","UR - Unrated"]
 
         };
         this.handleOnChangeMPAA = this.handleOnChangeMPAA.bind(this);
@@ -56,7 +55,7 @@ class MovieFilterMPAA extends Component {
                     // includeFilter={true}
                     // dropdownHeight="300px"
                     numberDisplayed = "2"
-                    className = "b"
+                    className = "c"
             />
             </div>
         );

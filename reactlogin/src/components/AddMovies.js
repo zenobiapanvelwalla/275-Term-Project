@@ -329,7 +329,7 @@ class AddMovies extends Component {
                         <option key="P">Paid</option>
                         </select>
                     </div>
-                    <div className="col-sm-5"><input ref="price" type="text" className="form-control" id="movie_price"  placeholder="Price" disabled={!this.state.priceEnable}/></div> 
+                    <div className="col-sm-5"><input ref="price" type="number" className="form-control" id="movie_price"  placeholder="Price" disabled={!this.state.priceEnable}/></div> 
                 </div>
                
 
