@@ -101,9 +101,11 @@ public class ReportService {
 		monthList = UserActivityRepository.getMonthsWatchedMovedPerMonth();
 		List<String> monthListStr = convertIntToMonths(monthList);
 
+		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userList);
+
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
 		MonthlyDetails.setMonth(monthListStr);
-		MonthlyDetails.setUserCount(userList);
+		MonthlyDetails.setUserCount(refilledUserCountList);
 		return MonthlyDetails;
 
 	}
@@ -111,10 +113,14 @@ public class ReportService {
 	public MonthlyDetails getMonthlyRegisteredUsers() {
 		List<BigInteger> userCountList= null;
 		List<Integer> monthList= null ;
+
 		monthList =UserRepository.getMonthuserRegisteredMonthly();
 		userCountList = UserRepository.getUserRegisteredMonthly();
+
 		List<String> monthListStr = convertIntToMonths(monthList);
+
 		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userCountList);
+
 		MonthlyDetails monthlyUserRegistered = new MonthlyDetails();
 		monthlyUserRegistered.setMonth(monthListStr);
 		monthlyUserRegistered.setUserCount(refilledUserCountList);
@@ -159,7 +165,7 @@ public class ReportService {
 
 		List<BigInteger> userCountList = new ArrayList<BigInteger>();
 		List<Integer> monthList = new ArrayList<Integer>();
-		for(int i = 0; i <= 12; i++) {
+		for(int i = 0; i < 12; i++) {
 			count = BigInteger.valueOf(0);
 			ref_date = now.minusMonths(i);
 			ref_date = ref_date.withDayOfMonth(1);
