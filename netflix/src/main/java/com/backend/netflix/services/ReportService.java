@@ -118,7 +118,7 @@ public class ReportService {
 		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userList);
 
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
-		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userList);
+
 		MonthlyDetails.setMonth(monthListStr);
 		MonthlyDetails.setUserCount(refilledUserCountList);
 		return MonthlyDetails;
