@@ -50,8 +50,6 @@ public class ReportService {
 		List<Integer> monthList= null;
 		List<BigDecimal> incomeList= null ;
 
-		//if(paymentType.compareTo("PayPerViewOnly")==0) {
-
 		incomeList = billingRepository.getIncomeListBasedOnPaymentType(paymentType);
 		monthList = billingRepository.getMonthsListBasedOnPaymentType(paymentType);
 

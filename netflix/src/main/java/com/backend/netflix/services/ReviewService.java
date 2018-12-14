@@ -23,6 +23,10 @@ public class ReviewService {
     @Autowired
     private MovieRepository mRepo;
 
+    public List<Review> getAllReviewsFoMovieId(int movieId) {
+        return reviewRepository.findByMovieId(movieId);
+    }
+
 
     public List<HighRatedMovie> getTopTenMoviesByStarRating() {
 

@@ -44,9 +44,11 @@ public class ReviewController {
         if(uaList.size()>0){
             //Saving user reviews
             Movie updatedMovie = reviewService.addReview(review);
+            List<Review> reviews = reviewService.getAllReviewsFoMovieId(review.getMovieId());
             response.put("success", true);
             response.put("message", "Review Added Successfully");
             response.put("updatedMovie",updatedMovie);
+            response.put("reviews",reviews);
             response.put("statusCode", 200);
         } else {
             response.put("success", false);
