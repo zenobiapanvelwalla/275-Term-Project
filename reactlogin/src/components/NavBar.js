@@ -24,7 +24,7 @@ class NavBar extends Component
                                 <a onClick={() => {this.props.history.push('/user-profile')}} className="nav-link">User Profile</a>
                             </li>
                             <li className="nav-item">
-                                <a onClick={() => {this.props.history.push('/')}} className="nav-link">User Profile</a>
+                                <a onClick={() => {this.props.history.push('/highlyratedmovies')}} className="nav-link">Movie Scoreboard</a>
                             </li>
                             <li className="nav-item float-right">
                                 <a className="nav-link" onClick={() => {
