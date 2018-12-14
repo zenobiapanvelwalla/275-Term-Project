@@ -114,10 +114,10 @@ public class ReportService {
 		monthList =UserRepository.getMonthuserRegisteredMonthly();
 		userCountList = UserRepository.getUserRegisteredMonthly();
 		List<String> monthListStr = convertIntToMonths(monthList);
-
+		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userCountList);
 		MonthlyDetails monthlyUserRegistered = new MonthlyDetails();
 		monthlyUserRegistered.setMonth(monthListStr);
-		monthlyUserRegistered.setUserCount(userCountList);
+		monthlyUserRegistered.setUserCount(refilledUserCountList);
 		return monthlyUserRegistered;
 	}
 
@@ -177,9 +177,10 @@ public class ReportService {
 			monthList.add(month);
 		}
 		List<String> monthListStr = convertIntToMonths(monthList);
+		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userCountList);
 		MonthlyDetails monthlyDetails = new MonthlyDetails();
 		monthlyDetails.setMonth(monthListStr);
-		monthlyDetails.setUserCount(userCountList);
+		monthlyDetails.setUserCount(refilledUserCountList);
 		return monthlyDetails;
 	}
 
