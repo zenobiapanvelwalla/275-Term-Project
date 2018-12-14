@@ -56,9 +56,9 @@ public class ReportService {
 		monthList = billingRepository.getMonthsListBasedOnPaymentType(paymentType);
 
 		List<String> monthListStr = convertIntToMonths(monthList);
-
+		List<BigDecimal> refilledIncomeList = refillIncomeListList(monthList,incomeList);
 		MonthlyIncome monthlyIncome = new MonthlyIncome();
-		monthlyIncome.setIncome(incomeList);
+		monthlyIncome.setIncome(refilledIncomeList);
 		monthlyIncome.setMonth(monthListStr);
 
 		return monthlyIncome;
@@ -84,15 +84,29 @@ public class ReportService {
 		monthList = billingRepository.getMonthsListForTotalIncome();
 
 		List<String> monthListStr = convertIntToMonths(monthList);
-
+		List<BigDecimal> refilledIncomeList = refillIncomeListList(monthList,incomeList);
 		MonthlyIncome monthlyIncome = new MonthlyIncome();
-		monthlyIncome.setIncome(incomeList);
+		monthlyIncome.setIncome(refilledIncomeList);
 		monthlyIncome.setMonth(monthListStr);
 
 		return monthlyIncome;
 
 	}
-
+	//refilling the incomeList to get 12 values
+	public List<BigDecimal> refillIncomeListList(List<Integer> monthList, List<BigDecimal> incomeList) {
+		List<BigDecimal> refilledIncomeList = new ArrayList();
+		for(int i=0;i<12;i++) {
+			refilledIncomeList.add(BigDecimal.ZERO);
+			
+		}
+		int index = 0;
+		for( int m: monthList) {
+			
+			refilledIncomeList.set(m-1, incomeList.get(index));
+			index++;
+		}
+		return refilledIncomeList;
+	}
 	public MonthlyDetails getUniqueActiveUserWatchedOnemovieperMonth() {
 		
 		List<BigInteger> userList= new ArrayList<>();
@@ -104,6 +118,7 @@ public class ReportService {
 		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userList);
 
 		MonthlyDetails MonthlyDetails = new MonthlyDetails();
+		List<BigInteger> refilledUserCountList = refillUserCountList(monthList,userList);
 		MonthlyDetails.setMonth(monthListStr);
 		MonthlyDetails.setUserCount(refilledUserCountList);
 		return MonthlyDetails;
