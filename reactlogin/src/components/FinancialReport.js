@@ -124,7 +124,7 @@ class FinancialReport extends Component{
         }
     }
     componentDidMount(){
-        //get the logged in user's subscription details
+        //unique pay per view users
         let self = this;
         axios.get(config.API_URL+"/count-unique-pay-per-view-users",{withCredentials: true})
           .then(function (response) {
@@ -149,6 +149,132 @@ class FinancialReport extends Component{
           .catch(function (error) {
             console.log(error);
           });
+          //Unique Subscription users
+          axios.get(config.API_URL+"/count-unique-subscription-users",{withCredentials: true})
+          .then(function (response) {
+            //console.log("Message " + JSON.stringify(response));
+            console.log(response.data.message);
+            self.setState({
+                chartData:{
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                    datasets:[
+                        {
+                            label:'Unique Subscription Users',
+                            data: response.data.message.userCount,
+                            backgroundColor: [
+                                'rgba(0, 255, 0, 0.3)',
+                                'rgba(0, 0, 255, 0.3)'
+                            ]
+                        }
+                    ] 
+                }
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        //Total Unique Active Users
+        axios.get(config.API_URL+"/count-total-unique-active-users",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data.message);
+          self.setState({
+            chartData2:{
+                  labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                  datasets:[
+                      {
+                          label:'Total Unique Active Users',
+                          data: response.data.message.userCount,
+                          backgroundColor: [
+                              'rgba(0, 255, 0, 0.3)',
+                              'rgba(0, 0, 255, 0.3)'
+                          ]
+                      }
+                  ] 
+              }
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //Total Unique Users
+        axios.get(config.API_URL+"/count-unique-registered-users",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data.message);
+          self.setState({
+            chartData3:{
+                  labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                  datasets:[
+                      {
+                          label:'Total Unique Users',
+                          data: response.data.message.userCount,
+                          backgroundColor: [
+                              'rgba(0, 255, 0, 0.3)',
+                              'rgba(0, 0, 255, 0.3)'
+                          ]
+                      }
+                  ] 
+              }
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //Monthly Subscription Income, pay per view income, monthly total income.
+        axios.get(config.API_URL+"/monthlyincome",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log(response.data);
+          self.setState({
+            chartData4:{
+                  labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                  datasets:[
+                      {
+                          label:'Monthly Subscription Income',
+                          data: response.data.subscriptionIncome.income,
+                          backgroundColor: [
+                              'rgba(0, 255, 0, 0.3)',
+                              'rgba(0, 0, 255, 0.3)'
+                          ]
+                      }
+                  ] 
+              },
+              chartData5:{
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                datasets:[
+                    {
+                        label:'Monthly Pay Per View Income',
+                        data: response.data.payPerMovieIncome.income,
+                        backgroundColor: [
+                            'rgba(255,99,132,0.6)',
+                            'rgba(54,162,235,0.6)'
+                        ]
+                    }
+                ] 
+            },
+            chartData6:{
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+                datasets:[
+                    {
+                        label:'Monthly Total Income',
+                        data: response.data.totalIncome.income,
+                        backgroundColor: [
+                            'rgba(255,99,132,0.6)',
+                            'rgba(54,162,235,0.6)'
+                        ]
+                    }
+                ] 
+            }
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      
+      
       }
     render() {
         return(
