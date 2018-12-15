@@ -27,7 +27,8 @@ class UpdateMovies extends Component {
             priceEnable:false,
             messageEnable : false,
             msgResult:true,
-            movie_details:[]
+            movie_details:[],
+            message:"The movie has been updated successfully"
 
             // isProjectName:true,
             // isProjectDescription:true,
@@ -154,7 +155,9 @@ class UpdateMovies extends Component {
 
     componentDidMount(){
         let self = this;
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + self.props.match.params.movieId);
         let path = "/movies/" + this.props.match.params.movieId;
+        path = "/movies/" + this.props.match.params.movieId;
         console.log(config.API_URL+path);
         axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
@@ -201,15 +204,15 @@ class UpdateMovies extends Component {
             }
         let self = this;
         console.log("User Data:" + JSON.stringify(data))
-        axios.post(config.API_URL+'/movies/store',data)
+        axios.post(config.API_URL+'/movies/update/'+this.props.match.params.movieId,data,{withCredentials: true})
         .then(function (response) {
           console.log(response);
           if(response.data.success)
           {
-            self.props.history.push('/customerdashboard');
+            this.setState({msgResult:true, message:"You have successfully updated movie!."});
           }
           else{
-            self.setState({msgResult:false})
+            self.setState({msgResult:true, message:"Some Error Occured!."});
           }
           
         })
@@ -272,7 +275,7 @@ class UpdateMovies extends Component {
                 <div className="form-row align-items-center ">
                 <h3 className=""> Edit Movie </h3>
                 </div>
-                { this.state.msgResult ? null : <div className="text-left text-small small alert alert-warning">Movie Added Successfully.</div>}
+                { this.state.msgResult ?<div className="text-left text-small small alert alert-info">{this.state.message}</div> : null}
 
 
                 <div className="form-row text-left align-items-center pt-2">

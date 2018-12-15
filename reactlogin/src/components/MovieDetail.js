@@ -209,7 +209,9 @@ class MovieDetail extends Component {
                                 <div>
                                     <button className="btn btn-outline-warning btn-sm mt-1" onClick={this.handleDelete}>Delete</button>
                                     <button className="btn btn-outline-warning btn-sm mt-1" onClick={(e) => {
-                                        this.props.history.push('/updatemovie')
+                                        console.log("Movvvvvvvvvvvvvvvvvvv" + this.state.movie_details.movieId)
+                                        let path = "/updatemovies/" +  this.state.movie_details.movieId;
+                                        this.props.history.push(path)
                                     }
                                     }>Update</button>
                                 </div> : null
