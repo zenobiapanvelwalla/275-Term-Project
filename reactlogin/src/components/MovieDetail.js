@@ -384,10 +384,13 @@ class MovieDetail extends Component {
                     <div className="row detailText">
                                 <b>Cast: </b><p>{this.state.movie_details.actors}</p>
                     </div>
+                    {this.state.canUserWatch==true?
                     <div className="row">
                         <button type="button" onClick={this.watchMovie} className="btn btn-danger">Watch Now</button>     
                     </div>
+                    :""}
                     <br/>
+                    
 
                     {this.state.billing_option ?
                     <div className="row">

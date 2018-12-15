@@ -20,10 +20,10 @@ public class UserSubscription implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-
 	private int userId;
 
 	public UserSubscription() {}
+	
 	
 
 	private int months;
