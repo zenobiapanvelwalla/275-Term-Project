@@ -229,10 +229,13 @@ class AddMovies extends Component {
         console.log("Inside handle selected ");
         var availability = this.refs.availability.value;
         console.log(availability);
-        if(availability === "Paid")
+        if(availability === "Paid" || availability == "PayPerViewOnly")
         {
             console.log("Inside if");
             this.state.priceEnable = true;
+        }
+        else{
+            this.setState({priceEnable:false});
         }
     }
 

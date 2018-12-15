@@ -29,6 +29,9 @@ class MovieDetail extends Component {
             reviews:[],
             billing_option:false,
             seereviews:false,
+            topTenByLast24Hours:'',
+            top10ByLastWeek:'',
+            top10ByLastMonth:'',
         }
         this.watchMovie = this.watchMovie.bind(this);
         this.getReviews = this.getReviews.bind(this);
@@ -41,6 +44,40 @@ class MovieDetail extends Component {
         let self = this;
         let a = this.props.match.params.movieId;
         this.setState({movie_id:a})
+
+
+        //get top ten users in last 24 hours
+        axios.get(config.API_URL+"/movies/play-count/"+a+"/24",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log("last day : " + JSON.stringify(response.data.message));
+          self.setState({ topTenByLast24Hours:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //get top ten users in last 7 days (week)
+        axios.get(config.API_URL+"/movies/play-count/"+a+"/7",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log("last day : " + JSON.stringify(response.data.message));
+          self.setState({ top10ByLastWeek:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+        //get top ten users in last 30 days (month)
+        axios.get(config.API_URL+"/movies/play-count/"+a+"/30",{withCredentials: true})
+        .then(function (response) {
+          //console.log("Message " + JSON.stringify(response));
+          console.log("last day : " + JSON.stringify(response.data.message));
+          self.setState({ top10ByLastMonth:response.data.message});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
         
         let path = "/movies/" + this.props.match.params.movieId;
@@ -218,6 +255,15 @@ class MovieDetail extends Component {
                             }
                         </div>
 
+                        {localStorage.getItem('role') == 'ADMIN' ?
+                        <div className="row">
+                            <b>Play Count - </b>
+                            <button className="badge">last day : {this.state.topTenByLast24Hours}</button>
+                            <button className="badge">last week : {this.state.top10ByLastWeek}</button>
+                            <button className="badge">last month : {this.state.top10ByLastMonth}</button>
+                        </div>
+                        : null}
+                    
                         <div className="row">
                             <ReactStars
                                     value = {this.state.movie_details.avgStarRating}
@@ -367,6 +413,8 @@ class MovieDetail extends Component {
 		        </div>
                     {this.getReviews()}
                 </div> : null}
+
+                {/* admin graph */}
                 
                 
             </div>

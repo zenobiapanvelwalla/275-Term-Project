@@ -26,20 +26,10 @@ class UpdateMovies extends Component {
             shareholders: [{ name: '' }],
             priceEnable:false,
             messageEnable : false,
-            msgResult:true,
+            msgResult:false,
             movie_details:[],
             message:"The movie has been updated successfully"
 
-            // isProjectName:true,
-            // isProjectDescription:true,
-            // isBudgetMin:true,
-            // isBudgetMax:true,
-            // isProjectFile:true,
-            // isSelectedSkills:true,
-            // projectId: '',
-            // skills:[],
-            // projectFile: '',
-            // message: '',
         };
         // this.handleOptionSelected = this.handleOptionSelected.bind(this);
 
@@ -50,109 +40,9 @@ class UpdateMovies extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
-
-    // validateProjectName() {
-    //     if (this.state.projectData.projectname != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // validateDescription(){
-    //     if (this.state.projectData.projectdescription != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-    // validateBudget() {
-    //     if (this.state.projectData.projectBudgetMin != '' && this.state.projectData.projectBudgetMax != '' && this.state.projectData.projectBudgetMin<this.state.projectData.projectBudgetMax)
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // validateProjectFile(){
-    //     if (this.state.projectData.projectFile != '')
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-    // validateSkills(){
-    //     if (this.state.projectData.selectedskills.length > 2)
-    //     {
-    //         return (true)
-    //     }
-    //     return (false)
-    // }
-
-    // handleSubmit = () => {
-
-    //     if(this.validateProjectName() == true) {
-    //         if(this.validateDescription() == true) {
-    //             if(this.validateProjectFile() == true) {
-    //                 if(this.validateSkills() == true) {
-    //                     if(this.validateBudget() == true) {
-    //                         this.props.dispatch(this.props.addProject(this.state.projectData))
-    //                     .then(() => this.props.history.push('/dashboard'));
-    //                     }
-    //                     else{
-    //                         this.setState({isBudgetMin: false})
-    //                     }
-    //                 }
-    //                 else{
-    //                     this.setState({isSelectedSkills: false})
-    //                 }
-    //             }
-    //             else{
-    //                 this.setState({isProjectFile: false})
-    //             }
-    //         }
-    //         else {
-    //             this.setState({isProjectDescription: false})
-    //         }
-    //     }
-    //     else {
-    //         this.setState({isProjectName: false})
-    //     }
-    // }
-
-    // handleFileUpload = (event) => {
-
-    //     const payload = new FormData();
-
-    //     payload.append('myfile', event.target.files[0]);
-
-    //     API.uploadFile(payload)
-    //         .then((response) => {
-    //             if (response.success) {
-    //                 alert("File uploaded: Upload again to replace file");
-    //                 this.setState({
-    //                     projectData: {
-    //                         ...this.state.projectData,
-    //                         projectFile: "./uploads/doc" + response.filename
-    //                     }
-    //                 });
-    //                 this.setState({isProjectFile: true});
-
-    //             }
-    //         });
-    // };
-
-
-    // handleOptionSelected(option){
-    //     this.setState({
-    //         projectData: {
-    //             ...this.state.projectData,
-    //             selectedskills:option
-    //         }
-    //     });
-
-    // }
-
+    
+    
+    
     componentDidMount(){
         let self = this;
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + self.props.match.params.movieId);
@@ -162,7 +52,22 @@ class UpdateMovies extends Component {
         axios.get(config.API_URL+path,{withCredentials: true})
         .then(function (response) {
           console.log("movie_details " + JSON.stringify(response.data.message));
-          self.setState({movie_details:response.data.message})
+          self.setState({movie_details:response.data.message},()=>{
+          self.refs.title.value = self.state.movie_details.title;
+          self.refs.genre.value = self.state.movie_details.genre;
+          self.refs.year.value = self.state.movie_details.year;
+          self.refs.studio.value = self.state.movie_details.studio;
+          self.refs.synopsis.value = self.state.movie_details.synopsis;
+          self.refs.image.value = self.state.movie_details.imageUrl;
+          self.refs.movieurl.value = self.state.movie_details.movieUrl;
+          self.refs.director.value = self.state.movie_details.director;
+          self.refs.country.value = self.state.movie_details.country;
+          self.refs.rating.value = self.state.movie_details.rating;
+          self.refs.availability.value = self.state.movie_details.availability;
+          self.refs.price.value = self.state.movie_details.price;
+          self.setState({shareholders:[{ name:'aaa'},{name :'bbb'}]})
+        
+          })
         })
     }
 
@@ -198,21 +103,22 @@ class UpdateMovies extends Component {
             "actors":actors,
             "director":this.refs.director.value,
             "country":this.refs.country.value,
-            "rating":this.refs.rating.key,
-            "availability":this.refs.availability.key,
+            "rating":this.refs.rating.value,
+            "availability":this.refs.availability.value,
             "price":this.refs.price.value
             }
         let self = this;
         console.log("User Data:" + JSON.stringify(data))
-        axios.post(config.API_URL+'/movies/update/'+this.props.match.params.movieId,data,{withCredentials: true})
+        console.log("path : " + config.API_URL+'/movies/update/'+this.props.match.params.movieId)
+        axios.put(config.API_URL+'/movies/update/'+this.props.match.params.movieId,data,{withCredentials: true})
         .then(function (response) {
           console.log(response);
           if(response.data.success)
           {
-            this.setState({msgResult:true, message:"You have successfully updated movie!."});
+            self.setState({messages:"You have successfully updated movie!.",msgResult:true});
           }
           else{
-            self.setState({msgResult:true, message:"Some Error Occured!."});
+            self.setState({message:"Some Error Occured!.",msgResult:true});
           }
           
         })
@@ -227,10 +133,13 @@ class UpdateMovies extends Component {
         console.log("Inside handle selected ");
         var availability = this.refs.availability.value;
         console.log(availability);
-        if(availability == "Paid")
+        if(availability == "Paid" || availability == "PayPerViewOnly")
         {
             console.log("Inside if");
             this.state.priceEnable = true;
+        }
+        else{
+            this.setState({priceEnable:false})
         }
     }
 
@@ -284,8 +193,8 @@ class UpdateMovies extends Component {
                 </div>
 
                 <div className="form-row align-items-center">
-                    <div className="col-sm-6"><input ref="title" type="text" className="form-control" id="movie_title" value={this.state.movie_details.title}  placeholder="Enter title"/></div>
-                    <div className="col-sm-6"><input ref="genre" type="text" className="form-control" id="movie_genre" value={this.state.movie_details.genre}   placeholder="Enter Genre"/></div>
+                    <div className="col-sm-6"><input ref="title" type="text" className="form-control" id="movie_title"  placeholder="Enter title"/></div>
+                    <div className="col-sm-6"><input ref="genre" type="text" className="form-control" id="movie_genre"    placeholder="Enter Genre"/></div>
                 </div>
 
                  <div className="form-row text-left align-items-center pt-3">
@@ -294,11 +203,11 @@ class UpdateMovies extends Component {
                 </div>
 
                 <div className="form-row align-items-center">
-                    <div className="col-sm-3"><select className="form-control" ref="year" value={this.state.movie_details.year} className="form-control" id="exampleSelect1" placeholder="Release Year">
+                    <div className="col-sm-3"><select className="form-control" ref="year"  className="form-control" id="exampleSelect1" placeholder="Release Year">
                             <option value="" disabled selected>Release Year</option>
                             {yearList}
                     </select></div> 
-                    <div className="col-sm-9"><input ref="studio" value={this.state.movie_details.studio} type="text" className="form-control" id="movie_studio"  placeholder="studio"/></div> 
+                    <div className="col-sm-9"><input ref="studio"  type="text" className="form-control" id="movie_studio"  placeholder="studio"/></div> 
                 </div>
 
                 <div className="form-row text-left align-items-center pt-3">
@@ -307,22 +216,22 @@ class UpdateMovies extends Component {
                 </div> 
 
                 <div className="form-row align-items-center small">
-                    <div className="col-sm-8"><input ref="synopsis" value={this.state.movie_details.synopsis} type="text" className="form-control" id="movie_synopsis"  placeholder="Synopsis"/></div> 
-                    <div className="col-sm-4"><input ref="country" value={this.state.movie_details.country} type="text" className="form-control" id="movie_country"  placeholder="Country"/></div> 
+                    <div className="col-sm-8"><input ref="synopsis"  type="text" className="form-control" id="movie_synopsis"  placeholder="Synopsis"/></div> 
+                    <div className="col-sm-4"><input ref="country"  type="text" className="form-control" id="movie_country"  placeholder="Country"/></div> 
                 </div>
 
                 <div className="form-row text-left align-items-center pt-3">
                     <div className="col-sm-12">Image</div> 
                 </div>
                 <div className="form-row align-items-center">
-                    <div className="col-sm-12"><input ref="image" value={this.state.movie_details.imageUrl} type="text" className="form-control" id="movie_image"  placeholder="image"/></div> 
+                    <div className="col-sm-12"><input ref="image" type="text" className="form-control" id="movie_image"  placeholder="image"/></div> 
                 </div>
 
                 <div className="form-row text-left align-items-center pt-3">
                     <div className="col-sm-12">Movie Video</div> 
                 </div>
                 <div className="form-row align-items-center">
-                    <div className="col-sm-12"><input ref="movieurl" value={this.state.movie_details.movieUrl} type="text" className="form-control" id="movie_movieurl"  placeholder="Add Movie Video"/></div> 
+                    <div className="col-sm-12"><input ref="movieurl"  type="text" className="form-control" id="movie_movieurl"  placeholder="Add Movie Video"/></div> 
                 </div>
 
                 <div className="form-row text-left align-items-center pt-3">
@@ -332,7 +241,7 @@ class UpdateMovies extends Component {
 
                 <div className="form-row align-items-center">
                     <div className="col-sm-6">
-                        <select className="form-control" value={this.state.movie_details.rating} ref="rating" id="rating">
+                        <select className="form-control" ref="rating" id="rating">
                         <option key="PG">PG - Parental Guidance Suggested</option>
                         <option key="G">G - General Audiences</option>
                         <option key="PG-13">PG-13 - Parents Strongly Cautioned</option>
@@ -341,13 +250,13 @@ class UpdateMovies extends Component {
                         <option key="UR">UR - Unrated</option>
                         </select>
                     </div>
-                    <div className="col-sm-6"><input ref="director" value={this.state.movie_details.director} type="text" className="form-control" id="movie_director"  placeholder="Add Director (Optional)" /></div> 
+                    <div className="col-sm-6"><input ref="director"  type="text" className="form-control" id="movie_director"  placeholder="Add Director (Optional)" /></div> 
                 </div>
 
                 <div className="form-row align-items-center pt-3">
                     <div className="col-sm-7">
-                        <select ref="availability" className="form-control" id="rating" onChange={(event) => {this.handleSelectAvailability(event)}}>
-                        <option value key="FA">Free</option>
+                        <select ref="availability" className="form-control"  onChange={(event) => {this.handleSelectAvailability(event)}}>
+                        <option key="FA">Free</option>
                         <option key="SO">SubscriptionOnly</option>
                         <option key="PPVO">PayPerViewOnly</option>
                         <option key="P">Paid</option>
