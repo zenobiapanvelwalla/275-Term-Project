@@ -105,7 +105,7 @@ class BrowseCustomers extends Component{
             {/* Display top ten users */}
            
             <div className="card-default cardBC">
-            <div className="card-header"><b>Top 10 Customers</b></div>
+            <div className="card-header"><b>Top 10 Movies</b></div>
             <div className="table-responsive">
             <div className="align-content-end">
                 <select onChange={(event)=>{
