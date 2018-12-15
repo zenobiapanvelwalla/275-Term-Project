@@ -106,5 +106,30 @@ public class MovieService {
 		return mpaa;
 	}
 
+	public List<Movie> recommendMoviesBasesOnDirector(int movieId) {
+		Movie m = movieRepository.findById(movieId);
+		
+		List<Movie> recommendedMoviesBasesOnDirector = movieRepository.recommendMoviesBasedOnDirector(m.getDirector().trim(),movieId);
+		return recommendedMoviesBasesOnDirector;
+	}
+	
+	public List<Movie> recommendMoviesBasesOnActor(int movieId) {
+		Movie m = movieRepository.findById(movieId);
+		List<String> actorsNonUnique = new ArrayList<String>();
+		actorsNonUnique.addAll(Arrays.asList(m.getActors().split("\\s*,\\s*")));
+		List<Movie> recommendedMoviesBasesOnActors = new ArrayList<>();
+		for(String act: actorsNonUnique) {
+			recommendedMoviesBasesOnActors.addAll(movieRepository.recommendMovieBasedOnActors(act.trim(),movieId));
+		}
+		
+		return recommendedMoviesBasesOnActors;
+	}
+	
+	public List<Movie> recommendMoviesBasesOnGenre(int movieId) {
+		Movie m = movieRepository.findById(movieId);
+		List<Movie> recommendedMoviesBasesOnGenre = movieRepository.recommedMovieBasedOnGenre(m.getGenre().trim(),movieId);
+		return recommendedMoviesBasesOnGenre;
+	}
+
 
 }
