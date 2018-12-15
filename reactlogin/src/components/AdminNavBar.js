@@ -22,6 +22,18 @@ class AdminNavBar extends Component
                             <li className="nav-item">
                                 <a onClick={() => {this.props.history.push('/addmovies')}} className="nav-link">Add Movie</a>
                             </li>
+
+                            <li className="nav-item">
+                                <a onClick={() => {this.props.history.push('/browse-customers')}} className="nav-link">Customer Activity</a>
+                            </li>
+
+                            <li className="nav-item">
+                                <a onClick={() => {this.props.history.push('/financial-report')}} className="nav-link">Financial Report</a>
+                            </li>
+
+                            <li className="nav-item">
+                                <a onClick={() => {this.props.history.push('/financial-report')}} className="nav-link">Movie Activity Report</a>
+                            </li>
                             
                             <li className="nav-item float-right">
                                 <a className="nav-link" onClick={() => {
