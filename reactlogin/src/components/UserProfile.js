@@ -102,7 +102,7 @@ class UserProfile extends Component {
                         <table className="table table-hover table-sm">
                             <thead>
                               <tr>
-                                <th>Months</th>
+                                <th>Months Added</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                               </tr>
