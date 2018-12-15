@@ -12,6 +12,7 @@ import axios from 'axios';
 import details from '../custom_css/movie_detail.css';
 import ReactStars  from 'react-stars';
 import Video from "../components/Video";
+import scrollToComponent from 'react-scroll-to-component';
 
 class MovieDetail extends Component {
 
@@ -27,9 +28,11 @@ class MovieDetail extends Component {
             canUserWatch : '',
             reviews:[],
             billing_option:false,
+            seereviews:false,
         }
         this.watchMovie = this.watchMovie.bind(this);
-        // this.getReviews = this.getReviews.bind(this);
+        this.getReviews = this.getReviews.bind(this);
+        this.getReviews = this.getReviews.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -38,6 +41,8 @@ class MovieDetail extends Component {
         let self = this;
         let a = this.props.match.params.movieId;
         this.setState({movie_id:a})
+
+        
         let path = "/movies/" + this.props.match.params.movieId;
         console.log(config.API_URL+path);
         axios.get(config.API_URL+path,{withCredentials: true})
@@ -47,7 +52,7 @@ class MovieDetail extends Component {
         //   {
         //       self.setState({reviews:response.data.message.reviews})
         //   }
-          self.setState({movie_details:response.data.message },() => {
+          self.setState({movie_details:response.data.message,reviews:response.data.message.reviews },() => {
             //check user can watch movie or not
             let availability = self.state.movie_details.availability;
             let isSubscribed = localStorage.getItem('isSubscribed');
@@ -124,7 +129,7 @@ class MovieDetail extends Component {
         //   this.setState({movies:response.data.message[0]});
             if(response.data.success)
             {
-                this.props.history.push('/customerdashboard');
+                self.props.history.push('/customerdashboard');
             }
             else{
                 //this.setState({billing_option:true})
@@ -159,31 +164,32 @@ class MovieDetail extends Component {
         }
         }
 
-    // getReviews(){
-    //     const item = this.state.reviews.map((review,index) =>{
+    getReviews(){
+        console.log("Reviews Initially : " + this.state.reviews);
+        const item = this.state.reviews.map((review,index) =>{
 
-    //         return(
-    //                 <div className = "">
-    //                 <hr size="30"></hr>
-    //                 <b>{review.userName}</b>
-    //                 <ReactStars
-    //                     count={5}
-    //                     value={review.starRating}
-    //                     size={17}
-    //                     color2={'#ffd700'} 
-    //                     edit = {false}/>
-    //                 <p>{review.reviewText}</p>
+            return(
+                    <div className = "">
+                    <hr size="30"></hr>
+                    <b>{review.userName}</b>
+                    <ReactStars
+                        count={5}
+                        value={review.starRating}
+                        size={17}
+                        color2={'#ffd700'} 
+                        edit = {false}/>
+                    <p>{review.reviewText}</p>
                           
-    //                 </div>
+                    </div>
 
-    //         )
-    //     });
-    //     return(
-    //         <div>{item}</div>
-    //     )
+            )
+        });
+        return(
+            <div>{item}</div>
+        )
 
         
-    // }
+    }
 
     render(){
         
@@ -197,6 +203,8 @@ class MovieDetail extends Component {
                         {/* title */}
                         <div className="row">
                             <h3 className="text-left">{this.state.movie_details.title + "(" +  this.state.movie_details.year + ")"}</h3>
+                            <br/>
+                            
                             {/* add update delete button if the user is admin */}
                             {localStorage.getItem('role')=='ADMIN' ? 
                                 <div>
@@ -224,7 +232,17 @@ class MovieDetail extends Component {
                             {localStorage.getItem('role') == 'ADMIN' ? null : 
                             <div>
                             <button type="button" onClick={(event) => {this.setState({giveReview:true})}} className="btn btn-link btn-sm ml-0 pl-0 "><p className = "btnLink"><u>Add Review</u></p></button>
-                            <button type="button" onClick={(event) => {this.setState({giveReview:true})}} className="btn btn-link btn-sm ml-0 pl-0 ml-0 pl-0 "><p className = "btnLink"><u>See Reviews</u></p></button>
+                            <button type="button" onClick={(event) => {
+                                this.setState({seereviews:true}, ()=> {
+                                    scrollToComponent(this.refs.r, {
+                                        offset: 22,
+                                        align: 'middle',
+                                        duration: 1500
+                                    });
+                                    
+                                })
+
+                                }} className="btn btn-link btn-sm ml-0 pl-0 ml-0 pl-0 "><p className = "btnLink"><u>See Reviews</u></p></button>
                             </div>}
                         </div>
 
@@ -247,7 +265,7 @@ class MovieDetail extends Component {
                                 <button className="btn btn-outline-primary btn-sm mt-1" onClick={(event) => {
                                     if(this.state.rating <= 0)
                                     {
-
+                                        alert("Please give rating");
                                     }
                                     else
                                     {
@@ -277,12 +295,21 @@ class MovieDetail extends Component {
                                             let self = this;
                                             axios.post(config.API_URL+'/movies/add-review',payload)
                                             .then(function (response) {
-                                            console.log("Attributes " + JSON.stringify(response.data));
+                                            // console.log("Attributes " + JSON.stri    ngify(response.data));
                                             if(response.data.success){
-                                                self.setState({movie_details:response.data.updatedMovie, reviews:response.data.updatedMovie.reviews});
-
-                                                self.setState({giveReview:false})
+                                                self.setState({movie_details:response.data.updatedMovie,reviews:response.data.reviews},()=>
+                                                    {
+                                                        console.log("UPDATED MOVIE : " + JSON.stringify(response.data.updatedMovie));
+                                                        // let reviews_new =  response.data.updatedMovie.reviews
+                                                        // console.log("Reviews : " + reviews_new);
+                                                        // self.setState({review:reviews_new})
+                                                        self.setState({giveReview:false} , () => {
+                                                            self.setState({seereviews:false});
+                                                        })
+                                                        
+                                                    });
                                             }
+                                        
                                             else
                                             {
                                                 alert("you can not give reviews without watching movies");
@@ -333,12 +360,13 @@ class MovieDetail extends Component {
                 </div>
 
                 {/* //reviews section */}
-                {/* <div className="row">
-                <div class="col-md-12">
+                {this.state.seereviews ? <div className="row">
+                <div ref="r" class="col-md-12">
 		            <h5 className="ml-5">Reviews</h5>
 		        </div>
                     {this.getReviews()}
-                </div>  */}
+                </div> : null}
+                
                 
             </div>
 

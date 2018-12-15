@@ -54,11 +54,19 @@ class CustomerDashboard extends Component {
     }
     componentDidMount(){
         let self = this;
-        axios.get(config.API_URL+'/movies',{withCredentials: true})
+        let path = "";
+        if(localStorage.getItem('role') == 'ADMIN')
+        {
+            path = config.API_URL+'/admin/movies'
+        }
+        else{
+            path = config.API_URL+'/get-movies-for-customer/'
+       }
+        axios.get(path,{withCredentials: true})
         .then(function (response) {
-        //   console.log("Message " + JSON.stringify(response.data.message));
+        console.log("Movies " + JSON.stringify(response.data.message));
         //   this.setState({movies:response.data.message[0]});
-          self.setState({movies:response.data, allmovies:response.data, beforefilterMovies:response.data});
+          self.setState({movies:response.data.message, allmovies:response.data.message, beforefilterMovies:response.data});
         })
         .catch(function (error) {
           console.log(error);
