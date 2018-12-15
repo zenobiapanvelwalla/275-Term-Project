@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(origins = "http://ec2-34-220-9-51.us-west-2.compute.amazonaws.com:3000",allowCredentials="true")
+//@CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
 public class BillingController {
 
 	@Autowired
