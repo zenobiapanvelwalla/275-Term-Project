@@ -123,7 +123,7 @@ class BrowseCustomers extends Component{
                         <tr key={user.id}> 
                             <td>{user.email}</td>
                             <td>{user.displayName}</td>
-                            <td>{user.isVerified}</td>
+                            <td>{user.verified==true?"YES":"NO"}</td>
                             <td>{user.registeredAt}</td>
                             <td><a href="#history" onClick={this.getMoviePlayingHistory.bind(this,user.id)}> Movie Playing History</a></td>
                             
