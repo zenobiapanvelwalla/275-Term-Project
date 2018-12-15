@@ -66,7 +66,7 @@ class CustomerDashboard extends Component {
         .then(function (response) {
         console.log("Movies " + JSON.stringify(response.data.message));
         //   this.setState({movies:response.data.message[0]});
-          self.setState({movies:response.data.message, allmovies:response.data.message, beforefilterMovies:response.data});
+          self.setState({movies:response.data.message, allmovies:response.data.message, beforefilterMovies:response.data.message});
         })
         .catch(function (error) {
           console.log(error);
