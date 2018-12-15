@@ -203,8 +203,7 @@ class MovieDetail extends Component {
                         {/* title */}
                         <div className="row">
                             <h3 className="text-left">{this.state.movie_details.title + "(" +  this.state.movie_details.year + ")"}</h3>
-                            <br/>
-                            
+                            {!this.state.canUserWatch ? <span className="badge badge-danger">This movie is no longer available in our server.</span> : null}
                             {/* add update delete button if the user is admin */}
                             {localStorage.getItem('role')=='ADMIN' ? 
                                 <div>
