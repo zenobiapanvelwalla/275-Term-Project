@@ -32,7 +32,7 @@ class AdminNavBar extends Component
                             </li>
 
                             <li className="nav-item">
-                                <a onClick={() => {this.props.history.push('/financial-report')}} className="nav-link">Movie Activity Report</a>
+                                <a onClick={() => {this.props.history.push('/movie-activity-report')}} className="nav-link">Movie Activity Report</a>
                             </li>
                             
                             <li className="nav-item float-right">

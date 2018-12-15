@@ -26,6 +26,7 @@ import UpdateMovies from './UpdateMovies';
 import MovieFilterMPAA from './MovieFilterMPAA';
 import MovieFilterYear from './MovieFilterYear';
 import HighlyRatedMovies from './HighlyRatedMovies';
+import MovieActivityReport from './MovieActivityReport';
 
 
 class NewerHomePage extends Component {
@@ -60,6 +61,7 @@ class NewerHomePage extends Component {
                     <Route exact path="/updatemovies/:movieId" component={UpdateMovies}/>
                     <Route path="/financial-report" component={FinancialReport}/>
                     <Route path="/highlyratedmovies" component={HighlyRatedMovies}/>
+                    <Route path="/movie-activity-report" component={MovieActivityReport}/>
                     
                 </Switch>
             </Router>
