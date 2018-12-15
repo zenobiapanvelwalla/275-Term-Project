@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 @CrossOrigin(origins = "http://ec2-34-220-9-51.us-west-2.compute.amazonaws.com:3000",allowCredentials="true")
+//@CrossOrigin(origins = "http://localhost:3000",allowCredentials="true")
 public class MovieController {
 
     @Autowired
@@ -255,5 +256,18 @@ public class MovieController {
     	response.put("genres",genres);
     	response.put("mpaa",mpaa);
     	return   new ResponseEntity(response, HttpStatus.OK);
+    }
+    
+    @GetMapping("/movies/recommend-movies/{movieId}")
+    public ResponseEntity<?> recommendMovies(@PathVariable int movieId){
+    	HashMap<String,Object> response = new HashMap<String,Object>();
+    	List<Movie> recommendedMoviesBasedOnDirector = movieService.recommendMoviesBasesOnDirector(movieId);
+    	//List<Movie> recommededMoviesBasedOnActors =  movieService.recommendMoviesBasesOnActor(movieId);
+    	List<Movie> recommededMoviesBasedOnGenre =  movieService.recommendMoviesBasesOnGenre(movieId);
+    	
+    	response.put("basedOnDirector",recommendedMoviesBasedOnDirector);
+    	//response.put("basedOnActor",recommededMoviesBasedOnActors);
+    	response.put("basedOnGenre",recommededMoviesBasedOnGenre);
+    	return new ResponseEntity(response, HttpStatus.OK);
     }
 }
