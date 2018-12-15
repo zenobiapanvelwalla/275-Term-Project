@@ -188,7 +188,7 @@ class AddMovies extends Component {
                 actors = actors + "," + this.state.shareholders[key].name.toString();
         }
         actors = actors.indexOf(0) == ',' ? actors.substring(1) : actors;
-        console.log("string Actors" + actors)
+        console.log("string Actors" + this.refs.availability.value)
         var data = {
             "title": this.refs.title.value,
             "genre":this.refs.genre.value,
@@ -229,7 +229,7 @@ class AddMovies extends Component {
         console.log("Inside handle selected ");
         var availability = this.refs.availability.value;
         console.log(availability);
-        if(availability == "Paid")
+        if(availability === "Paid")
         {
             console.log("Inside if");
             this.state.priceEnable = true;
@@ -323,7 +323,7 @@ class AddMovies extends Component {
                 <div className="form-row align-items-center pt-3">
                     <div className="col-sm-7">
                         <select ref="availability" className="form-control" id="rating" onChange={(event) => {this.handleSelectAvailability(event)}}>
-                        <option value key="FA">Free</option>
+                        <option key="FA">Free</option>
                         <option key="SO">SubscriptionOnly</option>
                         <option key="PPVO">PayPerViewOnly</option>
                         <option key="P">Paid</option>
