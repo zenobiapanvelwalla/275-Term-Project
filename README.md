@@ -3,7 +3,7 @@
 
 
 
-Baby Movie Central is a web application like Netflix. Users can watch movies which are either Pay Per View, Free or Subscription only.
+Movie Central is a web application like Netflix. Users can watch movies which are either Pay Per View, Free or Subscription only.
 
 # Team Information
 
