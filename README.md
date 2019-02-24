@@ -1,5 +1,5 @@
 # 275-Term-Project
-# Baby Movie Central
+# Movie Central
 
 
 
@@ -32,9 +32,10 @@ Movie Central is a web application like Netflix. Users can watch movies which ar
 
 ### Tech
 
-Baby Movie Central uses of the following technologies
+Movie Central uses of the following technologies
 
 * [ReactJS] - HTML enhanced to make single page web apps
+* [Spring Boot] - Freamework used for developing backend
 * [Eclipse Oxygen] - IDE used for developing the backend
 * [Bootstrap 4] - For designing the front end
 * [AWS RDS] - For deploying the MySQL database
